@@ -1,0 +1,12 @@
+{
+  "runtime": {
+    "version": "LuaJIT"
+  },
+  "diagnostics": {
+    "globals": ["love"]
+  },
+  "workspace": {
+    "library": ["/Users/robcmills/.local/share/love2d-definitions/library"],
+    "checkThirdParty": false
+  }
+}
