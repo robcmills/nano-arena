@@ -17,6 +17,7 @@ local function update_scale()
 end
 
 function love.load()
+  love.graphics.setDefaultFilter("nearest", "nearest")
   load_initial_game_state()
   love.window.setMode(0, 0)
   update_scale()
