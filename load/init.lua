@@ -7,17 +7,30 @@ end
 
 local function update_scale()
   local window_width, window_height = love.graphics.getDimensions()
-  g.scale = math.min(
+  g.scale = math.floor(math.min(
     window_width / settings.resolution,
     window_height / settings.resolution
-  )
+  ))
   -- Center the canvas in the window
   g.offset_x = (window_width - settings.resolution * g.scale) / 2
   g.offset_y = (window_height - settings.resolution * g.scale) / 2
 end
 
+local function load_font()
+  -- g.font = love.graphics.newFont('assets/nes-smb-font.ttf')
+  -- g.font = love.graphics.newFont('assets/monogram/ttf/monogram.ttf', 16, 'mono')
+  g.font = love.graphics.newImageFont(
+    'assets/font.png',
+    ' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+  )
+  -- g.font = love.graphics.newFont(10, 'mono')
+  g.font:setFilter('nearest', 'nearest')
+  love.graphics.setFont(g.font)
+end
+
 function love.load()
-  love.graphics.setDefaultFilter("nearest", "nearest")
+  love.graphics.setDefaultFilter('nearest', 'nearest')
+  load_font()
   load_initial_game_state()
   love.window.setMode(0, 0)
   update_scale()
