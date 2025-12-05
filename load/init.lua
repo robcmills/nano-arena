@@ -17,13 +17,10 @@ local function update_scale()
 end
 
 local function load_font()
-  -- g.font = love.graphics.newFont('assets/nes-smb-font.ttf')
-  -- g.font = love.graphics.newFont('assets/monogram/ttf/monogram.ttf', 16, 'mono')
   g.font = love.graphics.newImageFont(
-    'assets/font.png',
-    ' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+    'assets/monogram-font.png',
+    ' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!"#$%&\'()*+,-./:;<=>?[\\]^_{|}~`@'
   )
-  -- g.font = love.graphics.newFont(10, 'mono')
   g.font:setFilter('nearest', 'nearest')
   love.graphics.setFont(g.font)
 end
