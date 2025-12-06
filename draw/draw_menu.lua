@@ -2,20 +2,42 @@ local colors = require('colors')
 local g = require('g')
 local settings = require('settings')
 
-local function draw_menu()
+local menu_bar_items = {
+  {key="F",label="ILE",id="file"},
+  {key="E",label="DIT",id="edit"},
+  {key="G",label="RID",id="grid"},
+  {key="S",label="ETTINGS",id="settings"},
+  {key="H",label="ELP",id="help"}
+}
+
+local menu_items = {
+  file={
+    {key="N",label="EW",id="new"},
+    {key="O",label="PEN",id="open"},
+    {key="S",label="AVE",id="save"},
+  },
+  edit={
+    {key="U",label="NDO",id="undo"},
+    {key="R",label="EDO",id="redo"},
+    {key="C",label="OPY",id="copy"},
+    {key="P",label="ASTE",id="paste"},
+  },
+  grid={
+    {key="S",label="HOW",id="show_grid"},
+    {key="H",label="IDE",id="hide_grid"},
+    {key="C",label="OLOR",id="color"},
+    {key="Z",label="IZE",id="size"},
+  },
+  help={
+    {key="H",label="ELP",id="help"},
+  }
+}
+
+local function draw_menu_bar()
   local menu_bar_color = colors.dark_grey
   local menu_height = 9
   local menu_padding = 2
   local char_width = 4
-
-  -- menu items with their labels
-  local menu_items = {
-    {key = "F", label = "ILE", id = "file"},
-    {key = "E", label = "DIT", id = "edit"},
-    {key = "G", label = "RID", id = "grid"},
-    {key = "S", label = "ETTINGS", id = "settings"},
-    {key = "H", label = "ELP", id = "help"}
-  }
 
   -- menu bar
   love.graphics.setColor(menu_bar_color)
@@ -25,7 +47,7 @@ local function draw_menu()
   local x_offset = menu_padding
   local menu_positions = {}
 
-  for _, item in ipairs(menu_items) do
+  for _, item in ipairs(menu_bar_items) do
     local item_width = (#item.key + #item.label) * char_width
     menu_positions[item.id] = {x = x_offset, width = item_width}
     x_offset = x_offset + item_width + (2 * char_width) -- 2 spaces between items
@@ -47,7 +69,7 @@ local function draw_menu()
   local colored_text = {}
   x_offset = menu_padding
 
-  for i, item in ipairs(menu_items) do
+  for i, item in ipairs(menu_bar_items) do
     local is_open = (g.editor.opened_menu == item.id)
     local key_color = is_open and colors.white or h
     local text_color = is_open and colors.white or n
@@ -57,13 +79,22 @@ local function draw_menu()
     table.insert(colored_text, text_color)
     table.insert(colored_text, item.label)
 
-    if i < #menu_items then
+    if i < #menu_bar_items then
       table.insert(colored_text, n)
       table.insert(colored_text, "  ")
     end
   end
 
   love.graphics.print(colored_text, menu_padding, menu_padding)
+end
+
+local function draw_open_menu()
+  -- todo
+end
+
+local function draw_menu()
+  draw_menu_bar()
+  draw_open_menu()
 end
 
 return draw_menu

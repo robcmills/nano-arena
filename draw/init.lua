@@ -1,5 +1,4 @@
-local draw_grid = require('draw/draw_grid')
-local draw_menu = require('draw/draw_menu')
+local draw_editor = require('draw/draw_editor')
 local g = require('g')
 
 function love.draw()
@@ -9,8 +8,7 @@ function love.draw()
   -- disable blending to prevent overlap artifacts
   love.graphics.setBlendMode('replace')
   -- drawing code here
-  draw_grid()
-  draw_menu()
+  draw_editor()
   -- restore default blend mode and color
   love.graphics.setBlendMode('alpha')
   -- reset canvas
