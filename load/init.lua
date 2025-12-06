@@ -16,18 +16,24 @@ local function update_scale()
   g.offset_y = (window_height - settings.resolution * g.scale) / 2
 end
 
-local function load_font()
-  g.font = love.graphics.newImageFont(
+local function load_fonts()
+  g.fonts = {}
+  g.fonts.monogram = love.graphics.newImageFont(
     'assets/monogram-font.png',
     ' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!"#$%&\'()*+,-./:;<=>?[\\]^_{|}~`@'
   )
-  g.font:setFilter('nearest', 'nearest')
-  love.graphics.setFont(g.font)
+  g.fonts.monogram:setFilter('nearest', 'nearest')
+  g.fonts.p8 = love.graphics.newImageFont(
+    'assets/pico8-font.png',
+    ' ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,"\'?!@_*#$%()+-/:;<=>[\\]^{|}~'
+  )
+  g.fonts.p8:setFilter('nearest', 'nearest')
+  love.graphics.setFont(g.fonts.p8)
 end
 
 function love.load()
   love.graphics.setDefaultFilter('nearest', 'nearest')
-  load_font()
+  load_fonts()
   load_initial_game_state()
   love.window.setMode(0, 0)
   update_scale()

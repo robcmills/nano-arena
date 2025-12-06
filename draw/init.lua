@@ -29,7 +29,7 @@ end
 
 local function draw_menu()
   local menu_bar_color = colors.dark_grey
-  local menu_height = 12
+  local menu_height = 9
   local menu_padding = 2
   -- menu bar
   love.graphics.setColor(menu_bar_color)
@@ -37,7 +37,7 @@ local function draw_menu()
   -- menu text
   love.graphics.setBlendMode('alpha')
   love.graphics.setColor(1, 1, 1)  -- white
-  love.graphics.print('File  Edit  Grid  Settings  Help', menu_padding, 0)
+  love.graphics.print('FILE  EDIT  GRID  SETTINGS  HELP', menu_padding, menu_padding)
 end
 
 function love.draw()
