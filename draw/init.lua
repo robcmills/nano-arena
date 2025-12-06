@@ -1,53 +1,6 @@
-local colors = require('colors')
+local draw_grid = require('draw/draw_grid')
+local draw_menu = require('draw/draw_menu')
 local g = require('g')
-local get_screen_center = require('util/get_screen_center')
-local round = require('util/round')
-local settings = require('settings')
-
-local function draw_grid(x, y, tile_size, grid_size, grid_color)
-  -- default parameters
-  local center_x, center_y = get_screen_center()
-  tile_size = tile_size or settings.tile_size
-  grid_color = grid_color or settings.grid_color
-  grid_size = grid_size or settings.grid_size
-  x = x or center_x - tile_size * (round(grid_size / 2))
-  y = y or center_y - tile_size * (round(grid_size / 2))
-  love.graphics.setLineStyle('rough')  -- crisp pixel-perfect lines
-  love.graphics.setColor(grid_color)
-  -- vertical lines
-  for i = 0, grid_size do
-    local line_x = x + (i * tile_size) + 0.5
-    love.graphics.line(line_x, y, line_x, y + (grid_size * tile_size) + 1)
-  end
-  -- horizontal lines
-  for i = 0, grid_size do
-    local line_y = y + (i * tile_size) + 0.5
-    love.graphics.line(x, line_y, x + (grid_size * tile_size) + 1, line_y)
-  end
-  love.graphics.setColor(1, 1, 1)
-end
-
-local function draw_menu()
-  local menu_bar_color = colors.dark_grey
-  local menu_height = 9
-  local menu_padding = 2
-  -- menu bar
-  love.graphics.setColor(menu_bar_color)
-  love.graphics.rectangle('fill', 0, 0, settings.resolution, menu_height)
-  -- menu text
-  love.graphics.setBlendMode('alpha')
-  love.graphics.setColor(1, 1, 1)
-  local h = colors.p8.blue -- highlight color
-  local n = colors.white -- normal color
-  local colored_text = {
-    h,"F",n,"ILE  ",
-    h,"E",n,"DIT  ",
-    h,"G",n,"RID  ",
-    h,"S",n,"ETTINGS  ",
-    h,"H",n,"ELP"
-  }
-  love.graphics.print(colored_text, menu_padding, menu_padding)
-end
 
 function love.draw()
   -- draw game to canvas

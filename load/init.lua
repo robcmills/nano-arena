@@ -3,6 +3,13 @@ local settings = require('settings')
 
 local function load_initial_game_state()
   g.canvas = love.graphics.newCanvas(settings.resolution, settings.resolution)
+  g.editor = {
+    opened_menu = nil,
+  }
+  g.fonts = {}
+  g.offset_x = 0
+  g.offset_y = 0
+  g.scale = 1
 end
 
 local function update_scale()
@@ -32,9 +39,10 @@ local function load_fonts()
 end
 
 function love.load()
+  love.keyboard.setKeyRepeat(true)
   love.graphics.setDefaultFilter('nearest', 'nearest')
-  load_fonts()
   load_initial_game_state()
+  load_fonts()
   love.window.setMode(0, 0)
   update_scale()
 end
