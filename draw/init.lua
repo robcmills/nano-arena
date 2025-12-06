@@ -36,8 +36,17 @@ local function draw_menu()
   love.graphics.rectangle('fill', 0, 0, settings.resolution, menu_height)
   -- menu text
   love.graphics.setBlendMode('alpha')
-  love.graphics.setColor(1, 1, 1)  -- white
-  love.graphics.print('FILE  EDIT  GRID  SETTINGS  HELP', menu_padding, menu_padding)
+  love.graphics.setColor(1, 1, 1)
+  local h = colors.p8.blue -- highlight color
+  local n = colors.white -- normal color
+  local colored_text = {
+    h,"F",n,"ILE  ",
+    h,"E",n,"DIT  ",
+    h,"G",n,"RID  ",
+    h,"S",n,"ETTINGS  ",
+    h,"H",n,"ELP"
+  }
+  love.graphics.print(colored_text, menu_padding, menu_padding)
 end
 
 function love.draw()
