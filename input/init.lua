@@ -13,5 +13,7 @@ function love.keypressed(key)
     g.editor.opened_menu = 'help'
   elseif key == 'escape' then
     g.editor.opened_menu = nil
+  elseif key == 'q' then
+    love.event.quit()
   end
 end
