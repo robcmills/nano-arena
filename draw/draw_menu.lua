@@ -2,29 +2,6 @@ local colors = require('colors')
 local g = require('g')
 local settings = require('settings')
 
-local menu_items = {
-  file={
-    {key="N",label="EW",id="new"},
-    {key="O",label="PEN",id="open"},
-    {key="S",label="AVE",id="save"},
-  },
-  edit={
-    {key="U",label="NDO",id="undo"},
-    {key="R",label="EDO",id="redo"},
-    {key="C",label="OPY",id="copy"},
-    {key="P",label="ASTE",id="paste"},
-  },
-  grid={
-    {key="S",label="HOW",id="show_grid"},
-    {key="H",label="IDE",id="hide_grid"},
-    {key="C",label="OLOR",id="color"},
-    {key="Z",label="IZE",id="size"},
-  },
-  help={
-    {key="H",label="ELP",id="help"},
-  }
-}
-
 local function draw_menu_bar()
   -- menu bar
   love.graphics.setColor(g.editor.menu_bar_color)
@@ -45,6 +22,11 @@ end
 
 local function draw_open_menu()
   if g.editor.opened_menu == nil then return end
+
+  local menu = g.editor.menus[g.editor.opened_menu]
+  love.graphics.setColor(g.editor.menu_bar_color)
+  love.graphics.rectangle('fill', menu.x, menu.y, menu.width, menu.height)
+  love.graphics.setColor(1, 1, 1)
 end
 
 local function draw_menu()
