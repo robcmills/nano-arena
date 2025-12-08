@@ -17,6 +17,7 @@ end
 
 function love.load()
   love.keyboard.setKeyRepeat(true)
+  love.mouse.setVisible(false)
   love.graphics.setDefaultFilter('nearest', 'nearest')
   load_game()
   load_fonts()

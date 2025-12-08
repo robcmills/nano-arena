@@ -20,7 +20,9 @@ local function load_menu_bar()
   for _, key in ipairs(g.editor.menu_bar_order) do
     local item = g.editor.menu_bar_items[key]
     item.width = (#item.key + #item.label) * g.editor.char_width + g.editor.menu_padding * 2
+    item.height = g.editor.menu_bar_height
     item.x = x_offset
+    item.y = 0
     x_offset = x_offset + item.width - g.editor.menu_padding * 2 + (2 * g.editor.char_width) -- 2 spaces between items
   end
 

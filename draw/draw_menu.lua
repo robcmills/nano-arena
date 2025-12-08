@@ -7,11 +7,30 @@ local function draw_menu_bar()
   love.graphics.setColor(theme.menu_bar_background_color)
   love.graphics.rectangle('fill', 0, 0, settings.resolution, g.editor.menu_bar_height)
 
-  -- draw highlight rectangle if a menu is opened
+  -- menu highlight
+  local highlight_items = {}
   if g.editor.opened_menu then
-    local item = g.editor.menu_bar_items[g.editor.opened_menu]
-    love.graphics.setColor(theme.menu_bar_highlight_background_color)
-    love.graphics.rectangle('fill', item.x, 0, item.width, g.editor.menu_bar_height)
+    table.insert(highlight_items, g.editor.menu_bar_items[g.editor.opened_menu])
+  end
+  -- mouse hover
+  for _, key in ipairs(g.editor.menu_bar_order) do
+    local item = g.editor.menu_bar_items[key]
+    if item.is_hovered then
+      table.insert(highlight_items, item)
+      break
+    end
+  end
+  if #highlight_items > 0 then
+    for _, item in ipairs(highlight_items) do
+      love.graphics.setColor(theme.menu_bar_highlight_background_color)
+      love.graphics.rectangle(
+        'fill',
+        item.x,
+        item.y,
+        item.width,
+        item.height
+      )
+    end
   end
 
   -- menu text
