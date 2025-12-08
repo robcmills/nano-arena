@@ -51,13 +51,14 @@ local function draw_open_menu()
   love.graphics.rectangle('fill', menu.x, menu.y, menu.width, menu.height)
   love.graphics.setColor(1, 1, 1)
 
-  -- if g.editor.selected_menu_item then
-  --   local item = menu.items[g.editor.selected_menu_item]
-  -- end
-
   -- draw menu items
   for i, item_id in ipairs(menu.items_order) do
     local item = menu.items[item_id]
+    if item.is_hovered then
+      love.graphics.setColor(theme.menu_bar_highlight_background_color)
+      love.graphics.rectangle('fill', item.x, item.y, item.width, item.height)
+      love.graphics.setColor(1, 1, 1)
+    end
     local x = menu.x + g.editor.menu_padding
     local y = menu.y + g.editor.menu_padding + (i-1) * g.editor.menu_bar_height
     love.graphics.print(item.colored_text, x, y)

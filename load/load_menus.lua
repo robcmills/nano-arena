@@ -63,6 +63,14 @@ local function load_menus()
     local menu_bar_item = g.editor.menu_bar_items[id]
     menu.x = menu_bar_item.x
     menu.y = g.editor.menu_bar_height
+
+    for index, item_id in pairs(menu.items_order) do
+      local item = menu.items[item_id]
+      item.x = menu.x
+      item.y = menu.y + (index - 1) * g.editor.menu_bar_height
+      item.width = menu.width
+      item.height = g.editor.menu_bar_height
+    end
   end
 end
 

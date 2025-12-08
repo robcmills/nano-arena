@@ -25,4 +25,13 @@ function love.mousemoved(screen_x, screen_y)
     local item = g.editor.menu_bar_items[key]
     item.is_hovered = y < g.editor.menu_bar_height and x >= item.x and x < item.x + item.width
   end
+
+  -- menu hover
+  if g.editor.opened_menu then
+    local menu = g.editor.menus[g.editor.opened_menu]
+    for _, item_id in ipairs(menu.items_order) do
+      local item = menu.items[item_id]
+      item.is_hovered = x >= item.x and x < item.x + item.width and y >= item.y and y < item.y + item.height
+    end
+  end
 end
