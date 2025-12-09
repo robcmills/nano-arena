@@ -1,4 +1,3 @@
-local colors = require('colors')
 local g = require('g')
 local theme = require('theme')
 

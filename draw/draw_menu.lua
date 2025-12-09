@@ -1,11 +1,11 @@
 local g = require('g')
-local settings = require('settings')
 local theme = require('theme')
 
 local function draw_menu_bar()
   -- menu bar
+  local window_width = love.graphics.getDimensions()
   love.graphics.setColor(theme.menu_bar_background_color)
-  love.graphics.rectangle('fill', 0, 0, settings.resolution, g.editor.menu_bar_height)
+  love.graphics.rectangle('fill', 0, 0, window_width / g.scale_x, g.editor.menu_bar_height)
 
   -- menu highlight
   local highlight_items = {}

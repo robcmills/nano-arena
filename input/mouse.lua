@@ -1,8 +1,8 @@
 local g = require('g')
 
 function love.mousemoved(screen_x, screen_y)
-  local x = (screen_x - g.offset_x) / g.scale
-  local y = (screen_y - g.offset_y) / g.scale
+  local x = screen_x / g.scale_x
+  local y = screen_y / g.scale_y
 
   -- menu bar hover
   for _, key in ipairs(g.editor.menu_bar_order) do
