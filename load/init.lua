@@ -1,6 +1,6 @@
 local g = require('g')
 local load_canvas = require('load/load_canvas')
-local load_editor = require('load/load_editor')
+-- local load_editor = require('load/load_editor')
 local load_fonts = require('load/load_fonts')
 local load_game = require('load/load_game')
 
@@ -18,7 +18,7 @@ function love.load()
   load_canvas()
   load_game()
   load_fonts()
-  load_editor()
+  -- load_editor()
   love.window.setMode(0, 0)
   update_scale()
 end

@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="16" height="16" tilewidth="16" tileheight="16" infinite="0" backgroundcolor="#262626" nextlayerid="6" nextobjectid="8">
  <editorsettings>
-  <export target="arena-map-1..lua" format="lua"/>
+  <export target="arena-map-1.lua" format="lua"/>
  </editorsettings>
- <tileset firstgid="1" source="arena-tileset.tsx"/>
- <tileset firstgid="257" source="gray-rocks.tsx"/>
+ <tileset firstgid="1" name="arena-tileset" tilewidth="16" tileheight="16" tilecount="256" columns="16">
+  <image source="arena-spritesheet.png" trans="ff00ff" width="256" height="256"/>
+  <tile id="17">
+   <objectgroup draworder="index" id="2">
+    <object id="3" x="0" y="0" width="16" height="16"/>
+   </objectgroup>
+  </tile>
+ </tileset>
+ <tileset firstgid="257" name="gray-rocks" tilewidth="16" tileheight="16" tilecount="12960" columns="15">
+  <image source="../assets/pixeloverload-grey-rocks.png" trans="ff00ff" width="240" height="384"/>
+ </tileset>
  <layer id="1" name="Tile Layer 1" width="16" height="16">
   <data encoding="csv">
 385,385,386,1610613122,1610613137,1610613152,1610613167,1610613122,1610613137,1610613152,1610613167,1610613167,1610613167,385,385,386,
@@ -46,9 +55,9 @@
 </data>
  </layer>
  <objectgroup id="5" name="collision">
-  <object id="4" x="0" y="0" width="64" height="192"/>
-  <object id="5" x="0" y="192" width="192" height="64"/>
-  <object id="6" x="192" y="64" width="64" height="192"/>
-  <object id="7" x="64" y="0" width="192" height="64"/>
+  <object id="4" x="0" y="0" width="64" height="192" visible="0"/>
+  <object id="5" x="0" y="192" width="192" height="64" visible="0"/>
+  <object id="6" x="192" y="64" width="64" height="192" visible="0"/>
+  <object id="7" x="64" y="0" width="192" height="64" visible="0"/>
  </objectgroup>
 </map>

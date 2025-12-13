@@ -9,15 +9,103 @@ return {
   height = 16,
   tilewidth = 16,
   tileheight = 16,
-  nextlayerid = 2,
-  nextobjectid = 1,
+  nextlayerid = 6,
+  nextobjectid = 8,
   backgroundcolor = { 38, 38, 38 },
   properties = {},
   tilesets = {
     {
       name = "arena-tileset",
       firstgid = 1,
-      filename = "arena-tileset.tsx"
+      class = "",
+      tilewidth = 16,
+      tileheight = 16,
+      spacing = 0,
+      margin = 0,
+      columns = 16,
+      image = "arena-spritesheet.png",
+      imagewidth = 256,
+      imageheight = 256,
+      transparentcolor = "#ff00ff",
+      objectalignment = "unspecified",
+      tilerendersize = "tile",
+      fillmode = "stretch",
+      tileoffset = {
+        x = 0,
+        y = 0
+      },
+      grid = {
+        orientation = "orthogonal",
+        width = 16,
+        height = 16
+      },
+      properties = {},
+      wangsets = {},
+      tilecount = 256,
+      tiles = {
+        {
+          id = 17,
+          objectGroup = {
+            type = "objectgroup",
+            draworder = "index",
+            id = 2,
+            name = "",
+            class = "",
+            visible = true,
+            opacity = 1,
+            offsetx = 0,
+            offsety = 0,
+            parallaxx = 1,
+            parallaxy = 1,
+            properties = {},
+            objects = {
+              {
+                id = 3,
+                name = "",
+                type = "",
+                shape = "rectangle",
+                x = 0,
+                y = 0,
+                width = 16,
+                height = 16,
+                rotation = 0,
+                visible = true,
+                properties = {}
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      name = "gray-rocks",
+      firstgid = 257,
+      class = "",
+      tilewidth = 16,
+      tileheight = 16,
+      spacing = 0,
+      margin = 0,
+      columns = 15,
+      image = "../assets/pixeloverload-grey-rocks.png",
+      imagewidth = 240,
+      imageheight = 384,
+      transparentcolor = "#ff00ff",
+      objectalignment = "unspecified",
+      tilerendersize = "tile",
+      fillmode = "stretch",
+      tileoffset = {
+        x = 0,
+        y = 0
+      },
+      grid = {
+        orientation = "orthogonal",
+        width = 16,
+        height = 16
+      },
+      properties = {},
+      wangsets = {},
+      tilecount = 12960,
+      tiles = {}
     }
   },
   layers = {
@@ -39,22 +127,126 @@ return {
       properties = {},
       encoding = "lua",
       data = {
+        385, 385, 386, 1610613122, 1610613137, 1610613152, 1610613167, 1610613122, 1610613137, 1610613152, 1610613167, 1610613167, 1610613167, 385, 385, 386,
+        400, 400, 401, 1610613121, 1610613136, 1610613151, 1610613166, 1610613121, 1610613136, 1610613151, 1610613166, 1610613166, 1610613166, 400, 385, 386,
+        415, 415, 416, 354, 1073742276, 1073742277, 1073742278, 1073742279, 1073742280, 1073742281, 1073742282, 1073742283, 1073742284, 415, 385, 386,
+        430, 430, 431, 1073742200, 1073742261, 1073742262, 1073742263, 1073742264, 1073742265, 1073742266, 1073742267, 1073742268, 353, 430, 400, 401,
+        400, 401, 402, 403, 9, 9, 9, 9, 9, 9, 9, 9, 410, 411, 415, 416,
+        415, 416, 417, 418, 9, 9, 9, 9, 9, 9, 9, 9, 425, 426, 430, 431,
+        430, 431, 432, 433, 9, 9, 9, 9, 9, 9, 9, 9, 398, 399, 400, 401,
+        400, 401, 402, 403, 9, 9, 9, 9, 9, 9, 9, 9, 413, 414, 415, 416,
+        385, 386, 417, 418, 9, 9, 9, 9, 9, 9, 9, 9, 428, 429, 430, 431,
+        400, 401, 432, 433, 9, 9, 9, 9, 9, 9, 9, 9, 398, 399, 400, 401,
+        415, 416, 405, 406, 9, 9, 9, 9, 9, 9, 9, 9, 413, 414, 415, 416,
+        430, 431, 420, 421, 9, 9, 9, 9, 9, 9, 9, 9, 428, 429, 430, 431,
+        385, 385, 386, 361, 315, 316, 347, 348, 349, 350, 351, 352, 353, 385, 385, 386,
+        400, 400, 2147484077, 329, 330, 331, 362, 363, 364, 365, 366, 367, 368, 400, 400, 401,
+        415, 415, 416, 344, 345, 346, 377, 378, 379, 380, 381, 382, 383, 415, 415, 416,
+        430, 430, 431, 2684354994, 2684354979, 2684354964, 2684354949, 2684354934, 2684354994, 2684354979, 2684354964, 2684354949, 2684354934, 430, 430, 431
+      }
+    },
+    {
+      type = "tilelayer",
+      x = 0,
+      y = 0,
+      width = 16,
+      height = 16,
+      id = 4,
+      name = "Tile Layer 2",
+      class = "",
+      visible = true,
+      opacity = 1,
+      offsetx = 0,
+      offsety = 0,
+      parallaxx = 1,
+      parallaxy = 1,
+      properties = {},
+      encoding = "lua",
+      data = {
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 1073742342, 1073742343, 1073742344, 1073742381, 1073742382, 1073742383, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 1073742327, 1073742328, 1073742329, 1073742366, 1073742367, 1073742368, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 1073742312, 1073742313, 1073742314, 1073742351, 1073742352, 1073742353, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 2684355081, 2684355066, 2684355051, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 2684355082, 2684355067, 2684355052, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 2684355083, 2684355068, 2684355053, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 2684355084, 2684355069, 2684355054, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 2684355085, 2684355070, 2684355055, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 2684355086, 2684355071, 2684355056, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 0, 0, 0,
-        0, 0, 0, 6, 2, 2, 2, 2, 2, 2, 2, 2, 6, 0, 0, 0,
-        0, 0, 0, 6, 2, 2, 2, 2, 2, 2, 2, 2, 6, 0, 0, 0,
-        0, 0, 0, 6, 2, 2, 2, 2, 2, 2, 2, 2, 6, 0, 0, 0,
-        0, 0, 0, 6, 2, 2, 2, 2, 2, 2, 2, 2, 6, 0, 0, 0,
-        0, 0, 0, 6, 2, 2, 2, 2, 2, 2, 2, 2, 6, 0, 0, 0,
-        0, 0, 0, 6, 2, 2, 2, 2, 2, 2, 2, 2, 6, 0, 0, 0,
-        0, 0, 0, 6, 2, 2, 2, 2, 2, 2, 2, 2, 6, 0, 0, 0,
-        0, 0, 0, 6, 2, 2, 2, 2, 2, 2, 2, 2, 6, 0, 0, 0,
-        0, 0, 0, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+      }
+    },
+    {
+      type = "objectgroup",
+      draworder = "topdown",
+      id = 5,
+      name = "collision",
+      class = "",
+      visible = true,
+      opacity = 1,
+      offsetx = 0,
+      offsety = 0,
+      parallaxx = 1,
+      parallaxy = 1,
+      properties = {},
+      objects = {
+        {
+          id = 4,
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 0,
+          y = 0,
+          width = 64,
+          height = 192,
+          rotation = 0,
+          visible = false,
+          properties = {}
+        },
+        {
+          id = 5,
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 0,
+          y = 192,
+          width = 192,
+          height = 64,
+          rotation = 0,
+          visible = false,
+          properties = {}
+        },
+        {
+          id = 6,
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 192,
+          y = 64,
+          width = 64,
+          height = 192,
+          rotation = 0,
+          visible = false,
+          properties = {}
+        },
+        {
+          id = 7,
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 64,
+          y = 0,
+          width = 192,
+          height = 64,
+          rotation = 0,
+          visible = false,
+          properties = {}
+        }
       }
     }
   }
