@@ -4,7 +4,7 @@
   <export target="arena-map-2.lua" format="lua"/>
  </editorsettings>
  <properties>
-  <property name="map_center" type="object" value="0"/>
+  <property name="map_center" type="object" value="2"/>
  </properties>
  <tileset firstgid="1" name="arena-tileset" tilewidth="16" tileheight="16" tilecount="256" columns="16">
   <image source="arena-spritesheet.png" trans="ff00ff" width="256" height="256"/>

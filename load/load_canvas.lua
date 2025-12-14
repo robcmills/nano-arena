@@ -3,7 +3,6 @@ local settings = require('settings')
 
 local function load_canvas()
   local window_width, window_height = love.graphics.getDimensions()
-  print('window', window_width, window_height)
   local canvas_width, canvas_height
 
   if window_width < window_height then
@@ -13,7 +12,6 @@ local function load_canvas()
     canvas_height = settings.resolution
     canvas_width = settings.resolution * (window_width / window_height)
   end
-  print('canvas', canvas_width, canvas_height)
 
   g.canvas = love.graphics.newCanvas(canvas_width, canvas_height)
 end

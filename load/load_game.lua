@@ -1,8 +1,7 @@
-local g = require('g')
-local sti = require('sti')
+local load_map = require('load/load_map')
 
 local function load_game()
-  g.map = sti('tiled/arena-map-2.lua')
+  load_map('tiled/arena-map-2.lua')
 end
 
 return load_game

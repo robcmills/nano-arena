@@ -1,7 +1,5 @@
-local g = require('g')
+local update_map = require('update/update_map')
 
 function love.update(dt)
-  if g.map ~= nil then
-    g.map:update(dt)
-  end
+  update_map(dt)
 end

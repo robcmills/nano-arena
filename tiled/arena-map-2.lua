@@ -13,7 +13,7 @@ return {
   nextobjectid = 3,
   backgroundcolor = { 128, 128, 128 },
   properties = {
-    ["map_center"] = { id = 0 }
+    ["map_center"] = { id = 2 }
   },
   tilesets = {
     {
