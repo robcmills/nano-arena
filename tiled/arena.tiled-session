@@ -8,12 +8,18 @@
     ],
     "fileStates": {
         "arena-map-1.tmx": {
-            "scale": 2.3681,
-            "selectedLayer": 1,
+            "scale": 6.8643,
+            "selectedLayer": 2,
             "viewCenter": {
-                "x": 128.37295722309022,
-                "y": 137.24082597863264
+                "x": 85.36922920035546,
+                "y": 78.52220911090717
             }
+        },
+        "arena-map-1.tmx#arena-tileset": {
+            "scaleInDock": 1
+        },
+        "arena-map-1.tmx#gray-rocks": {
+            "scaleInDock": 1
         },
         "arena-map-2.tmx": {
             "scale": 3.3992187499999997,
@@ -35,6 +41,7 @@
     "openFiles": [
     ],
     "project": "arena.tiled-project",
+    "property.type": "object",
     "recentFiles": [
     ],
     "tileset.lastUsedFormat": "tsx",

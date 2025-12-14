@@ -1,5 +1,6 @@
 -- local draw_editor = require('draw/draw_editor')
 local g = require('g')
+local draw_canvas = require('draw/draw_canvas')
 local draw_map = require('draw/draw_map')
 
 function love.draw()
@@ -11,5 +12,5 @@ function love.draw()
   love.graphics.setBlendMode('alpha')
   love.graphics.setCanvas()
   love.graphics.clear(0, 0, 0)
-  love.graphics.draw(g.canvas, 0, 0, 0, g.scale_x, g.scale_y)
+  draw_canvas()
 end
