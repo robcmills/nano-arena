@@ -3,6 +3,7 @@ local round = require('util/round')
 local settings = require('settings')
 
 local function draw_grid(x, y, tile_size, grid_size, grid_color)
+  love.graphics.setBlendMode('replace')
   -- default parameters
   local center_x, center_y = get_screen_center()
   tile_size = tile_size or settings.tile_size

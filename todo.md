@@ -1,3 +1,3 @@
 # Todo
 
-- refactor to full screen?
+- [x] refactor to full screen
