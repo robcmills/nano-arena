@@ -1,11 +1,17 @@
 local g = require('g')
-local settings = require('settings')
 
 local function load_player()
   g.player = {}
-  g.player.sprite = love.graphics.newImage("assets/player.png")
-  g.player.x = settings.resolution / 2
-  g.player.y = settings.resolution / 2
+  g.player.sprite_sheet = love.graphics.newImage("assets/player.png")
+  local sheet_width = g.player.sprite_sheet:getWidth()
+  local sheet_height = g.player.sprite_sheet:getHeight()
+  local sprite_size = 16
+  g.player.sprites = {}
+  g.player.sprites.down = love.graphics.newQuad(sprite_size, sprite_size, sprite_size, sprite_size, sheet_width, sheet_height)
+  g.player.sprites.right = love.graphics.newQuad(0, sprite_size, sprite_size, sprite_size, sheet_width, sheet_height)
+  g.player.sprites.up = love.graphics.newQuad(0, 0, sprite_size, sprite_size, sheet_width, sheet_height)
+  g.player.tile_x = 3
+  g.player.tile_y = 3
 end
 
 return load_player
