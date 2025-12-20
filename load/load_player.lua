@@ -11,8 +11,11 @@ local function load_player()
   g.player.sprites.down = love.graphics.newQuad(sprite_size, sprite_size, sprite_size, sprite_size, sheet_width, sheet_height)
   g.player.sprites.right = love.graphics.newQuad(0, sprite_size, sprite_size, sprite_size, sheet_width, sheet_height)
   g.player.sprites.up = love.graphics.newQuad(0, 0, sprite_size, sprite_size, sheet_width, sheet_height)
-  g.player.map_x = 48
-  g.player.map_y = 48
+  g.player.map_pixel_x = 16
+  g.player.map_pixel_y = 16
+  g.player.tile_x = 1
+  g.player.tile_y = 1
+  g.player.last_move_time = nil
 end
 
 return load_player
