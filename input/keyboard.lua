@@ -1,4 +1,5 @@
 local g = require('g')
+local take_screenshot = require('util/save_screenshot')
 
 function love.keypressed(key)
   if g.editor ~= nil then
@@ -16,6 +17,8 @@ function love.keypressed(key)
   end
   if key == 'q' then
     love.event.quit()
+  elseif key == 'n' then
+    take_screenshot()
   end
 end
 
