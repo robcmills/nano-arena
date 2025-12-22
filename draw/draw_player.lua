@@ -1,10 +1,9 @@
 local g = require('g')
 local get_screen_center = require('util/get_screen_center')
-local settings = require('settings')
 
 local function draw_player()
   local x, y = get_screen_center()
-  local offset = settings.tile_size / 2
+  local offset = g.player.sprite_size / 2
 
   local quad = g.player.sprites.right
   if g.player.dir == 'up' then
