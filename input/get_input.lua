@@ -2,7 +2,7 @@ local g = require('g')
 
 local function get_input()
   if g.is_test then
-    -- return get_test_input()
+    -- return get_test_input() -- todo
   else
     return {
       down = love.keyboard.isDown('down'),

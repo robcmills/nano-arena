@@ -1,7 +1,17 @@
+---@class Settings
+---@field grid_color [number, number, number] Grid color
+---@field grid_size number Grid size in pixels
+---@field player_move_speed number Player movement speed in pixels per second
+---@field player_sprite_size number Player sprite size in pixels
+---@field resolution number Canvas resolution in pixels
+---@field tile_size number Tile size in pixels
+
+---@type Settings
 local settings = {
-  grid_color = {0.25, 0.25, 0.25},
-  grid_size = 8,
-  player_move_speed = 100,  -- pixels per second
+  grid_color = {0.25, 0.25, 0.25}, -- todo: move to editor
+  grid_size = 8, -- todo: move to editor
+  player_move_speed = 100,
+  player_sprite_size = 32,
   resolution = 256,
   tile_size = 16,
 }

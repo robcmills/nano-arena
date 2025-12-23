@@ -1,5 +1,4 @@
 local g = require('g')
-local keys = require('util/keys')
 local theme = require('theme')
 
 local function load_menus()
