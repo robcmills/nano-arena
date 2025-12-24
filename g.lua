@@ -57,7 +57,7 @@ local g = {
   map = nil,
   now = 0,
   player = nil,
-  state = 'game',
+  state = 'editor',
 }
 
 return g

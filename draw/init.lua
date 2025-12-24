@@ -2,17 +2,16 @@ local g = require('g')
 local draw_canvas = require('draw/draw_canvas')
 local draw_debug = require('draw/draw_debug')
 local draw_editor = require('draw/draw_editor')
--- local draw_player = require('draw/draw_player')
--- local draw_map = require('draw/draw_map')
--- local draw_screen_center = require('draw/draw_screen_center')
+local draw_game = require('draw/draw_game')
 
 function love.draw()
   love.graphics.setCanvas(g.canvas)
   love.graphics.clear()
-  draw_editor()
-  -- draw_map()
-  -- draw_player()
-  -- draw_screen_center()
+  if g.state == 'game' then
+    draw_game()
+  elseif g.state == 'editor' then
+    draw_editor()
+  end
   draw_debug()
   love.graphics.setBlendMode('alpha')
   love.graphics.setCanvas()

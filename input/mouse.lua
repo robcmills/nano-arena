@@ -2,6 +2,8 @@ local editor = require('editor')
 local g = require('g')
 
 function love.mousemoved(screen_x, screen_y)
+  if g.state ~= 'editor' then return end
+
   local x = screen_x / g.canvas_scale
   local y = screen_y / g.canvas_scale
 
@@ -25,6 +27,8 @@ function love.mousemoved(screen_x, screen_y)
 end
 
 function love.mousepressed(x, y, button)
+  if g.state ~= 'editor' then return end
+
   if button == 1 then
     -- menu bar
     for _, key in ipairs(editor.menu_bar_order) do
