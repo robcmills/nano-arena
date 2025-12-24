@@ -1,8 +1,8 @@
-local g = require('g')
+local editor = require('editor')
 local theme = require('theme')
 
 local function load_menus()
-  g.editor.menus = {
+  editor.menus = {
     file = {
       items = {
         new = { key = "N", post_label = "EW" },
@@ -37,7 +37,7 @@ local function load_menus()
     }
   }
 
-  for id, menu in pairs(g.editor.menus) do
+  for id, menu in pairs(editor.menus) do
     local longest_label = 0
     for _, item in pairs(menu.items) do
       local label = (item.pre_label or "") .. item.key .. (item.post_label or "")
@@ -57,18 +57,18 @@ local function load_menus()
       end
       item.colored_text = colored_text
     end
-    menu.width = longest_label * g.editor.char_width + g.editor.menu_padding * 2
-    menu.height = g.editor.menu_bar_height * #menu.items_order
-    local menu_bar_item = g.editor.menu_bar_items[id]
+    menu.width = longest_label * editor.char_width + editor.menu_padding * 2
+    menu.height = editor.menu_bar_height * #menu.items_order
+    local menu_bar_item = editor.menu_bar_items[id]
     menu.x = menu_bar_item.x
-    menu.y = g.editor.menu_bar_height
+    menu.y = editor.menu_bar_height
 
     for index, item_id in pairs(menu.items_order) do
       local item = menu.items[item_id]
       item.x = menu.x
-      item.y = menu.y + (index - 1) * g.editor.menu_bar_height
+      item.y = menu.y + (index - 1) * editor.menu_bar_height
       item.width = menu.width
-      item.height = g.editor.menu_bar_height
+      item.height = editor.menu_bar_height
     end
   end
 end

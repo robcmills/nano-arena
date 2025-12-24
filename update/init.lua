@@ -4,9 +4,11 @@ local update_map = require('update/update_map')
 local update_player = require('update/update_player')
 
 function love.update(dt)
-  g.frame = g.frame + 1
-  g.now = g.now + dt
-  update_map(dt)
-  local input = get_input()
-  update_player(g.player, input)
+  if g.state == 'game' then
+    g.frame = g.frame + 1
+    g.now = g.now + dt
+    update_map(dt)
+    local input = get_input()
+    update_player(g.player, input)
+  end
 end

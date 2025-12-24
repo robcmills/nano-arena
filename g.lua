@@ -8,6 +8,7 @@
 ---@field map MapState | nil Map game state
 ---@field now number Current time in seconds
 ---@field player PlayerState | nil Player game state
+---@field state 'game' | 'editor' Game state
 
 ---@class PlayerState
 ---@field dir string Current movement direction: 'up', 'down', 'left', 'right'
@@ -36,46 +37,6 @@
 ---@field map table? Loaded map data table
 ---@field sti table? STI map instance
 
----@class EditorState
----@field char_width number Character width in pixels
----@field cursor_quad love.Quad Quad for cursor sprite
----@field menu_bar_colored_text (string|number)[]? Colored text array for menu bar
----@field menu_bar_height number? Height of menu bar in pixels
----@field menu_bar_items table<string, MenuBarItem>? Menu bar items by key
----@field menu_bar_order string[]? Ordered list of menu bar item keys
----@field menu_padding number? Padding for menu items in pixels
----@field menus table<string, Menu>? Menus by key
----@field opened_menu string? Currently opened menu key, nil if none
----@field spritesheet love.Image Editor spritesheet image
-
----@class MenuBarItem
----@field height number? Item height in pixels
----@field is_hovered boolean? Whether item is hovered
----@field key string Keyboard shortcut key
----@field label string Display label
----@field width number? Item width in pixels
----@field x number? X position in pixels
----@field y number? Y position in pixels
-
----@class Menu
----@field height number? Menu height in pixels
----@field items table<string, MenuItem> Menu items by key
----@field items_order string[] Ordered list of menu item keys
----@field width number? Menu width in pixels
----@field x number? X position in pixels
----@field y number? Y position in pixels
-
----@class MenuItem
----@field colored_text (string|number)[]? Colored text array for menu item
----@field height number? Item height in pixels
----@field is_hovered boolean? Whether item is hovered
----@field key string Keyboard shortcut key
----@field post_label string? Optional label text after key
----@field pre_label string? Optional label text before key
----@field width number? Item width in pixels
----@field x number? X position in pixels
----@field y number? Y position in pixels
-
 ---@class FontsState
 ---@field monogram FontInfo Monogram font information
 ---@field p8 FontInfo Pico-8 font information
@@ -89,12 +50,13 @@
 local g = {
   canvas = nil,
   canvas_scale = 1,
-  editor = nil,
   fonts = nil,
   frame = 0,
   is_test = false,
   map = nil,
   now = 0,
   player = nil,
+  state = 'game',
 }
+
 return g

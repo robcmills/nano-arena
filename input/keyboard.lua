@@ -1,18 +1,18 @@
-local g = require('g')
+local editor = require('editor')
 local take_screenshot = require('util/save_screenshot')
 
 function love.keypressed(key)
-  if g.editor ~= nil then
+  if editor ~= nil then
     if key == 'f' then
-      g.editor.opened_menu = 'file'
+      editor.opened_menu = 'file'
     elseif key == 'e' then
-      g.editor.opened_menu = 'edit'
+      editor.opened_menu = 'edit'
     elseif key == 'g' then
-      g.editor.opened_menu = 'grid'
+      editor.opened_menu = 'grid'
     elseif key == 'h' then
-      g.editor.opened_menu = 'help'
+      editor.opened_menu = 'help'
     elseif key == 'escape' then
-      g.editor.opened_menu = nil
+      editor.opened_menu = nil
     end
   end
   if key == 'q' then
