@@ -1,6 +1,7 @@
 ---@class GameState
 ---@field canvas love.Canvas | nil Canvas for rendering
 ---@field canvas_scale number Scale factor for canvas rendering
+---@field debug string? Renders at top left of screen if not nil.
 ---@field editor EditorState | nil Editor game state
 ---@field fonts FontsState | nil Fonts state
 ---@field frame number Frame counter
