@@ -3,20 +3,16 @@ local settings = require('settings')
 
 local function load_canvas()
   local window_width, window_height = love.graphics.getDimensions()
-  local canvas_width, canvas_height
 
-  if window_width < window_height then
-    canvas_width = settings.resolution
-    canvas_height = settings.resolution * (window_height / window_width)
-  else
-    canvas_height = settings.resolution
-    canvas_width = settings.resolution * (window_width / window_height)
-  end
+  -- Find the largest integer scale that fits (floats will distort pixel art)
+  g.canvas_scale = math.floor(math.min(
+    window_width / settings.resolution,
+    window_height / settings.resolution
+  ))
 
-  -- Calculate scale to fit canvas in window
-  local scale_x = window_width / canvas_width
-  local scale_y = window_height / canvas_height
-  g.canvas_scale = math.min(scale_x, scale_y)  -- Use min to ensure it fits
+  -- Size canvas to exactly fill window at integer scale
+  local canvas_width = math.ceil(window_width / g.canvas_scale)
+  local canvas_height = math.ceil(window_height / g.canvas_scale)
 
   g.canvas = love.graphics.newCanvas(canvas_width, canvas_height)
 end
