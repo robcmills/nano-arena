@@ -11,6 +11,7 @@ local colors = {
     lavender = {131/255, 118/255, 156/255},
   },
   red = {1, 0, 0},
+  very_dark_grey = {0.1, 0.1, 0.1},
   white = {1, 1, 1},
 }
 

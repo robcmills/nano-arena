@@ -2,6 +2,7 @@ local editor = require('editor')
 local g = require('g')
 
 local function draw_cursor()
+  love.mouse.setVisible(false)
   local mouse_x, mouse_y = love.mouse.getPosition()
   -- Transform window to canvas coords
   local canvas_x = mouse_x / g.canvas_scale

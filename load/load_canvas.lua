@@ -13,6 +13,8 @@ local function load_canvas()
   -- Size canvas to exactly fill window at integer scale
   local canvas_width = math.ceil(window_width / g.canvas_scale)
   local canvas_height = math.ceil(window_height / g.canvas_scale)
+  g.canvas_height = canvas_height
+  g.canvas_width = canvas_width
 
   g.canvas = love.graphics.newCanvas(canvas_width, canvas_height)
 end

@@ -1,6 +1,7 @@
 local colors = require('colors')
 
 local theme = {
+  editor_background_color = colors.very_dark_grey,
   menu_background_color = colors.dark_grey,
   menu_bar_background_color = colors.dark_grey,
   menu_bar_highlight_background_color = colors.blue,
