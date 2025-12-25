@@ -1,7 +1,7 @@
 local g = require('g')
 local draw_canvas = require('draw/draw_canvas')
 local draw_debug = require('draw/draw_debug')
-local draw_editor = require('draw/draw_editor')
+local draw_editor = require('editor/draw_editor')
 local draw_game = require('draw/draw_game')
 
 function love.draw()
