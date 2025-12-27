@@ -28,6 +28,9 @@
                 "x": 127.97058147552289,
                 "y": 127.97058147552289
             }
+        },
+        "arena-map-2.tmx#arena-tileset": {
+            "scaleInEditor": 1
         }
     },
     "last.exportedFilePath": "/Users/robcmills/src/nano-arena/tiled",
@@ -41,7 +44,7 @@
     "openFiles": [
     ],
     "project": "arena.tiled-project",
-    "property.type": "object",
+    "property.type": "bool",
     "recentFiles": [
     ],
     "tileset.lastUsedFormat": "tsx",

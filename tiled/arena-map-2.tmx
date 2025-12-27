@@ -13,6 +13,31 @@
     <object id="3" x="0" y="0" width="16" height="16"/>
    </objectgroup>
   </tile>
+  <tile id="48">
+   <properties>
+    <property name="is_solid" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="49">
+   <properties>
+    <property name="is_solid" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="64">
+   <properties>
+    <property name="is_solid" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="65">
+   <properties>
+    <property name="is_solid" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="130">
+   <properties>
+    <property name="is_solid" type="bool" value="true"/>
+   </properties>
+  </tile>
  </tileset>
  <layer id="4" name="background" width="10" height="10">
   <data encoding="csv">
@@ -73,13 +98,13 @@
  <layer id="6" name="walls" width="10" height="10">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,
-0,49,0,0,0,0,0,65,0,0,
-0,0,41,0,0,0,41,0,0,0,
-0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,41,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,
-0,0,41,0,0,0,41,0,0,0,
-0,65,0,0,0,0,0,49,0,0,
+0,49,40,42,42,42,40,50,0,0,
+0,40,41,42,42,42,41,40,0,0,
+0,42,42,42,40,42,42,42,0,0,
+0,42,42,40,41,40,42,42,0,0,
+0,42,42,42,40,42,42,42,0,0,
+0,40,41,42,42,42,41,40,0,0,
+0,50,40,42,42,42,40,49,0,0,
 0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0
 </data>
