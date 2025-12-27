@@ -33,10 +33,10 @@ local function load_player()
   g.player.sprites.up = love.graphics.newQuad(0, ss, ss, ss, sheet_width, sheet_height)
 
   -- Player starting position
-  g.player.map_pixel_x = 16
-  g.player.map_pixel_y = 16
-  g.player.tile_x = 1
-  g.player.tile_y = 1
+  g.player.map_pixel_x = 64
+  g.player.map_pixel_y = 64
+  g.player.tile_x = 4
+  g.player.tile_y = 4
 end
 
 return load_player

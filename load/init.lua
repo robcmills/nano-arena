@@ -5,6 +5,7 @@ local load_fonts = require('load/load_fonts')
 local load_game = require('load/load_game')
 
 function love.load()
+  love.filesystem.setIdentity("nano-arena")
   love.window.setMode(0, 0, { fullscreen = true })
   love.keyboard.setKeyRepeat(true)
   love.mouse.setVisible(false)

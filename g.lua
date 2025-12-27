@@ -52,14 +52,16 @@
 ---@type GameState
 local g = {
   canvas = nil,
+  canvas_height = 0,
   canvas_scale = 1,
+  canvas_width = 0,
   fonts = nil,
   frame = 0,
   is_test = false,
   map = nil,
   now = 0,
   player = nil,
-  state = 'editor',
+  state = 'game',
 }
 
 return g

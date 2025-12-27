@@ -39,6 +39,16 @@ function love.mousepressed(x, y, button)
       end
     end
 
+    -- open menu
+    if editor.opened_menu then
+      local menu = editor.menus[editor.opened_menu]
+      for _, item in pairs(menu.items) do
+        if item.is_hovered and item.on_click then
+          item.on_click()
+        end
+      end
+    end
+
     editor.opened_menu = nil
   end
 end

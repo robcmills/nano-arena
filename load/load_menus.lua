@@ -1,11 +1,12 @@
 local editor = require('editor')
+local on_click_file_new = require('editor/on_click_file_new')
 local theme = require('theme')
 
 local function load_menus()
   editor.menus = {
     file = {
       items = {
-        new = { key = "N", post_label = "EW" },
+        new = { key = "N", post_label = "EW", on_click = on_click_file_new },
         open = { key = "O", post_label = "PEN" },
         save = { key = "S", post_label = "AVE" },
       },
