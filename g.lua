@@ -25,8 +25,8 @@
 ---@field sprite_sheet love.Image Player sprite sheet image
 ---@field sprite_size number Size of each sprite in pixels
 ---@field sprites PlayerSprites Sprite quads for different directions
----@field tile_x number Player X tile position
----@field tile_y number Player Y tile position
+---@field tile_x number Player current X tile position
+---@field tile_y number Player current Y tile position
 ---@field to_tile_x number? Target tile X for movement interpolation
 ---@field to_tile_y number? Target tile Y for movement interpolation
 
