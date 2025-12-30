@@ -8,7 +8,7 @@ local function get_map_tile(tile_x, tile_y, layer_name)
   end
   local tileset = g.map.tilesets[1]
   for _, tile in ipairs(tileset.tiles) do
-    if tile.id == tile_id then
+    if tile.id + 1 == tile_id then
       return tile
     end
   end

@@ -1,6 +1,6 @@
 local g = require('g')
 
-local function get_map_layer(name)
+local function get_map_layer_by_name(name)
   for _, layer in ipairs(g.map.layers) do
     if layer.name == name then
       return layer
@@ -8,4 +8,4 @@ local function get_map_layer(name)
   end
 end
 
-return get_map_layer
+return get_map_layer_by_name

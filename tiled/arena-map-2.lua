@@ -9,8 +9,8 @@ return {
   height = 10,
   tilewidth = 16,
   tileheight = 16,
-  nextlayerid = 10,
-  nextobjectid = 4,
+  nextlayerid = 12,
+  nextobjectid = 6,
   backgroundcolor = { 128, 128, 128 },
   properties = {
     ["map_center"] = { id = 2 }
@@ -78,6 +78,12 @@ return {
           }
         },
         {
+          id = 42,
+          properties = {
+            ["type"] = "goal"
+          }
+        },
+        {
           id = 43,
           properties = {
             ["is_spawn"] = true
@@ -123,66 +129,6 @@ return {
       y = 0,
       width = 10,
       height = 10,
-      id = 4,
-      name = "background",
-      class = "",
-      visible = true,
-      opacity = 1,
-      offsetx = 0,
-      offsety = 0,
-      parallaxx = 1,
-      parallaxy = 1,
-      properties = {},
-      encoding = "lua",
-      data = {
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-      }
-    },
-    {
-      type = "tilelayer",
-      x = 0,
-      y = 0,
-      width = 10,
-      height = 10,
-      id = 2,
-      name = "ground",
-      class = "",
-      visible = true,
-      opacity = 1,
-      offsetx = 0,
-      offsety = 0,
-      parallaxx = 1,
-      parallaxy = 1,
-      properties = {},
-      encoding = "lua",
-      data = {
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-      }
-    },
-    {
-      type = "tilelayer",
-      x = 0,
-      y = 0,
-      width = 10,
-      height = 10,
       id = 7,
       name = "grid",
       class = "",
@@ -199,7 +145,7 @@ return {
         0, 42, 42, 42, 42, 42, 42, 42, 0, 0,
         0, 42, 42, 42, 42, 42, 42, 42, 0, 0,
         0, 42, 42, 42, 41, 41, 41, 42, 0, 0,
-        0, 0, 41, 42, 41, 42, 41, 43, 0, 0,
+        0, 0, 41, 42, 41, 42, 41, 0, 0, 0,
         0, 42, 41, 41, 41, 42, 42, 42, 0, 0,
         0, 42, 42, 42, 42, 42, 42, 42, 0, 0,
         0, 42, 42, 42, 42, 42, 42, 42, 0, 0,
@@ -243,36 +189,6 @@ return {
       y = 0,
       width = 10,
       height = 10,
-      id = 8,
-      name = "shadows",
-      class = "",
-      visible = true,
-      opacity = 1,
-      offsetx = 0,
-      offsety = 0,
-      parallaxx = 1,
-      parallaxy = 1,
-      properties = {},
-      encoding = "lua",
-      data = {
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-      }
-    },
-    {
-      type = "tilelayer",
-      x = 0,
-      y = 0,
-      width = 10,
-      height = 10,
       id = 6,
       name = "walls",
       class = "",
@@ -298,10 +214,40 @@ return {
       }
     },
     {
+      type = "tilelayer",
+      x = 0,
+      y = 0,
+      width = 10,
+      height = 10,
+      id = 10,
+      name = "entities",
+      class = "",
+      visible = true,
+      opacity = 1,
+      offsetx = 0,
+      offsety = 0,
+      parallaxx = 1,
+      parallaxy = 1,
+      properties = {},
+      encoding = "lua",
+      data = {
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 43, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+      }
+    },
+    {
       type = "objectgroup",
       draworder = "topdown",
       id = 5,
-      name = "Object Layer 1",
+      name = "objects",
       class = "",
       visible = true,
       opacity = 1,
@@ -323,6 +269,22 @@ return {
           rotation = 0,
           visible = false,
           properties = {}
+        },
+        {
+          id = 4,
+          name = "spawn",
+          type = "",
+          shape = "point",
+          x = 16,
+          y = 64,
+          width = 0,
+          height = 0,
+          rotation = 0,
+          visible = false,
+          properties = {
+            ["direction"] = "right",
+            ["is_spawn"] = true
+          }
         }
       }
     }

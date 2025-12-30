@@ -1,14 +1,16 @@
-local get_map_layer = require('map/get_map_layer')
+local get_map_layer_by_name = require('map/get_map_layer_by_name')
+local settings = require('settings')
 
 local function get_map_spawns()
-  local spawns_layer = get_map_layer('spawns')
+  local objects_layer = get_map_layer_by_name('objects')
   local spawns = {}
-  for y = 0, spawns_layer.height - 1 do
-    for x = 0, spawns_layer.width - 1 do
-      local index = y * spawns_layer.width + x + 1
-      if spawns_layer.data[index] ~= 0 then
-        table.insert(spawns, { x = x, y = y })
-      end
+  for _, object in ipairs(objects_layer.objects) do
+    if object.properties.is_spawn then
+      table.insert(spawns, {
+        direction = object.properties.direction,
+        x = object.x / settings.tile_size,
+        y = object.y / settings.tile_size
+      })
     end
   end
   return spawns
