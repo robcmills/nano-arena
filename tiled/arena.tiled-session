@@ -22,19 +22,32 @@
             "scaleInDock": 1
         },
         "arena-map-2.tmx": {
-            "scale": 3.3992187499999997,
-            "selectedLayer": 0,
+            "scale": 3.6743,
+            "selectedLayer": 3,
             "viewCenter": {
-                "x": 127.97058147552289,
-                "y": 127.97058147552289
+                "x": 63.68559997822713,
+                "y": 91.99031107966141
             }
         },
         "arena-map-2.tmx#arena-tileset": {
+            "scaleInDock": 1,
             "scaleInEditor": 1
+        },
+        "arena-map-3.tmx": {
+            "scale": 3.1663,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 87.79963995831096,
+                "y": 101.38015980797778
+            }
+        },
+        "arena-map-3.tmx#arena-tileset": {
+            "scaleInDock": 1
         }
     },
     "last.exportedFilePath": "/Users/robcmills/src/nano-arena/tiled",
     "last.imagePath": "/Users/robcmills/src/nano-arena/assets",
+    "map.fixedSize": false,
     "map.height": 16,
     "map.lastUsedExportFilter": "Lua files (*.lua)",
     "map.lastUsedFormat": "tmx",
@@ -46,6 +59,7 @@
     "project": "arena.tiled-project",
     "property.type": "bool",
     "recentFiles": [
+        "arena-map-3.tmx"
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {
