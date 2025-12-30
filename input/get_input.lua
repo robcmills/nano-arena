@@ -1,8 +1,9 @@
 local g = require('g')
+local test = require('test')
 
 local function get_input()
   if g.is_test then
-    -- return get_test_input() -- todo
+    return test.current.input()
   else
     return {
       down = love.keyboard.isDown('down'),

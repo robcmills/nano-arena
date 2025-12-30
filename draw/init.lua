@@ -3,6 +3,7 @@ local draw_canvas = require('draw/draw_canvas')
 local draw_debug = require('draw/draw_debug')
 local draw_editor = require('editor/draw_editor')
 local draw_game = require('draw/draw_game')
+local test = require('test')
 
 function love.draw()
   love.graphics.setCanvas(g.canvas)
@@ -17,4 +18,5 @@ function love.draw()
   love.graphics.setCanvas()
   love.graphics.clear(0, 0, 0)
   draw_canvas()
+  if g.is_test then test.current.update_post() end
 end
