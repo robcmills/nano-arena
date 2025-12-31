@@ -1,6 +1,61 @@
 local function encode_gif(args)
   local frames, width, height, delay = args.frames, args.width, args.height, args.delay
 
+  -- ============================================
+  -- Profiling Setup
+  -- ============================================
+  local profile = {
+    startTime = love.timer.getTime(),
+    startMemory = collectgarbage("count"),
+    sections = {}
+  }
+
+  local function startSection(name)
+    collectgarbage("collect") -- Force GC for accurate memory measurement
+    profile.sections[name] = {
+      startTime = love.timer.getTime(),
+      startMemory = collectgarbage("count")
+    }
+  end
+
+  local function endSection(name)
+    local section = profile.sections[name]
+    section.endTime = love.timer.getTime()
+    section.endMemory = collectgarbage("count")
+    section.duration = section.endTime - section.startTime
+    section.memoryDelta = section.endMemory - section.startMemory
+  end
+
+  local function printProfile()
+    local totalTime = love.timer.getTime() - profile.startTime
+    local totalMemory = collectgarbage("count") - profile.startMemory
+
+    print("\n========== GIF ENCODER PROFILE ==========")
+    print(string.format("Total Time: %.4f seconds", totalTime))
+    print(string.format("Total Memory Delta: %.2f KB", totalMemory))
+    print(string.format("Image Size: %dx%d, Frames: %d", width, height, #frames))
+    print("\n--- Section Breakdown ---")
+
+    -- Sort sections by duration
+    local sortedSections = {}
+    for name, data in pairs(profile.sections) do
+      table.insert(sortedSections, { name = name, data = data })
+    end
+    table.sort(sortedSections, function(a, b)
+      return a.data.duration > b.data.duration
+    end)
+
+    for _, section in ipairs(sortedSections) do
+      local pct = (section.data.duration / totalTime) * 100
+      print(string.format("  %-30s %8.4fs (%5.1f%%)  %+.2f KB",
+        section.name,
+        section.data.duration,
+        pct,
+        section.data.memoryDelta))
+    end
+    print("==========================================\n")
+  end
+
   -- Convert delay from seconds to hundredths of a second (GIF time unit)
   local delayTime = math.floor(delay * 100)
 
@@ -55,21 +110,12 @@ local function encode_gif(args)
   -- Color Quantization
   -- ============================================
 
-  local function findClosestColor(r, g, b, palette)
-    local minDist = math.huge
-    local bestIndex = 0
-
-    for i = 0, 255 do
-      local pr, pg, pb = palette[i][1], palette[i][2], palette[i][3]
-      -- Euclidean distance in RGB space
-      local dist = (r - pr) ^ 2 + (g - pg) ^ 2 + (b - pb) ^ 2
-      if dist < minDist then
-        minDist = dist
-        bestIndex = i
-      end
-    end
-
-    return bestIndex
+  local function findClosestColor(r, g, b)
+    -- Direct calculation for 6x6x6 cube (no searching needed)
+    local ri = math.floor(r / 255 * 5 + 0.5)
+    local gi = math.floor(g / 255 * 5 + 0.5)
+    local bi = math.floor(b / 255 * 5 + 0.5)
+    return ri * 36 + gi * 6 + bi
   end
 
   -- ============================================
@@ -203,7 +249,9 @@ local function encode_gif(args)
   -- Write Global Color Table
   -- ============================================
 
+  startSection("Palette Generation")
   local globalPalette = generatePalette()
+  endSection("Palette Generation")
 
   for i = 0, 255 do
     writeByte(globalPalette[i][1]) -- Red
@@ -266,6 +314,7 @@ local function encode_gif(args)
     writeByte(0)
 
     -- Convert image to indexed color
+    startSection("Frame " .. frameIndex .. " - Color Quantization")
     local indexedData = {}
     for y = 0, height - 1 do
       for x = 0, width - 1 do
@@ -277,16 +326,18 @@ local function encode_gif(args)
         b = math.floor(b * 255 + 0.5)
 
         -- Find closest palette color
-        local index = findClosestColor(r, g, b, globalPalette)
+        local index = findClosestColor(r, g, b)
         table.insert(indexedData, index)
       end
     end
+    endSection("Frame " .. frameIndex .. " - Color Quantization")
 
     -- Image Data (LZW-compressed)
+    startSection("Frame " .. frameIndex .. " - LZW Compression")
     local minCodeSize = 8 -- 8 bits for 256-color palette
     writeByte(minCodeSize)
-
     local compressed = lzwCompress(indexedData, minCodeSize)
+    endSection("Frame " .. frameIndex .. " - LZW Compression")
 
     -- Write compressed data in sub-blocks (max 255 bytes each)
     local pos = 1
@@ -310,7 +361,12 @@ local function encode_gif(args)
 
   writeByte(0x3B)
 
-  return table.concat(output)
+  startSection("Final Concatenation")
+  local result = table.concat(output)
+  endSection("Final Concatenation")
+
+  printProfile()
+  return result
 end
 
 return encode_gif
