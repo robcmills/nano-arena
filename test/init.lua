@@ -15,7 +15,7 @@ local gif = require('util/gif')
 
 ---@type TestState
 local test_state = {
-  current = require('tests/test1'),
+  current = require('tests/test2'),
   load = function(self)
     self.current.load()
     if self.record then
