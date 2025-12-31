@@ -37,10 +37,7 @@ local test = {
     end
   end,
   update_post = function()
-    if test_state == 'done' then
-      -- save recording
-      love.event.quit()
-    end
+    return test_state == 'done'
   end,
 }
 

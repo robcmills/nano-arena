@@ -18,5 +18,5 @@ function love.draw()
   love.graphics.setCanvas()
   love.graphics.clear(0, 0, 0)
   draw_canvas()
-  if g.is_test then test.current.update_post() end
+  if g.is_test then test:update_post() end
 end
