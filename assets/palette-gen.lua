@@ -1,120 +1,125 @@
--- Palette Generator - JASC-PAL Format
--- Generates a rainbow palette with grayscale appended
+-- JASC-PAL Palette Generator
+-- Generates a rainbow palette with lightness variations, and a grayscale
 
--- Adjustable parameters
-local HUE_SEGMENTS = 16   -- Number of hue divisions
-local LIGHTNESS_STEPS = 8 -- Number of lightness divisions per hue
+-- Helper function: Convert HSL to RGB
+-- h: 0-360, s: 0-1, l: 0-1
+-- Returns r, g, b (0-255)
+local function hslToRgb(h, s, l)
+  h = h / 360
 
--- HSL to RGB conversion
-local function hsl_to_rgb(h, s, l)
-  -- h: 0-360, s: 0-1, l: 0-1
-  -- returns r, g, b as 0-255 integers
+  local r, g, b
 
   if s == 0 then
-    -- Grayscale
-    local gray = math.floor(l * 255 + 0.5)
-    return gray, gray, gray
+    r, g, b = l, l, l
+  else
+    local function hueToRgb(p, q, t)
+      if t < 0 then t = t + 1 end
+      if t > 1 then t = t - 1 end
+      if t < 1 / 6 then return p + (q - p) * 6 * t end
+      if t < 1 / 2 then return q end
+      if t < 2 / 3 then return p + (q - p) * (2 / 3 - t) * 6 end
+      return p
+    end
+
+    local q = l < 0.5 and l * (1 + s) or l + s - l * s
+    local p = 2 * l - q
+
+    r = hueToRgb(p, q, h + 1 / 3)
+    g = hueToRgb(p, q, h)
+    b = hueToRgb(p, q, h - 1 / 3)
   end
 
-  local function hue_to_rgb(p, q, t)
-    if t < 0 then t = t + 1 end
-    if t > 1 then t = t - 1 end
-    if t < 1 / 6 then return p + (q - p) * 6 * t end
-    if t < 1 / 2 then return q end
-    if t < 2 / 3 then return p + (q - p) * (2 / 3 - t) * 6 end
-    return p
-  end
-
-  local q = l < 0.5 and l * (1 + s) or l + s - l * s
-  local p = 2 * l - q
-  local h_normalized = h / 360
-
-  local r = hue_to_rgb(p, q, h_normalized + 1 / 3)
-  local g = hue_to_rgb(p, q, h_normalized)
-  local b = hue_to_rgb(p, q, h_normalized - 1 / 3)
-
-  return math.floor(r * 255 + 0.5),
-      math.floor(g * 255 + 0.5),
-      math.floor(b * 255 + 0.5)
+  return math.floor(r * 255 + 0.5), math.floor(g * 255 + 0.5), math.floor(b * 255 + 0.5)
 end
+
+
+local n = 15 -- Number of hue segments (divisible by 3 in order to include pure red, green, and blue)
+local m = 9 -- Number of lightness divisions (odd to include a "middle" 50% lightness, in order to include pure red, green, and blue)
+
+-- Calculate total colors
+local rainbow_colors = n * (m + m / 2)
+local grayscale_colors = m * 2
+local total_colors = rainbow_colors + grayscale_colors
+
+print(string.format("Configuration: n=%d hues, m=%d lightness steps", n, m))
+print(string.format("Rainbow colors: %d", rainbow_colors))
+print(string.format("Grayscale colors: %d", grayscale_colors))
+print(string.format("Total colors: %d", total_colors))
+
+assert(total_colors <= 256, "Total colors exceed 256!")
 
 -- Generate the palette
-local function generate_palette(hue_segments, lightness_steps)
-  local palette = {}
+local palette = {}
 
-  -- Generate rainbow palette (max saturation)
-  for hue_index = 0, hue_segments - 1 do
-    local hue = (hue_index / hue_segments) * 360
+-- Generate rainbow palette
+for i = 0, n - 1 do
+  local hue = (i / n) * 360   -- Divide hue spectrum evenly
 
-    for light_index = 1, lightness_steps do
-      -- Lightness from dark to light, avoiding 0 and 1 extremes
-      -- Range: roughly 0.1 to 0.9 for visible colors
-      local lightness = light_index / (lightness_steps + 1)
-
-      local r, g, b = hsl_to_rgb(hue, 1.0, lightness)       -- saturation = 1.0
-      table.insert(palette, { r = r, g = g, b = b })
-    end
+  -- Add lightness variations (maximum saturation = 1.0)
+  for j = 1, m do
+    local lightness = j / (m + 1)     -- Avoid 0 (black) and 1 (white)
+    local r, g, b = hslToRgb(hue, 1.0, lightness)
+    table.insert(palette, { r, g, b })
   end
-
-  -- Generate grayscale palette (zero saturation)
-  local grayscale_steps = lightness_steps * 2
-  for gray_index = 0, grayscale_steps - 1 do
-    -- Full range from black to white
-    local lightness = gray_index / (grayscale_steps - 1)
-    print('lightness: ' .. lightness)
-
-    local r, g, b = hsl_to_rgb(0, 0, lightness)     -- saturation = 0
-    print('r: ' .. r .. ' g: ' .. g .. ' b: ' .. b)
-    table.insert(palette, { r = r, g = g, b = b })
-  end
-
-  return palette
 end
 
--- Write palette to JASC-PAL format file
-local function write_jasc_pal(filename, palette)
-  local file, err = io.open(filename, "w")
+-- Generate grayscale palette
+for i = 0, m - 1 do
+  local lightness = i / (m - 1)   -- 0 to 1 inclusive (black to white)
+  local r, g, b = hslToRgb(0, 0, lightness)     -- Hue doesn't matter when saturation is 0
+  table.insert(palette, { r, g, b })
+end
+
+-- Write to JASC-PAL file
+local function writePalette(filename, pal)
+  local file = io.open(filename, "w")
   if not file then
-    print("Error opening file: " .. err)
-    return false
+    error("Could not open file for writing: " .. filename)
   end
 
   -- JASC-PAL header
   file:write("JASC-PAL\n")
   file:write("0100\n")
-  file:write(tostring(#palette) .. "\n")
+  file:write(string.format("%d\n", #pal))
 
   -- Write each color
-  for _, color in ipairs(palette) do
-    file:write(string.format("%d %d %d\n", color.r, color.g, color.b))
+  for _, color in ipairs(pal) do
+    file:write(string.format("%d %d %d\n", color[1], color[2], color[3]))
   end
 
   file:close()
-  print(string.format("Palette written to '%s' with %d colors", filename, #palette))
-  return true
+  print(string.format("Palette written to '%s' with %d colors", filename, #pal))
 end
 
--- Print palette info
-local function print_palette_info(hue_segments, lightness_steps)
-  local rainbow_colors = hue_segments * lightness_steps
-  local grayscale_colors = lightness_steps * 2
-  local total_colors = rainbow_colors + grayscale_colors
+-- Verify pure colors are present
+local function verifyPureColors(pal)
+  local hasRed, hasGreen, hasBlue = false, false, false
 
-  print("=== Palette Configuration ===")
-  print(string.format("Hue segments:      %d", hue_segments))
-  print(string.format("Lightness steps:   %d", lightness_steps))
-  print(string.format("Rainbow colors:    %d", rainbow_colors))
-  print(string.format("Grayscale colors:  %d", grayscale_colors))
-  print(string.format("Total colors:      %d", total_colors))
-  print("=============================")
+  for i, color in ipairs(pal) do
+    if color[1] == 255 and color[2] == 0 and color[3] == 0 then
+      hasRed = true
+      print(string.format("Pure red found at index %d", i))
+    end
+    if color[1] == 0 and color[2] == 255 and color[3] == 0 then
+      hasGreen = true
+      print(string.format("Pure green found at index %d", i))
+    end
+    if color[1] == 0 and color[2] == 0 and color[3] == 255 then
+      hasBlue = true
+      print(string.format("Pure blue found at index %d", i))
+    end
+  end
+
+  return hasRed and hasGreen and hasBlue
 end
 
--- Main execution
-local function main()
-  print_palette_info(HUE_SEGMENTS, LIGHTNESS_STEPS)
-
-  local palette = generate_palette(HUE_SEGMENTS, LIGHTNESS_STEPS)
-  write_jasc_pal("assets/palette.pal", palette)
+-- Verify and write
+print("\nVerifying pure colors...")
+if verifyPureColors(palette) then
+  print("All pure RGB colors found!")
+else
+  print("WARNING: Not all pure RGB colors found in palette")
 end
 
-main()
+-- Write the palette file
+writePalette("assets/palette.pal", palette)
