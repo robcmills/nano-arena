@@ -1,5 +1,5 @@
 local function encode_gif(args)
-  local frames, width, height, delay = args.frames, args.width, args.height, args.delay
+  local frames, width, height, delay, palette = args.frames, args.width, args.height, args.delay, args.palette
 
   -- ============================================
   -- Profiling Setup
