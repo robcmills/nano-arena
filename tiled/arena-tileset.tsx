@@ -6,4 +6,9 @@
    <object id="3" x="0" y="0" width="16" height="16"/>
   </objectgroup>
  </tile>
+ <tile id="81">
+  <properties>
+   <property name="type" value="goal"/>
+  </properties>
+ </tile>
 </tileset>

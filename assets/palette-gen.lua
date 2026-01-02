@@ -1,12 +1,10 @@
 -- JASC-PAL Palette Generator
--- Generates a rainbow palette with lightness variations, and a grayscale
 
 -- Helper function: Convert HSL to RGB
 -- h: 0-360, s: 0-1, l: 0-1
 -- Returns r, g, b (0-255)
 local function hslToRgb(h, s, l)
   h = h / 360
-
   local r, g, b
 
   if s == 0 then
@@ -33,40 +31,37 @@ local function hslToRgb(h, s, l)
 end
 
 
-local n = 15 -- Number of hue segments (divisible by 3 in order to include pure red, green, and blue)
-local m = 9 -- Number of lightness divisions (odd to include a "middle" 50% lightness, in order to include pure red, green, and blue)
+local hues_count = 12 -- Number of hue segments (divisible by 3 in order to include pure red, green, and blue)
+local lights_count = 5 -- Number of lightness divisions (odd to include a "middle" 50% lightness, in order to include pure red, green, and blue)
 
--- Calculate total colors
-local rainbow_colors = n * (m + m / 2)
-local grayscale_colors = m * 2
-local total_colors = rainbow_colors + grayscale_colors
-
-print(string.format("Configuration: n=%d hues, m=%d lightness steps", n, m))
-print(string.format("Rainbow colors: %d", rainbow_colors))
-print(string.format("Grayscale colors: %d", grayscale_colors))
-print(string.format("Total colors: %d", total_colors))
-
-assert(total_colors <= 256, "Total colors exceed 256!")
-
--- Generate the palette
 local palette = {}
 
--- Generate rainbow palette
-for i = 0, n - 1 do
-  local hue = (i / n) * 360   -- Divide hue spectrum evenly
+-- rainbow palette
+for i = 0, hues_count - 1 do
+  local hue = (i / hues_count) * 360
 
-  -- Add lightness variations (maximum saturation = 1.0)
-  for j = 1, m do
-    local lightness = j / (m + 1)     -- Avoid 0 (black) and 1 (white)
-    local r, g, b = hslToRgb(hue, 1.0, lightness)
+  -- lightness variations (maximum saturation)
+  local saturation = 1.0
+  for j = 1, lights_count do
+    local lightness = j / (lights_count + 1) -- Avoid 0 (black) and 1 (white)
+    local r, g, b = hslToRgb(hue, saturation, lightness)
+    table.insert(palette, { r, g, b })
+  end
+
+  -- lightness variations (low saturation)
+  saturation = 0.5
+  for k = 1, lights_count do
+    local lightness = k / (lights_count + 1) -- Avoid 0 (black) and 1 (white)
+    local r, g, b = hslToRgb(hue, saturation, lightness)
     table.insert(palette, { r, g, b })
   end
 end
 
--- Generate grayscale palette
-for i = 0, m - 1 do
-  local lightness = i / (m - 1)   -- 0 to 1 inclusive (black to white)
-  local r, g, b = hslToRgb(0, 0, lightness)     -- Hue doesn't matter when saturation is 0
+-- grayscale palette
+for i = 0, lights_count - 1 do
+  -- Avoid pure black and white
+  local lightness = 0.1 + i * 0.8 / (lights_count - 1)
+  local r, g, b = hslToRgb(0, 0, lightness)
   table.insert(palette, { r, g, b })
 end
 
@@ -113,13 +108,14 @@ local function verifyPureColors(pal)
   return hasRed and hasGreen and hasBlue
 end
 
--- Verify and write
-print("\nVerifying pure colors...")
+local total_colors = #palette
+print(string.format("Total colors: %d", total_colors))
+assert(total_colors <= 256, "Total colors exceed 256!")
+
 if verifyPureColors(palette) then
   print("All pure RGB colors found!")
 else
   print("WARNING: Not all pure RGB colors found in palette")
 end
 
--- Write the palette file
 writePalette("assets/palette.pal", palette)

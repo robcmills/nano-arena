@@ -13,7 +13,7 @@ local test_state = 'loading'
 local test = {
   name = 'test2',
   load = function()
-    load_game({ map = 'tiled/arena-map-2.lua' })
+    load_game({ map = 'tiled/arena-map-3.lua' })
     test_state = 'running'
   end,
   update_pre = function()

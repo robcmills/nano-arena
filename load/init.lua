@@ -7,13 +7,14 @@ local test = require('test')
 
 function love.load()
   love.filesystem.setIdentity("nano-arena")
-  -- love.window.setMode(0, 0, { fullscreen = true })
-  love.window.setMode(640, 480)
+  love.window.setMode(0, 0, { fullscreen = true })
+  -- love.window.setMode(640, 480)
   love.keyboard.setKeyRepeat(true)
   love.mouse.setVisible(false)
   love.graphics.setDefaultFilter('nearest', 'nearest')
   load_canvas()
   load_fonts()
+  -- load_palette()
   if g.state == 'game' then
     if g.is_test then test:load() else load_game() end
   elseif g.state == 'editor' then

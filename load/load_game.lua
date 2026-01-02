@@ -7,7 +7,7 @@ local function load_game(args)
   args = args or {}
   g.frame = 0
   g.now = 0
-  load_map(args.map or 'tiled/arena-map-2.lua')
+  load_map(args.map or 'tiled/arena-map-3.lua')
   load_player()
   spawn_player()
 end
