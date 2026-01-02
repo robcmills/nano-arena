@@ -1,3 +1,63 @@
+
+local function get_profiler()
+  local profile = {
+    startTime = love.timer.getTime(),
+    startMemory = collectgarbage("count"),
+    sections = {}
+  }
+
+  local function start_section(name)
+    collectgarbage("collect") -- Force GC for accurate memory measurement
+    profile.sections[name] = {
+      startTime = love.timer.getTime(),
+      startMemory = collectgarbage("count")
+    }
+  end
+
+  local function end_section(name)
+    local section = profile.sections[name]
+    section.endTime = love.timer.getTime()
+    section.endMemory = collectgarbage("count")
+    section.duration = section.endTime - section.startTime
+    section.memoryDelta = section.endMemory - section.startMemory
+  end
+
+  local function print_profile()
+    local totalTime = love.timer.getTime() - profile.startTime
+    local totalMemory = collectgarbage("count") - profile.startMemory
+
+    print("\n========== GIF ENCODER PROFILE ==========")
+    print(string.format("Total Time: %.4f seconds", totalTime))
+    print(string.format("Total Memory Delta: %.2f KB", totalMemory))
+    print("\n--- Section Breakdown ---")
+
+    -- Sort sections by duration
+    local sortedSections = {}
+    for name, data in pairs(profile.sections) do
+      table.insert(sortedSections, { name = name, data = data })
+    end
+    table.sort(sortedSections, function(a, b)
+      return a.data.duration > b.data.duration
+    end)
+
+    for _, section in ipairs(sortedSections) do
+      local pct = (section.data.duration / totalTime) * 100
+      print(string.format("  %-30s %8.4fs (%5.1f%%)  %+.2f KB",
+        section.name,
+        section.data.duration,
+        pct,
+        section.data.memoryDelta))
+    end
+    print("==========================================\n")
+  end
+
+  return {
+    end_section = end_section,
+    print_profile = print_profile,
+    start_section = start_section,
+  }
+end
+
 -- ============================================
 -- Color Quantization
 -- ============================================
@@ -37,60 +97,7 @@ local function encode_gif(args)
   local height = args.height
   local delay = args.delay
 
-  -- ============================================
-  -- Profiling Setup
-  -- ============================================
-  local profile = {
-    startTime = love.timer.getTime(),
-    startMemory = collectgarbage("count"),
-    sections = {}
-  }
-
-  local function startSection(name)
-    collectgarbage("collect") -- Force GC for accurate memory measurement
-    profile.sections[name] = {
-      startTime = love.timer.getTime(),
-      startMemory = collectgarbage("count")
-    }
-  end
-
-  local function endSection(name)
-    local section = profile.sections[name]
-    section.endTime = love.timer.getTime()
-    section.endMemory = collectgarbage("count")
-    section.duration = section.endTime - section.startTime
-    section.memoryDelta = section.endMemory - section.startMemory
-  end
-
-  local function printProfile()
-    local totalTime = love.timer.getTime() - profile.startTime
-    local totalMemory = collectgarbage("count") - profile.startMemory
-
-    print("\n========== GIF ENCODER PROFILE ==========")
-    print(string.format("Total Time: %.4f seconds", totalTime))
-    print(string.format("Total Memory Delta: %.2f KB", totalMemory))
-    print(string.format("Image Size: %dx%d, Frames: %d", width, height, #frames))
-    print("\n--- Section Breakdown ---")
-
-    -- Sort sections by duration
-    local sortedSections = {}
-    for name, data in pairs(profile.sections) do
-      table.insert(sortedSections, { name = name, data = data })
-    end
-    table.sort(sortedSections, function(a, b)
-      return a.data.duration > b.data.duration
-    end)
-
-    for _, section in ipairs(sortedSections) do
-      local pct = (section.data.duration / totalTime) * 100
-      print(string.format("  %-30s %8.4fs (%5.1f%%)  %+.2f KB",
-        section.name,
-        section.data.duration,
-        pct,
-        section.data.memoryDelta))
-    end
-    print("==========================================\n")
-  end
+  local profiler = get_profiler()
 
   -- Convert delay from seconds to hundredths of a second (GIF time unit)
   local delayTime = math.floor(delay * 100)
@@ -273,9 +280,9 @@ local function encode_gif(args)
   -- Write Global Color Table
   -- ============================================
 
-  startSection("Palette Generation")
+  profiler.start_section("Palette Generation")
   local globalPalette = generatePalette()
-  endSection("Palette Generation")
+  profiler.end_section("Palette Generation")
 
   for i = 0, 255 do
     writeByte(globalPalette[i][1]) -- Red
@@ -338,20 +345,20 @@ local function encode_gif(args)
     writeByte(0)
 
     -- Convert image to indexed color
-    startSection("Frame " .. frameIndex .. " - Color Quantization")
+    profiler.start_section("Frame " .. frameIndex .. " - Color Quantization")
     local indexedData = quantize_frame({
       imageData = imageData,
       height = height,
       width = width,
     })
-    endSection("Frame " .. frameIndex .. " - Color Quantization")
+    profiler.end_section("Frame " .. frameIndex .. " - Color Quantization")
 
     -- Image Data (LZW-compressed)
-    startSection("Frame " .. frameIndex .. " - LZW Compression")
+    profiler.start_section("Frame " .. frameIndex .. " - LZW Compression")
     local minCodeSize = 8 -- 8 bits for 256-color palette
     writeByte(minCodeSize)
     local compressed = lzwCompress(indexedData, minCodeSize)
-    endSection("Frame " .. frameIndex .. " - LZW Compression")
+    profiler.end_section("Frame " .. frameIndex .. " - LZW Compression")
 
     -- Write compressed data in sub-blocks (max 255 bytes each)
     local pos = 1
@@ -375,11 +382,11 @@ local function encode_gif(args)
 
   writeByte(0x3B)
 
-  startSection("Final Concatenation")
+  profiler.start_section("Final Concatenation")
   local result = table.concat(output)
-  endSection("Final Concatenation")
+  profiler.end_section("Final Concatenation")
 
-  printProfile()
+  profiler.print_profile()
   return result
 end
 
