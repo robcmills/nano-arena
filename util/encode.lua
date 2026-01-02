@@ -1,3 +1,28 @@
+---@param tbl table
+local function get_write_byte(tbl)
+  ---@param value number
+  return function(value)
+    table.insert(tbl, string.char(value % 256))
+  end
+end
+
+---@param tbl table
+local function get_write_word(tbl)
+  local write_byte = get_write_byte(tbl)
+  ---@param value number
+  return function(value)
+    write_byte(value % 256)
+    write_byte(math.floor(value / 256) % 256)
+  end
+end
+
+---@param tbl table
+local function get_write_string(tbl)
+  ---@param str string
+  return function(str)
+    table.insert(tbl, str)
+  end
+end
 
 local function get_profiler()
   local profile = {
@@ -102,24 +127,10 @@ local function encode_gif(args)
   -- Convert delay from seconds to hundredths of a second (GIF time unit)
   local delayTime = math.floor(delay * 100)
 
-  local output = {}
-
-  -- ============================================
-  -- Helper Functions for Writing Data
-  -- ============================================
-
-  local function writeByte(value)
-    table.insert(output, string.char(value % 256))
-  end
-
-  local function writeWord(value)
-    writeByte(value % 256)
-    writeByte(math.floor(value / 256) % 256)
-  end
-
-  local function writeString(str)
-    table.insert(output, str)
-  end
+  local out = {}
+  local write_byte = get_write_byte(out)
+  local write_word = get_write_word(out)
+  local write_string = get_write_string(out)
 
   -- ============================================
   -- Palette Generation (256-color)
@@ -251,14 +262,14 @@ local function encode_gif(args)
   -- Write GIF Header
   -- ============================================
 
-  writeString("GIF89a")
+  write_string("GIF89a")
 
   -- ============================================
   -- Write Logical Screen Descriptor
   -- ============================================
 
-  writeWord(width)
-  writeWord(height)
+  write_word(width)
+  write_word(height)
 
   -- Packed field:
   -- - Global Color Table Flag: 1 (yes)
@@ -271,10 +282,10 @@ local function encode_gif(args)
   local gctSize = 7
 
   local packed = (gctFlag * 128) + (colorRes * 16) + (sortFlag * 8) + gctSize
-  writeByte(packed)
+  write_byte(packed)
 
-  writeByte(0) -- Background color index
-  writeByte(0) -- Pixel aspect ratio (no aspect ratio info)
+  write_byte(0) -- Background color index
+  write_byte(0) -- Pixel aspect ratio (no aspect ratio info)
 
   -- ============================================
   -- Write Global Color Table
@@ -285,9 +296,9 @@ local function encode_gif(args)
   profiler.end_section("Palette Generation")
 
   for i = 0, 255 do
-    writeByte(globalPalette[i][1]) -- Red
-    writeByte(globalPalette[i][2]) -- Green
-    writeByte(globalPalette[i][3]) -- Blue
+    write_byte(globalPalette[i][1]) -- Red
+    write_byte(globalPalette[i][2]) -- Green
+    write_byte(globalPalette[i][3]) -- Blue
   end
 
   -- ============================================
@@ -295,15 +306,15 @@ local function encode_gif(args)
   -- ============================================
 
   if #frames > 1 then
-    writeByte(0x21)         -- Extension introducer
-    writeByte(0xFF)         -- Application extension label
-    writeByte(11)           -- Block size
-    writeString("NETSCAPE") -- Application identifier
-    writeString("2.0")      -- Application authentication code
-    writeByte(3)            -- Sub-block data size
-    writeByte(1)            -- Sub-block ID
-    writeWord(0)            -- Loop count (0 = infinite)
-    writeByte(0)            -- Block terminator
+    write_byte(0x21)         -- Extension introducer
+    write_byte(0xFF)         -- Application extension label
+    write_byte(11)           -- Block size
+    write_string("NETSCAPE") -- Application identifier
+    write_string("2.0")      -- Application authentication code
+    write_byte(3)            -- Sub-block data size
+    write_byte(1)            -- Sub-block ID
+    write_word(0)            -- Loop count (0 = infinite)
+    write_byte(0)            -- Block terminator
   end
 
   -- ============================================
@@ -313,28 +324,28 @@ local function encode_gif(args)
   for frameIndex, imageData in ipairs(frames) do
     -- Graphic Control Extension (for timing and transparency)
     if #frames > 1 or delayTime > 0 then
-      writeByte(0x21) -- Extension introducer
-      writeByte(0xF9) -- Graphic control label
-      writeByte(4)    -- Block size
+      write_byte(0x21) -- Extension introducer
+      write_byte(0xF9) -- Graphic control label
+      write_byte(4)    -- Block size
 
       -- Packed field:
       -- - Reserved: 0 (3 bits)
       -- - Disposal Method: 0 (no disposal specified)
       -- - User Input Flag: 0 (no user input)
       -- - Transparent Color Flag: 0 (no transparency)
-      writeByte(0)
+      write_byte(0)
 
-      writeWord(delayTime) -- Delay time in hundredths of a second
-      writeByte(0)         -- Transparent color index (unused)
-      writeByte(0)         -- Block terminator
+      write_word(delayTime) -- Delay time in hundredths of a second
+      write_byte(0)         -- Transparent color index (unused)
+      write_byte(0)         -- Block terminator
     end
 
     -- Image Descriptor
-    writeByte(0x2C)   -- Image separator
-    writeWord(0)      -- Left position
-    writeWord(0)      -- Top position
-    writeWord(width)  -- Image width
-    writeWord(height) -- Image height
+    write_byte(0x2C)   -- Image separator
+    write_word(0)      -- Left position
+    write_word(0)      -- Top position
+    write_word(width)  -- Image width
+    write_word(height) -- Image height
 
     -- Packed field:
     -- - Local Color Table Flag: 0 (use global)
@@ -342,7 +353,7 @@ local function encode_gif(args)
     -- - Sort Flag: 0
     -- - Reserved: 0 (2 bits)
     -- - Size of Local Color Table: 0 (no local table)
-    writeByte(0)
+    write_byte(0)
 
     -- Convert image to indexed color
     profiler.start_section("Frame " .. frameIndex .. " - Color Quantization")
@@ -356,7 +367,7 @@ local function encode_gif(args)
     -- Image Data (LZW-compressed)
     profiler.start_section("Frame " .. frameIndex .. " - LZW Compression")
     local minCodeSize = 8 -- 8 bits for 256-color palette
-    writeByte(minCodeSize)
+    write_byte(minCodeSize)
     local compressed = lzwCompress(indexedData, minCodeSize)
     profiler.end_section("Frame " .. frameIndex .. " - LZW Compression")
 
@@ -364,26 +375,26 @@ local function encode_gif(args)
     local pos = 1
     while pos <= #compressed do
       local blockSize = math.min(255, #compressed - pos + 1)
-      writeByte(blockSize)
+      write_byte(blockSize)
 
       for i = pos, pos + blockSize - 1 do
-        writeByte(compressed[i])
+        write_byte(compressed[i])
       end
 
       pos = pos + blockSize
     end
 
-    writeByte(0) -- Block terminator
+    write_byte(0) -- Block terminator
   end
 
   -- ============================================
   -- Write GIF Trailer
   -- ============================================
 
-  writeByte(0x3B)
+  write_byte(0x3B)
 
   profiler.start_section("Final Concatenation")
-  local result = table.concat(output)
+  local result = table.concat(out)
   profiler.end_section("Final Concatenation")
 
   profiler.print_profile()
