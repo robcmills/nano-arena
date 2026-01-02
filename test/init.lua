@@ -16,11 +16,16 @@ local get_gif_recorder = require('util/gif_recorder')
 ---@type TestState
 local test_state = {
   current = require('tests/test2'),
-  gif_recorder = get_gif_recorder({}),
+  gif_recorder = get_gif_recorder(),
   load = function(self)
     self.current.load()
     if self.record then
-      self.gif_recorder.start(g.canvas)
+      self.gif_recorder.init({
+        canvas = g.canvas,
+        filename = self.current.name,
+        palette = g.palette,
+      })
+      self.gif_recorder.start()
     end
   end,
   record = true,
@@ -30,7 +35,7 @@ local test_state = {
   update_post = function(self)
     if self.current.update_post() then
       if self.record then
-        self.gif_recorder.stop(self.current.name)
+        self.gif_recorder.stop()
       end
       love.event.quit()
     else

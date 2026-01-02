@@ -1,22 +1,33 @@
 local encode_gif = require('util/encode')
 
 --- @class GifRecorderArgs
+--- @field canvas love.Canvas
+--- @field filename? string
 --- @field fps? number
+--- @field palette? RGB[]
 
---- @param args GifRecorderArgs
-local function get_gif_recorder(args)
+local function get_gif_recorder()
   local state = {
     canvas = nil,
-    delay = 1 / (args.fps or 60),
+    delay = 1 / 60,
     frames = {},
     recording = false,
   }
 
-  --- @param canvas love.Canvas
-  local function start(canvas)
-    state.canvas = canvas
-    state.recording = true
+  --- @param args GifRecorderArgs
+  local function init(args)
+    state.canvas = args.canvas
+    if args.fps then
+      state.delay = 1 / args.fps
+    end
+    state.filename = (args.filename or "recording") .. ".gif"
     state.frames = {}
+    state.palette = args.palette
+  end
+
+  local function start()
+    state.frames = {}
+    state.recording = true
     print("GIF Recording started...")
   end
 
@@ -25,23 +36,20 @@ local function get_gif_recorder(args)
     table.insert(state.frames, state.canvas:newImageData())
   end
 
-  local function stop(filename)
+  local function stop()
     if not state.recording then return end
-
-    local width = state.canvas:getWidth()
-    local height = state.canvas:getHeight()
 
     print(string.format("Encoding %d frames...", #state.frames))
     local gifData = encode_gif({
+      delay = state.delay,
       frames = state.frames,
-      width = width,
-      height = height,
-      delay = state.delay
+      height = state.canvas:getHeight(),
+      palette = state.palette,
+      width = state.canvas:getWidth(),
     })
 
-    local path = filename .. ".gif"
-    love.filesystem.write(path, gifData)
-    print("Saved to: " .. love.filesystem.getSaveDirectory() .. "/" .. path)
+    love.filesystem.write(state.filename, gifData)
+    print("Saved to: " .. love.filesystem.getSaveDirectory() .. "/" .. state.filename)
 
     state.frames = {}
     state.recording = false
@@ -49,6 +57,7 @@ local function get_gif_recorder(args)
 
   return {
     captureFrame = capture_frame,
+    init = init,
     start = start,
     stop = stop,
   }

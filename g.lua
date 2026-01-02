@@ -10,6 +10,7 @@
 ---@field is_test boolean Whether game is running in test mode
 ---@field map MapState | nil Map game state
 ---@field now number Current time in seconds
+---@field palette? RGB[]
 ---@field player PlayerState | nil Player game state
 ---@field state 'game' | 'editor' Game state
 
@@ -60,6 +61,7 @@ local g = {
   is_test = true,
   map = nil,
   now = 0,
+  palette = nil,
   player = nil,
   state = 'game',
 }

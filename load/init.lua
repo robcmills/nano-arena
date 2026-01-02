@@ -3,6 +3,7 @@ local load_canvas = require('load/load_canvas')
 local load_editor = require('load/load_editor')
 local load_fonts = require('load/load_fonts')
 local load_game = require('load/load_game')
+local load_palette = require('load/load_palette')
 local test = require('test')
 
 function love.load()
@@ -14,7 +15,7 @@ function love.load()
   love.graphics.setDefaultFilter('nearest', 'nearest')
   load_canvas()
   load_fonts()
-  -- load_palette()
+  g.palette = load_palette('assets/palette.pal')
   if g.state == 'game' then
     if g.is_test then test:load() else load_game() end
   elseif g.state == 'editor' then

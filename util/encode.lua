@@ -384,6 +384,7 @@ local function process_frame(args)
   -- Convert image to indexed color
   profiler.start_section("Frame " .. frameIndex .. " - Color Quantization")
   local indexedData = quantize_frame({
+    color_to_index = color_to_index,
     imageData = imageData,
     height = height,
     width = width,

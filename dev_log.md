@@ -120,4 +120,44 @@ Total Memory Delta: 316.01 KB
   Final Concatenation              0.0001s (  0.0%)  +62.16 KB
 ==========================================
 
+After passing in palette to encoder: (color quantization via hash table)
+
+GIF Recording started...
+Encoding 14 frames...
+
+========== GIF ENCODER PROFILE ==========
+Total Time: 0.6237 seconds
+Total Memory Delta: 318.76 KB
+
+--- Section Breakdown ---
+  Frame 1 - Color Quantization     0.0435s (  7.0%)  +4096.39 KB
+  Frame 2 - Color Quantization     0.0284s (  4.6%)  +4096.39 KB
+  Frame 6 - Color Quantization     0.0263s (  4.2%)  +4096.34 KB
+  Frame 7 - Color Quantization     0.0263s (  4.2%)  +4096.34 KB
+  Frame 3 - Color Quantization     0.0262s (  4.2%)  +4096.44 KB
+  Frame 13 - Color Quantization    0.0262s (  4.2%)  +4096.34 KB
+  Frame 9 - Color Quantization     0.0262s (  4.2%)  +4096.72 KB
+  Frame 5 - Color Quantization     0.0260s (  4.2%)  +4096.53 KB
+  Frame 14 - Color Quantization    0.0260s (  4.2%)  +4096.34 KB
+  Frame 4 - Color Quantization     0.0260s (  4.2%)  +4096.34 KB
+  Frame 8 - Color Quantization     0.0260s (  4.2%)  +4096.34 KB
+  Frame 11 - Color Quantization    0.0259s (  4.2%)  +4096.34 KB
+  Frame 12 - Color Quantization    0.0259s (  4.2%)  +4096.34 KB
+  Frame 10 - Color Quantization    0.0259s (  4.1%)  +4096.34 KB
+  Frame 1 - LZW Compression        0.0198s (  3.2%)  +624.32 KB
+  Frame 2 - LZW Compression        0.0164s (  2.6%)  +619.82 KB
+  Frame 9 - LZW Compression        0.0161s (  2.6%)  +623.50 KB
+  Frame 8 - LZW Compression        0.0160s (  2.6%)  +623.50 KB
+  Frame 12 - LZW Compression       0.0159s (  2.6%)  +625.08 KB
+  Frame 13 - LZW Compression       0.0159s (  2.5%)  +623.14 KB
+  Frame 14 - LZW Compression       0.0158s (  2.5%)  +623.14 KB
+  Frame 11 - LZW Compression       0.0158s (  2.5%)  +625.04 KB
+  Frame 6 - LZW Compression        0.0158s (  2.5%)  +623.30 KB
+  Frame 3 - LZW Compression        0.0158s (  2.5%)  +619.74 KB
+  Frame 10 - LZW Compression       0.0158s (  2.5%)  +624.27 KB
+  Frame 5 - LZW Compression        0.0158s (  2.5%)  +622.09 KB
+  Frame 7 - LZW Compression        0.0157s (  2.5%)  +622.90 KB
+  Frame 4 - LZW Compression        0.0157s (  2.5%)  +621.71 KB
+  Final Concatenation              0.0001s (  0.0%)  +62.13 KB
+==========================================
 
