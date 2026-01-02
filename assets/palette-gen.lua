@@ -36,6 +36,14 @@ local lights_count = 5 -- Number of lightness divisions (odd to include a "middl
 
 local palette = {}
 
+-- grayscale palette
+local grays_count = lights_count * 2 - 1
+for i = 0, grays_count do
+  local lightness = i / grays_count
+  local r, g, b = hslToRgb(0, 0, lightness)
+  table.insert(palette, { r, g, b })
+end
+
 -- rainbow palette
 for i = 0, hues_count - 1 do
   local hue = (i / hues_count) * 360
@@ -55,14 +63,6 @@ for i = 0, hues_count - 1 do
     local r, g, b = hslToRgb(hue, saturation, lightness)
     table.insert(palette, { r, g, b })
   end
-end
-
--- grayscale palette
-for i = 0, lights_count - 1 do
-  -- Avoid pure black and white
-  local lightness = 0.1 + i * 0.8 / (lights_count - 1)
-  local r, g, b = hslToRgb(0, 0, lightness)
-  table.insert(palette, { r, g, b })
 end
 
 -- Write to JASC-PAL file
