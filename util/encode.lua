@@ -1,3 +1,5 @@
+local ffi = require('ffi')
+
 -- ============================================
 -- Helper Functions for Writing Data
 -- ============================================
@@ -28,6 +30,12 @@ local function get_write_string(tbl)
   end
 end
 
+--- @class Profiler
+--- @field start_section fun(name: string)
+--- @field end_section fun(name: string)
+--- @field print_profile fun()
+
+--- @return Profiler
 local function get_profiler()
   local profile = {
     startTime = love.timer.getTime(),
@@ -123,24 +131,37 @@ local function find_closest_color(r, g, b)
   return ri * 36 + gi * 6 + bi
 end
 
+--- @class QuantizeFrameArgs
+--- @field color_to_index? table
+--- @field imageData love.ImageData
+--- @field height number
+--- @field width number
+
+--- @param args QuantizeFrameArgs
 local function quantize_frame(args)
+  local color_to_index = args.color_to_index
   local imageData = args.imageData
   local height = args.height
   local width = args.width
-  local indexedData = {}
 
-  for y = 0, height - 1 do
-    for x = 0, width - 1 do
-      local r, g, b = imageData:getPixel(x, y)
-      -- Convert from [0,1] to [0,255]
-      r = math.floor(r * 255 + 0.5)
-      g = math.floor(g * 255 + 0.5)
-      b = math.floor(b * 255 + 0.5)
-      -- Find closest palette color
+  local indexedData = {}
+  local pointer = ffi.cast("uint8_t*", imageData:getFFIPointer())
+
+  for i = 0, width * height - 1 do
+    local offset = i * 4
+    local r = pointer[offset]
+    local g = pointer[offset + 1]
+    local b = pointer[offset + 2]
+
+    if color_to_index then
+      local key = r * 65536 + g * 256 + b
+      indexedData[i + 1] = color_to_index[key] or 0
+    else
       local index = find_closest_color(r, g, b)
       table.insert(indexedData, index)
     end
   end
+
   return indexedData
 end
 
@@ -301,6 +322,95 @@ local function get_color_to_index(palette)
   return color_to_index
 end
 
+--- @class EncodeFrameArgs
+--- @field color_to_index? table
+--- @field delayTime number
+--- @field frameIndex number
+--- @field frames_count number
+--- @field height number
+--- @field imageData love.ImageData
+--- @field out table
+--- @field profiler Profiler
+--- @field width number
+
+--- @param args EncodeFrameArgs
+local function process_frame(args)
+  local color_to_index = args.color_to_index
+  local delayTime = args.delayTime
+  local frameIndex = args.frameIndex
+  local frames_count = args.frames_count
+  local height = args.height
+  local imageData = args.imageData
+  local out = args.out
+  local profiler = args.profiler
+  local width = args.width
+
+  local write_byte = get_write_byte(out)
+  local write_word = get_write_word(out)
+
+  -- Graphic Control Extension (for timing and transparency)
+  if frames_count > 1 or delayTime > 0 then
+    write_byte(0x21) -- Extension introducer
+    write_byte(0xF9) -- Graphic control label
+    write_byte(4)    -- Block size
+
+    -- Packed field:
+    -- - Reserved: 0 (3 bits)
+    -- - Disposal Method: 0 (no disposal specified)
+    -- - User Input Flag: 0 (no user input)
+    -- - Transparent Color Flag: 0 (no transparency)
+    write_byte(0)
+
+    write_word(delayTime) -- Delay time in hundredths of a second
+    write_byte(0)         -- Transparent color index (unused)
+    write_byte(0)         -- Block terminator
+  end
+
+  -- Image Descriptor
+  write_byte(0x2C)   -- Image separator
+  write_word(0)      -- Left position
+  write_word(0)      -- Top position
+  write_word(width)  -- Image width
+  write_word(height) -- Image height
+
+  -- Packed field:
+  -- - Local Color Table Flag: 0 (use global)
+  -- - Interlace Flag: 0 (not interlaced)
+  -- - Sort Flag: 0
+  -- - Reserved: 0 (2 bits)
+  -- - Size of Local Color Table: 0 (no local table)
+  write_byte(0)
+
+  -- Convert image to indexed color
+  profiler.start_section("Frame " .. frameIndex .. " - Color Quantization")
+  local indexedData = quantize_frame({
+    imageData = imageData,
+    height = height,
+    width = width,
+  })
+  profiler.end_section("Frame " .. frameIndex .. " - Color Quantization")
+
+  -- Image Data (LZW-compressed)
+  profiler.start_section("Frame " .. frameIndex .. " - LZW Compression")
+  local minCodeSize = 8 -- 8 bits for 256-color palette
+  write_byte(minCodeSize)
+  local compressed = compress(indexedData, minCodeSize)
+  profiler.end_section("Frame " .. frameIndex .. " - LZW Compression")
+
+  -- Write compressed data in sub-blocks (max 255 bytes each)
+  local pos = 1
+  while pos <= #compressed do
+    local blockSize = math.min(255, #compressed - pos + 1)
+    write_byte(blockSize)
+    for i = pos, pos + blockSize - 1 do
+      write_byte(compressed[i])
+    end
+    pos = pos + blockSize
+  end
+
+  write_byte(0) -- Block terminator
+end
+
 --- @class EncodeGifArgs
 --- @field delay number
 --- @field frames love.ImageData[]
@@ -354,69 +464,17 @@ local function encode_gif(args)
 
   -- process each frame
   for frameIndex, imageData in ipairs(frames) do
-    -- Graphic Control Extension (for timing and transparency)
-    if #frames > 1 or delayTime > 0 then
-      write_byte(0x21) -- Extension introducer
-      write_byte(0xF9) -- Graphic control label
-      write_byte(4)    -- Block size
-
-      -- Packed field:
-      -- - Reserved: 0 (3 bits)
-      -- - Disposal Method: 0 (no disposal specified)
-      -- - User Input Flag: 0 (no user input)
-      -- - Transparent Color Flag: 0 (no transparency)
-      write_byte(0)
-
-      write_word(delayTime) -- Delay time in hundredths of a second
-      write_byte(0)         -- Transparent color index (unused)
-      write_byte(0)         -- Block terminator
-    end
-
-    -- Image Descriptor
-    write_byte(0x2C)   -- Image separator
-    write_word(0)      -- Left position
-    write_word(0)      -- Top position
-    write_word(width)  -- Image width
-    write_word(height) -- Image height
-
-    -- Packed field:
-    -- - Local Color Table Flag: 0 (use global)
-    -- - Interlace Flag: 0 (not interlaced)
-    -- - Sort Flag: 0
-    -- - Reserved: 0 (2 bits)
-    -- - Size of Local Color Table: 0 (no local table)
-    write_byte(0)
-
-    -- Convert image to indexed color
-    profiler.start_section("Frame " .. frameIndex .. " - Color Quantization")
-    local indexedData = quantize_frame({
-      imageData = imageData,
+    process_frame({
+      color_to_index = color_to_index,
+      delayTime = delayTime,
+      frameIndex = frameIndex,
+      frames_count = #frames,
       height = height,
+      imageData = imageData,
+      out = out,
+      profiler = profiler,
       width = width,
     })
-    profiler.end_section("Frame " .. frameIndex .. " - Color Quantization")
-
-    -- Image Data (LZW-compressed)
-    profiler.start_section("Frame " .. frameIndex .. " - LZW Compression")
-    local minCodeSize = 8 -- 8 bits for 256-color palette
-    write_byte(minCodeSize)
-    local compressed = compress(indexedData, minCodeSize)
-    profiler.end_section("Frame " .. frameIndex .. " - LZW Compression")
-
-    -- Write compressed data in sub-blocks (max 255 bytes each)
-    local pos = 1
-    while pos <= #compressed do
-      local blockSize = math.min(255, #compressed - pos + 1)
-      write_byte(blockSize)
-
-      for i = pos, pos + blockSize - 1 do
-        write_byte(compressed[i])
-      end
-
-      pos = pos + blockSize
-    end
-
-    write_byte(0) -- Block terminator
   end
 
   -- write gif trailer
