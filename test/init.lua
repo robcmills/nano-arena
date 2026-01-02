@@ -22,7 +22,7 @@ local test_state = {
       gif:start(g.canvas)
     end
   end,
-  record = false,
+  record = true,
   update_pre = function(self)
     self.current.update_pre()
   end,

@@ -1,5 +1,41 @@
+-- ============================================
+-- Color Quantization
+-- ============================================
+
+local function find_closest_color(r, g, b)
+  -- Direct calculation for 6x6x6 cube (no searching needed)
+  local ri = math.floor(r / 255 * 5 + 0.5)
+  local gi = math.floor(g / 255 * 5 + 0.5)
+  local bi = math.floor(b / 255 * 5 + 0.5)
+  return ri * 36 + gi * 6 + bi
+end
+
+local function quantize_frame(args)
+  local imageData = args.imageData
+  local height = args.height
+  local width = args.width
+  local indexedData = {}
+
+  for y = 0, height - 1 do
+    for x = 0, width - 1 do
+      local r, g, b = imageData:getPixel(x, y)
+      -- Convert from [0,1] to [0,255]
+      r = math.floor(r * 255 + 0.5)
+      g = math.floor(g * 255 + 0.5)
+      b = math.floor(b * 255 + 0.5)
+      -- Find closest palette color
+      local index = find_closest_color(r, g, b)
+      table.insert(indexedData, index)
+    end
+  end
+  return indexedData
+end
+
 local function encode_gif(args)
-  local frames, width, height, delay = args.frames, args.width, args.height, args.delay
+  local frames = args.frames
+  local width = args.width
+  local height = args.height
+  local delay = args.delay
 
   -- ============================================
   -- Profiling Setup
@@ -104,18 +140,6 @@ local function encode_gif(args)
     end
 
     return palette
-  end
-
-  -- ============================================
-  -- Color Quantization
-  -- ============================================
-
-  local function findClosestColor(r, g, b)
-    -- Direct calculation for 6x6x6 cube (no searching needed)
-    local ri = math.floor(r / 255 * 5 + 0.5)
-    local gi = math.floor(g / 255 * 5 + 0.5)
-    local bi = math.floor(b / 255 * 5 + 0.5)
-    return ri * 36 + gi * 6 + bi
   end
 
   -- ============================================
@@ -315,21 +339,11 @@ local function encode_gif(args)
 
     -- Convert image to indexed color
     startSection("Frame " .. frameIndex .. " - Color Quantization")
-    local indexedData = {}
-    for y = 0, height - 1 do
-      for x = 0, width - 1 do
-        local r, g, b, a = imageData:getPixel(x, y)
-
-        -- Convert from [0,1] to [0,255]
-        r = math.floor(r * 255 + 0.5)
-        g = math.floor(g * 255 + 0.5)
-        b = math.floor(b * 255 + 0.5)
-
-        -- Find closest palette color
-        local index = findClosestColor(r, g, b)
-        table.insert(indexedData, index)
-      end
-    end
+    local indexedData = quantize_frame({
+      imageData = imageData,
+      height = height,
+      width = width,
+    })
     endSection("Frame " .. frameIndex .. " - Color Quantization")
 
     -- Image Data (LZW-compressed)
