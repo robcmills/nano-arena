@@ -1,5 +1,5 @@
 local g = require('g')
-local get_gif_recorder = require('util/gif_recorder')
+local get_gif_recorder = require('gif/get_gif_recorder')
 
 ---@class Test
 ---@field name string Test name

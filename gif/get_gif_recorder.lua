@@ -1,4 +1,4 @@
-local encode_gif = require('util/encode')
+local encode_gif = require('gif/encode_gif')
 
 --- @class GifRecorderArgs
 --- @field canvas love.Canvas
