@@ -13,7 +13,9 @@ function love.draw()
   elseif g.state == 'editor' then
     draw_editor()
   end
-  draw_debug()
+  if g.debug then
+    draw_debug()
+  end
   love.graphics.setBlendMode('alpha')
   love.graphics.setCanvas()
   love.graphics.clear(0, 0, 0)
