@@ -1,4 +1,5 @@
 local compress_lzw = require('gif/compress_lzw')
+local constants = require('gif/constants')
 local quantize_frame = require('gif/quantize_frame')
 
 --- @class EncodeFrameArgs
@@ -6,7 +7,6 @@ local quantize_frame = require('gif/quantize_frame')
 --- @field frameIndex number
 --- @field imageData love.ImageData
 --- @field height number
---- @field minCodeSize number
 --- @field profiler Profiler
 --- @field width number
 
@@ -16,7 +16,6 @@ local function encode_frame(args)
   local frameIndex = args.frameIndex
   local height = args.height
   local imageData = args.imageData
-  local minCodeSize = args.minCodeSize
   local profiler = args.profiler
   local width = args.width
 
@@ -32,7 +31,7 @@ local function encode_frame(args)
 
   -- Image Data (LZW-compressed)
   profiler.start_section("Frame " .. frameIndex .. " - LZW Compression")
-  local compressed = compress_lzw(indexedData, minCodeSize)
+  local compressed = compress_lzw(indexedData, constants.min_code_size)
   profiler.end_section("Frame " .. frameIndex .. " - LZW Compression")
 
   return compressed

@@ -220,3 +220,40 @@ Total Memory Delta: 632.66 KB
   Final Concatenation              0.0002s (  0.0%)  +115.82 KB
 ==========================================
 
+After refactoring gif encoder to encode each frame immediately,
+we now get less frames:
+I'm starting to see what is happening. We are fucking with how long each frame takes,
+in this case, the encoding is taking longer than 16ms (60fps),
+thus causing framerate to drop, and the engine is skipping frames to catch up.
+
+GIF Recording started...
+Encoding 8 frames...
+
+========== GIF ENCODER PROFILE ==========
+Total Time: 0.5470 seconds
+Total Memory Delta: 480.72 KB
+
+--- Section Breakdown ---
+  Frame 1 - Color Quantization     0.0276s (  5.0%)  +4096.39 KB
+  Frame 5 - Color Quantization     0.0272s (  5.0%)  +4096.53 KB
+  Frame 2 - Color Quantization     0.0265s (  4.8%)  +4096.39 KB
+  Frame 3 - Color Quantization     0.0258s (  4.7%)  +4096.44 KB
+  Frame 6 - Color Quantization     0.0257s (  4.7%)  +4096.34 KB
+  Frame 7 - Color Quantization     0.0254s (  4.6%)  +4096.34 KB
+  Frame 4 - Color Quantization     0.0253s (  4.6%)  +4096.34 KB
+  Frame 8 - Color Quantization     0.0251s (  4.6%)  +4096.34 KB
+  Frame 2 - LZW Compression        0.0168s (  3.1%)  +626.39 KB
+  Frame 1 - LZW Compression        0.0168s (  3.1%)  +625.64 KB
+  Frame 5 - LZW Compression        0.0165s (  3.0%)  +631.50 KB
+  Frame 8 - LZW Compression        0.0164s (  3.0%)  +631.56 KB
+  Frame 6 - LZW Compression        0.0163s (  3.0%)  +632.16 KB
+  Frame 3 - LZW Compression        0.0162s (  3.0%)  +627.19 KB
+  Frame 4 - LZW Compression        0.0162s (  3.0%)  +629.97 KB
+  Frame 7 - LZW Compression        0.0158s (  2.9%)  +631.56 KB
+  Final Concatenation              0.0001s (  0.0%)  +49.83 KB
+==========================================
+
+Saved to: /Users/robcmills/Library/Application Support/LOVE/nano-arena/test2.gif
+
+But this change was prep to parallelize gif encoding with threads.
+I def don't intend to encode every frame in the main thread.

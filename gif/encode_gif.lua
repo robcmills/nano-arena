@@ -1,6 +1,5 @@
-local encode_frame = require('gif/encode_frame')
+local constants = require('gif/constants')
 local generate_palette = require('gif/generate_palette')
-local get_profiler = require('util/get_profiler')
 
 -- ============================================
 -- Helper Functions for Writing Data
@@ -80,44 +79,21 @@ local function write_global_color_table(out, palette)
   end
 end
 
---- If palette is provided, build a fast lookup table
---- @param palette? RGB[]
-local function get_color_to_index(palette)
-  if not palette then return end
-
-  local color_to_index = {}
-  local palette_size = #palette
-
-  for i = 1, palette_size do
-    local c = palette[i]
-    local key = c[1] * 65536 + c[2] * 256 + c[3]
-    color_to_index[key] = i - 1
-  end
-
-  return color_to_index
-end
-
 --- @class WriteFrameArgs
---- @field color_to_index? table
 --- @field delayTime number
---- @field frameIndex number
+--- @field frame table
 --- @field frames_count number
 --- @field height number
---- @field imageData love.ImageData
 --- @field out table
---- @field profiler Profiler
 --- @field width number
 
 --- @param args WriteFrameArgs
 local function write_frame(args)
-  local color_to_index = args.color_to_index
   local delayTime = args.delayTime
-  local frameIndex = args.frameIndex
+  local frame = args.frame
   local frames_count = args.frames_count
   local height = args.height
-  local imageData = args.imageData
   local out = args.out
-  local profiler = args.profiler
   local width = args.width
 
   local write_byte = get_write_byte(out)
@@ -156,26 +132,15 @@ local function write_frame(args)
   -- - Size of Local Color Table: 0 (no local table)
   write_byte(0)
 
-  local minCodeSize = 8 -- 8 bits for 256-color palette
-  write_byte(minCodeSize)
-
-  local encoded = encode_frame({
-    color_to_index = color_to_index,
-    frameIndex = frameIndex,
-    height = height,
-    imageData = imageData,
-    minCodeSize = minCodeSize,
-    profiler = profiler,
-    width = width,
-  })
+  write_byte(constants.min_code_size)
 
   -- Write encoded data in sub-blocks (max 255 bytes each)
   local pos = 1
-  while pos <= #encoded do
-    local blockSize = math.min(255, #encoded - pos + 1)
+  while pos <= #frame do
+    local blockSize = math.min(255, #frame - pos + 1)
     write_byte(blockSize)
     for i = pos, pos + blockSize - 1 do
-      write_byte(encoded[i])
+      write_byte(frame[i])
     end
     pos = pos + blockSize
   end
@@ -185,9 +150,10 @@ end
 
 --- @class EncodeGifArgs
 --- @field delay number
---- @field frames love.ImageData[]
+--- @field frames table
 --- @field height number
 --- @field palette? RGB[]
+--- @field profiler Profiler
 --- @field width number
 
 --- @param args EncodeGifArgs
@@ -199,9 +165,8 @@ local function encode_gif(args)
   if palette then
     assert(#palette <= 256, "Palette must be no more than 256 colors")
   end
+  local profiler = args.profiler
   local width = args.width
-
-  local profiler = get_profiler()
 
   -- Convert delay from seconds to hundredths of a second (GIF time unit)
   local delayTime = math.floor(delay * 100)
@@ -219,7 +184,6 @@ local function encode_gif(args)
   write_word(height)
 
   write_global_color_table(out, palette)
-  local color_to_index = get_color_to_index(palette)
 
   -- Netscape extension for animation loop
   if #frames > 1 then
@@ -234,17 +198,14 @@ local function encode_gif(args)
     write_byte(0)            -- Block terminator
   end
 
-  -- process each frame
-  for frameIndex, imageData in ipairs(frames) do
+  -- write each frame
+  for _, frame in ipairs(frames) do
     write_frame({
-      color_to_index = color_to_index,
       delayTime = delayTime,
-      frameIndex = frameIndex,
+      frame = frame,
       frames_count = #frames,
       height = height,
-      imageData = imageData,
       out = out,
-      profiler = profiler,
       width = width,
     })
   end
