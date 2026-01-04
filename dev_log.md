@@ -161,3 +161,62 @@ Total Memory Delta: 318.76 KB
   Final Concatenation              0.0001s (  0.0%)  +62.13 KB
 ==========================================
 
+
+Somehow the same test is now producing more frames ??
+
+========== GIF ENCODER PROFILE ==========
+Total Time: 1.0391 seconds
+Total Memory Delta: 632.66 KB
+
+--- Section Breakdown ---
+  Frame 1 - Color Quantization     0.0370s (  3.6%)  +4096.39 KB
+  Frame 2 - Color Quantization     0.0262s (  2.5%)  +4096.39 KB
+  Frame 7 - Color Quantization     0.0260s (  2.5%)  +4096.34 KB
+  Frame 11 - Color Quantization    0.0259s (  2.5%)  +4096.34 KB
+  Frame 23 - Color Quantization    0.0258s (  2.5%)  +4096.34 KB
+  Frame 18 - Color Quantization    0.0257s (  2.5%)  +4096.34 KB
+  Frame 10 - Color Quantization    0.0257s (  2.5%)  +4096.34 KB
+  Frame 20 - Color Quantization    0.0255s (  2.5%)  +4096.34 KB
+  Frame 12 - Color Quantization    0.0255s (  2.5%)  +4096.34 KB
+  Frame 22 - Color Quantization    0.0254s (  2.4%)  +4096.34 KB
+  Frame 8 - Color Quantization     0.0253s (  2.4%)  +4096.34 KB
+  Frame 21 - Color Quantization    0.0252s (  2.4%)  +4096.34 KB
+  Frame 5 - Color Quantization     0.0252s (  2.4%)  +4096.53 KB
+  Frame 9 - Color Quantization     0.0252s (  2.4%)  +4096.72 KB
+  Frame 13 - Color Quantization    0.0252s (  2.4%)  +4096.34 KB
+  Frame 15 - Color Quantization    0.0251s (  2.4%)  +4096.34 KB
+  Frame 6 - Color Quantization     0.0251s (  2.4%)  +4096.34 KB
+  Frame 14 - Color Quantization    0.0251s (  2.4%)  +4096.34 KB
+  Frame 16 - Color Quantization    0.0251s (  2.4%)  +4096.34 KB
+  Frame 19 - Color Quantization    0.0250s (  2.4%)  +4096.34 KB
+  Frame 24 - Color Quantization    0.0250s (  2.4%)  +4096.34 KB
+  Frame 17 - Color Quantization    0.0250s (  2.4%)  +4097.09 KB
+  Frame 4 - Color Quantization     0.0249s (  2.4%)  +4096.34 KB
+  Frame 3 - Color Quantization     0.0245s (  2.4%)  +4096.44 KB
+  Frame 1 - LZW Compression        0.0196s (  1.9%)  +624.88 KB
+  Frame 10 - LZW Compression       0.0169s (  1.6%)  +624.67 KB
+  Frame 19 - LZW Compression       0.0168s (  1.6%)  +626.39 KB
+  Frame 13 - LZW Compression       0.0167s (  1.6%)  +625.83 KB
+  Frame 2 - LZW Compression        0.0167s (  1.6%)  +620.41 KB
+  Frame 7 - LZW Compression        0.0166s (  1.6%)  +623.74 KB
+  Frame 14 - LZW Compression       0.0166s (  1.6%)  +625.52 KB
+  Frame 17 - LZW Compression       0.0166s (  1.6%)  +625.48 KB
+  Frame 20 - LZW Compression       0.0165s (  1.6%)  +626.17 KB
+  Frame 15 - LZW Compression       0.0165s (  1.6%)  +625.52 KB
+  Frame 3 - LZW Compression        0.0165s (  1.6%)  +621.20 KB
+  Frame 16 - LZW Compression       0.0165s (  1.6%)  +626.57 KB
+  Frame 22 - LZW Compression       0.0164s (  1.6%)  +625.79 KB
+  Frame 12 - LZW Compression       0.0164s (  1.6%)  +625.16 KB
+  Frame 24 - LZW Compression       0.0164s (  1.6%)  +625.57 KB
+  Frame 9 - LZW Compression        0.0164s (  1.6%)  +624.67 KB
+  Frame 5 - LZW Compression        0.0164s (  1.6%)  +621.96 KB
+  Frame 11 - LZW Compression       0.0164s (  1.6%)  +625.16 KB
+  Frame 4 - LZW Compression        0.0163s (  1.6%)  +621.20 KB
+  Frame 18 - LZW Compression       0.0163s (  1.6%)  +626.07 KB
+  Frame 23 - LZW Compression       0.0162s (  1.6%)  +625.57 KB
+  Frame 8 - LZW Compression        0.0162s (  1.6%)  +623.98 KB
+  Frame 6 - LZW Compression        0.0160s (  1.5%)  +622.17 KB
+  Frame 21 - LZW Compression       0.0160s (  1.5%)  +626.17 KB
+  Final Concatenation              0.0002s (  0.0%)  +115.82 KB
+==========================================
+
