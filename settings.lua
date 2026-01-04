@@ -1,5 +1,7 @@
 ---@class Settings
 ---@field allow_void_suicide boolean Allow player to move into void
+---@field debug_x number Debug print X position in pixels
+---@field debug_y number Debug print Y position in pixels
 ---@field grid_color [number, number, number] Grid color
 ---@field grid_size number Grid size in pixels
 ---@field player_move_speed number Player movement speed in pixels per second
@@ -10,6 +12,8 @@
 ---@type Settings
 local settings = {
   allow_void_suicide = false,
+  debug_x = 128,
+  debug_y = 128,
   grid_color = {0.25, 0.25, 0.25}, -- todo: move to editor
   grid_size = 8, -- todo: move to editor
   player_move_speed = 100,
