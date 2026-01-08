@@ -111,6 +111,7 @@ local function get_gif_recorder()
     local frameCount = state.frame_index - 1
     print(string.format("Waiting for %d frames to finish encoding...", frameCount))
 
+    state.profiler.start_section("Wait for thread to finish")
     -- Collect all encoded frames from the worker thread
     local encodedFrames = {}
     for i = 1, frameCount do
@@ -126,10 +127,13 @@ local function get_gif_recorder()
     state.inputChannel:push({ command = "stop" })
     state.thread:wait()
 
+    state.profiler.end_section("Wait for thread to finish")
+
     -- Create new thread for next recording
     state.thread = love.thread.newThread("gif/encode_frame_worker.lua")
 
     print(string.format("Encoding %d frames into GIF...", frameCount))
+    state.profiler.start_section("Encoding gif")
     local gif = encode_gif({
       delay = state.delay,
       frames = encodedFrames,
@@ -141,6 +145,9 @@ local function get_gif_recorder()
 
     love.filesystem.write(state.filename, gif)
     print("Saved to: " .. love.filesystem.getSaveDirectory() .. "/" .. state.filename)
+
+    state.profiler.end_section("Encoding gif")
+    state.profiler.print_profile()
 
     state.frame_index = 1
     state.frames = {}

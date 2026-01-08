@@ -10,19 +10,19 @@ end
 
 --- @class QuantizeFrameArgs
 --- @field color_to_index? table
---- @field imageData love.ImageData
+--- @field bufferAddress number
 --- @field height number
 --- @field width number
 
 --- @param args QuantizeFrameArgs
 local function quantize_frame(args)
+  local bufferAddress = args.bufferAddress
   local color_to_index = args.color_to_index
-  local imageData = args.imageData
   local height = args.height
   local width = args.width
 
   local indexedData = {}
-  local pointer = ffi.cast("uint8_t*", imageData:getFFIPointer())
+  local pointer = ffi.cast("uint8_t*", ffi.cast("uintptr_t", bufferAddress))
 
   for i = 0, width * height - 1 do
     local offset = i * 4

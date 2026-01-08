@@ -6,13 +6,16 @@
 --- @return Profiler
 local function get_profiler()
   local profile = {
-    startTime = love.timer.getTime(),
+    startTime = 0,
     startMemory = collectgarbage("count"),
     sections = {}
   }
 
   local function start_section(name)
     collectgarbage("collect") -- Force GC for accurate memory measurement
+    if profile.startTime == 0 then
+      profile.startTime = love.timer.getTime()
+    end
     profile.sections[name] = {
       startTime = love.timer.getTime(),
       startMemory = collectgarbage("count")

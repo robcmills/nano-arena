@@ -213,11 +213,8 @@ local function encode_gif(args)
   -- write gif trailer
   write_byte(0x3B)
 
-  profiler.start_section("Final Concatenation")
   local result = table.concat(out)
-  profiler.end_section("Final Concatenation")
 
-  profiler.print_profile()
   return result
 end
 
