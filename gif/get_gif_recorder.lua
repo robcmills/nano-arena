@@ -1,7 +1,14 @@
-local encode_frame = require('gif/encode_frame')
+local ffi = require('ffi')
 local encode_gif = require('gif/encode_gif')
 local get_color_to_index = require('gif/get_color_to_index')
 local get_profiler = require('util/get_profiler')
+
+ffi.cdef[[
+  void* malloc(size_t size);
+  void free(void* ptr);
+  void* memcpy(void* dest, const void* src, size_t n);
+  typedef struct { uint8_t r, g, b, a; } RGBA;
+]]
 
 --- @class GifRecorderState
 --- @field canvas love.Canvas | nil
@@ -10,9 +17,13 @@ local get_profiler = require('util/get_profiler')
 --- @field frames table
 --- @field filename string
 --- @field frame_index number
+--- @field inputChannel love.Channel
+--- @field outputChannel love.Channel
 --- @field palette? RGB[]
 --- @field profiler Profiler
 --- @field recording boolean
+--- @field sharedBuffers table
+--- @field thread love.Thread
 
 --- @class GifRecorderInitArgs
 --- @field canvas love.Canvas
@@ -28,8 +39,12 @@ local function get_gif_recorder()
     filename = "recording.gif",
     frame_index = 1,
     frames = {},
+    inputChannel = love.thread.getChannel("gif_encode_input"),
+    outputChannel = love.thread.getChannel("gif_encode_output"),
     profiler = get_profiler(),
     recording = false,
+    sharedBuffers = {},
+    thread = love.thread.newThread("gif/encode_frame_worker.lua"),
   }
 
   --- @param args GifRecorderInitArgs
@@ -48,31 +63,76 @@ local function get_gif_recorder()
 
   local function start()
     state.frames = {}
+    state.frame_index = 1
     state.recording = true
+    state.sharedBuffers = {}
+
+    state.thread:start()
+
     print("GIF Recording started...")
   end
 
   local function capture_frame()
     if not state.recording then return end
 
-    table.insert(state.frames, encode_frame({
+    local width = state.canvas:getWidth()
+    local height = state.canvas:getHeight()
+    local imageData = state.canvas:newImageData()
+
+    -- Allocate shared buffer (lives outside Lua's memory management)
+    local frameSize = width * height * 4
+    local sharedBuffer = ffi.C.malloc(frameSize)
+
+    -- Copy frame data to shared buffer
+    local dest = ffi.cast("RGBA*", sharedBuffer)
+    local src = ffi.cast("RGBA*", imageData:getFFIPointer())
+    ffi.C.memcpy(dest, src, frameSize)
+
+    -- Pass the pointer address as a number to the worker thread
+    state.inputChannel:push({
+      command = "encode",
+      bufferAddress = tonumber(ffi.cast("uintptr_t", sharedBuffer)),
       color_to_index = state.color_to_index,
       frameIndex = state.frame_index,
-      height = state.canvas:getHeight(),
-      imageData = state.canvas:newImageData(),
-      profiler = state.profiler,
-      width = state.canvas:getWidth(),
-    }))
+      frameSize = frameSize,
+      height = height,
+      width = width,
+    })
+
+    -- Track the buffer for later cleanup
+    table.insert(state.sharedBuffers, sharedBuffer)
+
     state.frame_index = state.frame_index + 1
   end
 
   local function stop()
     if not state.recording then return end
 
-    print(string.format("Encoding %d frames...", #state.frames))
+    local frameCount = state.frame_index - 1
+    print(string.format("Waiting for %d frames to finish encoding...", frameCount))
+
+    -- Collect all encoded frames from the worker thread
+    local encodedFrames = {}
+    for i = 1, frameCount do
+      local result = state.outputChannel:demand() -- Block until result is available
+      encodedFrames[result.frameIndex] = result.compressed
+
+      -- Free the shared buffer
+      local bufferPtr = ffi.cast("void*", ffi.cast("uintptr_t", result.bufferAddress))
+      ffi.C.free(bufferPtr)
+    end
+
+    -- Stop the worker thread
+    state.inputChannel:push({ command = "stop" })
+    state.thread:wait()
+
+    -- Create new thread for next recording
+    state.thread = love.thread.newThread("gif/encode_frame_worker.lua")
+
+    print(string.format("Encoding %d frames into GIF...", frameCount))
     local gif = encode_gif({
       delay = state.delay,
-      frames = state.frames,
+      frames = encodedFrames,
       height = state.canvas:getHeight(),
       palette = state.palette,
       profiler = state.profiler,
@@ -82,8 +142,9 @@ local function get_gif_recorder()
     love.filesystem.write(state.filename, gif)
     print("Saved to: " .. love.filesystem.getSaveDirectory() .. "/" .. state.filename)
 
-    state.frame_index = 0
+    state.frame_index = 1
     state.frames = {}
+    state.sharedBuffers = {}
     state.recording = false
   end
 
