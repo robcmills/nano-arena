@@ -3,7 +3,7 @@ local settings = require('settings')
 -- local draw_screen_center = require('draw/draw_screen_center')
 
 local function draw_debug()
-  if g.debug then
+  if g.debug and g.draw_debug then
     love.graphics.setColor(1, 1, 1, 1)
     love.graphics.print(g.debug, settings.debug_x, settings.debug_y)
   end

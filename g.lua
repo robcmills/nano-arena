@@ -4,6 +4,7 @@
 ---@field canvas_scale number Scale factor for canvas rendering (integer)
 ---@field canvas_width number Width of canvas in pixels
 ---@field debug string? Renders at top left of screen if not nil.
+---@field draw_debug boolean Whether to draw debug info
 ---@field editor EditorState | nil Editor game state
 ---@field fonts FontsState | nil Fonts state
 ---@field frame number Frame counter
@@ -56,9 +57,10 @@ local g = {
   canvas_height = 0,
   canvas_scale = 1,
   canvas_width = 0,
+  draw_debug = false,
   fonts = nil,
   frame = 0,
-  is_test = true,
+  is_test = false,
   map = nil,
   now = 0,
   palette = nil,

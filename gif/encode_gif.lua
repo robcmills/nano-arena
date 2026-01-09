@@ -35,7 +35,6 @@ end
 -- Color Quantization
 -- ============================================
 
-
 --- @alias RGB [number, number, number]
 
 --- @param out table
@@ -165,7 +164,6 @@ local function encode_gif(args)
   if palette then
     assert(#palette <= 256, "Palette must be no more than 256 colors")
   end
-  local profiler = args.profiler
   local width = args.width
 
   -- Convert delay from seconds to hundredths of a second (GIF time unit)
