@@ -15,12 +15,17 @@
 ---@field player PlayerState | nil Player game state
 ---@field state 'game' | 'editor' Game state
 
+---@class WeaponState
+---@field cooldown number milliseconds wait between shots
+---@field id string
+
 ---@class PlayerState
 ---@field dir string Current movement direction: 'up', 'down', 'left', 'right'
 ---@field flip_x boolean? Whether to flip sprite horizontally
 ---@field from_tile_x number? Starting tile X for movement interpolation
 ---@field from_tile_y number? Starting tile Y for movement interpolation
 ---@field last_move_time number? Timestamp of last movement start, nil if not moving
+---@field last_shoot_time number? Timestamp of last shoot start, nil if not shooting
 ---@field map_pixel_x number Player X position in map pixels
 ---@field map_pixel_y number Player Y position in map pixels
 ---@field speed number Movement speed in pixels per second
@@ -31,6 +36,7 @@
 ---@field tile_y number Player current Y tile position
 ---@field to_tile_x number? Target tile X for movement interpolation
 ---@field to_tile_y number? Target tile Y for movement interpolation
+---@field weapon? WeaponState Weapon information
 
 ---@class PlayerSprites
 ---@field down love.Quad | nil Sprite quad for down direction
@@ -57,7 +63,7 @@ local g = {
   canvas_height = 0,
   canvas_scale = 1,
   canvas_width = 0,
-  draw_debug = false,
+  draw_debug = true,
   fonts = nil,
   frame = 0,
   is_test = false,

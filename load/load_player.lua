@@ -1,5 +1,6 @@
 local g = require('g')
 local settings = require('settings')
+local weapons = require('weapons')
 
 local function load_player()
   g.player = {
@@ -8,6 +9,7 @@ local function load_player()
     from_tile_x = nil,
     from_tile_y = nil,
     last_move_time = nil,
+    last_shoot_time = nil,
     map_pixel_x = 0,
     map_pixel_y = 0,
     speed = 0,
@@ -23,6 +25,7 @@ local function load_player()
     tile_y = 0,
     to_tile_x = nil,
     to_tile_y = nil,
+    weapon = weapons.line,
   }
   local sheet_width = g.player.sprite_sheet:getWidth()
   local sheet_height = g.player.sprite_sheet:getHeight()

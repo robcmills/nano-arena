@@ -4,7 +4,7 @@ local is_wall = require('map/is_wall')
 local settings = require('settings')
 
 -- move player one tile in the given direction
-local function move_player(p, dir)
+local function player_move(p, dir)
   p.dir = dir
   if dir == 'right' then p.flip_x = false end
   if dir == 'left' then p.flip_x = true end
@@ -34,4 +34,4 @@ local function move_player(p, dir)
   p.speed = settings.player_move_speed
 end
 
-return move_player
+return player_move

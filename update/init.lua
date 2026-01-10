@@ -13,6 +13,6 @@ function love.update(dt)
     local input = get_input()
     update_player(g.player, input)
 
-    g.debug = string.format("FRAME: %d NOW: %.3f DT: %.3f", g.frame, g.now, dt)
+    -- g.debug = string.format("FRAME: %d NOW: %.3f DT: %.3f", g.frame, g.now, dt)
   end
 end

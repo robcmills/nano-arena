@@ -9,6 +9,7 @@ local function get_input()
       down = love.keyboard.isDown('down'),
       left = love.keyboard.isDown('left'),
       right = love.keyboard.isDown('right'),
+      shoot = love.keyboard.isDown('space'),
       up = love.keyboard.isDown('up'),
     }
   end

@@ -1,17 +1,23 @@
-local g = require('g')
-local move_player = require('update/move_player')
+local player_can_move = require('update/player_can_move')
+local player_can_shoot = require('update/player_can_shoot')
+local player_move = require('update/player_move')
+local player_shoot = require('update/player_shoot')
 
 local function update_player_input(p, input)
-  if g.player.last_move_time ~= nil then return end
+  if input.shoot and player_can_shoot(p) then
+    player_shoot(p)
+  end
 
-  if input.left then
-    move_player(p, 'left')
-  elseif input.right then
-    move_player(p, 'right')
-  elseif input.up then
-    move_player(p, 'up')
-  elseif input.down then
-    move_player(p, 'down')
+  if player_can_move(p) then
+    if input.left then
+      player_move(p, 'left')
+    elseif input.right then
+      player_move(p, 'right')
+    elseif input.up then
+      player_move(p, 'up')
+    elseif input.down then
+      player_move(p, 'down')
+    end
   end
 end
 
