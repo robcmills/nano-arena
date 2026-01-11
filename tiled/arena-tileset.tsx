@@ -11,4 +11,9 @@
    <property name="type" value="goal"/>
   </properties>
  </tile>
+ <tile id="83">
+  <properties>
+   <property name="type" value="goal"/>
+  </properties>
+ </tile>
 </tileset>

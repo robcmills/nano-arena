@@ -7,6 +7,9 @@
     "expandedProjectPaths": [
     ],
     "fileStates": {
+        "": {
+            "scaleInDock": 1
+        },
         "arena-map-1.tmx": {
             "scale": 6.8643,
             "selectedLayer": 2,
@@ -47,6 +50,10 @@
         "arena-map-3.tmx#arena-tileset": {
             "scaleInDock": 1
         },
+        "arena-tileset.tsx": {
+            "scaleInDock": 2,
+            "scaleInEditor": 11
+        },
         "gray-rocks.tsx": {
             "scaleInDock": 2,
             "scaleInEditor": 11
@@ -64,8 +71,9 @@
     "openFiles": [
     ],
     "project": "arena.tiled-project",
-    "property.type": "bool",
+    "property.type": "string",
     "recentFiles": [
+        "arena-tileset.tsx",
         "arena-map-1.tmx",
         "gray-rocks.tsx",
         "arena-map-2.tmx",
