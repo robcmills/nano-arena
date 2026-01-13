@@ -1,17 +1,16 @@
 local editor = require('editor')
-local g = require('g')
 local theme = require('theme')
 
 local function load_menu_bar()
-  editor.char_width = g.fonts.p8.char_width
-  editor.menu_padding = 2
-  editor.menu_bar_height = g.fonts.p8.char_height + editor.menu_padding * 2
+  editor.menu_padding_x = 3
+  editor.menu_padding_y = 1
+  editor.menu_bar_height = editor.font.char_height + editor.menu_padding_y * 2
 
   editor.menu_bar_items = {
-    file = { key = "F", label = "ILE" },
-    edit = { key = "E", label = "DIT" },
-    grid = { key = "G", label = "RID" },
-    help = { key = "H", label = "ELP" },
+    file = { key = "F", label = "ile" },
+    edit = { key = "E", label = "dit" },
+    grid = { key = "G", label = "rid" },
+    help = { key = "H", label = "elp" },
   }
   editor.menu_bar_order = { "file", "edit", "grid", "help" }
 
@@ -19,11 +18,11 @@ local function load_menu_bar()
   local x_offset = 0
   for _, key in ipairs(editor.menu_bar_order) do
     local item = editor.menu_bar_items[key]
-    item.width = (#item.key + #item.label) * editor.char_width + editor.menu_padding * 2
+    item.width = (#item.key + #item.label) * editor.font.char_width + editor.menu_padding_x * 2
     item.height = editor.menu_bar_height
     item.x = x_offset
     item.y = 0
-    x_offset = x_offset + item.width - editor.menu_padding * 2 + (2 * editor.char_width) -- 2 spaces between items
+    x_offset = x_offset + item.width - editor.menu_padding_x * 2 + (2 * editor.font.char_width) -- 2 spaces between items
   end
 
   -- colored menu bar text

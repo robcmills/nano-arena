@@ -12,8 +12,8 @@
 ---@type Settings
 local settings = {
   allow_void_suicide = false,
-  debug_x = 16,
-  debug_y = 16,
+  debug_x = 32,
+  debug_y = 64,
   grid_color = {0.25, 0.25, 0.25}, -- todo: move to editor
   grid_size = 8, -- todo: move to editor
   player_move_speed = 100,

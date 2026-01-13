@@ -49,6 +49,7 @@
 ---@field sti table? STI map instance
 
 ---@class FontsState
+---@field future FontInfo Future font information
 ---@field monogram FontInfo Monogram font information
 ---@field p8 FontInfo Pico-8 font information
 
@@ -63,7 +64,7 @@ local g = {
   canvas_height = 0,
   canvas_scale = 1,
   canvas_width = 0,
-  draw_debug = false,
+  draw_debug = true,
   fonts = nil,
   frame = 0,
   is_test = false,
@@ -71,7 +72,7 @@ local g = {
   now = 0,
   palette = nil,
   player = nil,
-  state = 'game',
+  state = 'editor',
 }
 
 return g

@@ -12,7 +12,7 @@ function love.update(dt)
     update_map(dt)
     local input = get_input()
     update_player(g.player, input)
-
     -- g.debug = string.format("FRAME: %d NOW: %.3f DT: %.3f", g.frame, g.now, dt)
   end
+  g.debug = 'The quick brown fox jumps over the lazy dog.\nAlpha Bravo Charlie Delta Echo'
 end

@@ -2,6 +2,14 @@ local g = require('g')
 
 local function load_fonts()
   g.fonts = {
+    future = {
+      char_height = 12,
+      char_width = 6,
+      font = love.graphics.newImageFont(
+        'assets/future-font.png',
+        'abcdefghijklmnopqrstuvwxyz.,"\'?!@_*#$%()+-/:;<=>[\\]^{|}~ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 '
+      )
+    },
     monogram = {
       char_height = 12,
       char_width = 7,

@@ -39,8 +39,8 @@ local function draw_menu_bar()
   love.graphics.setColor(1, 1, 1)
   love.graphics.print(
     editor.menu_bar_colored_text,
-    editor.menu_padding,
-    editor.menu_padding
+    editor.menu_padding_x,
+    editor.menu_padding_y
   )
 end
 
@@ -60,14 +60,13 @@ local function draw_open_menu()
       love.graphics.rectangle('fill', item.x, item.y, item.width, item.height)
       love.graphics.setColor(1, 1, 1)
     end
-    local x = menu.x + editor.menu_padding
-    local y = menu.y + editor.menu_padding + (i-1) * editor.menu_bar_height
+    local x = menu.x + editor.menu_padding_x
+    local y = menu.y + editor.menu_padding_y + (i-1) * editor.menu_bar_height
     love.graphics.print(item.colored_text, x, y)
   end
 end
 
 local function draw_menu()
-  love.graphics.setFont(g.fonts.p8.font)
   draw_menu_bar()
   draw_open_menu()
 end

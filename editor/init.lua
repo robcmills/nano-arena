@@ -1,11 +1,12 @@
 ---@class EditorState
----@field char_width number Character width in pixels
 ---@field cursor_quad love.Quad? Quad for cursor sprite
+---@field font FontInfo?
 ---@field menu_bar_colored_text (string|number)[]? Colored text array for menu bar
 ---@field menu_bar_height number? Height of menu bar in pixels
 ---@field menu_bar_items table<string, MenuBarItem>? Menu bar items by key
 ---@field menu_bar_order string[]? Ordered list of menu bar item keys
----@field menu_padding number? Padding for menu items in pixels
+---@field menu_padding_x number? Horizontal padding for menu items in pixels
+---@field menu_padding_y number? Vertical padding for menu items in pixels
 ---@field menus table<string, Menu>? Menus by key
 ---@field opened_menu string? Currently opened menu key, nil if none
 ---@field spritesheet love.Image? Editor spritesheet image
@@ -40,13 +41,14 @@
 
 ---@type EditorState
 local editor = {
-  char_width = 0,
   cursor_quad = nil,
+  font = nil,
   menu_bar_colored_text = nil,
   menu_bar_height = nil,
   menu_bar_items = nil,
   menu_bar_order = nil,
-  menu_padding = nil,
+  menu_padding_x = nil,
+  menu_padding_y = nil,
   menus = nil,
   opened_menu = nil,
   spritesheet = nil,

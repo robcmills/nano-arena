@@ -6,33 +6,33 @@ local function load_menus()
   editor.menus = {
     file = {
       items = {
-        new = { key = "N", post_label = "EW", on_click = on_click_file_new },
-        open = { key = "O", post_label = "PEN" },
-        save = { key = "S", post_label = "AVE" },
+        new = { key = "N", post_label = "ew", on_click = on_click_file_new },
+        open = { key = "O", post_label = "pen" },
+        save = { key = "S", post_label = "ave" },
       },
       items_order = { "new", "open", "save" },
     },
     edit = {
       items = {
-        undo = { key = "U", post_label = "NDO" },
-        redo = { key = "R", post_label = "EDO" },
-        copy = { key = "C", post_label = "OPY" },
-        paste = { key = "P", post_label = "ASTE" },
+        undo = { key = "U", post_label = "ndo" },
+        redo = { key = "R", post_label = "edo" },
+        copy = { key = "C", post_label = "opy" },
+        paste = { key = "P", post_label = "aste" },
       },
       items_order = { "undo", "redo", "copy", "paste" },
     },
     grid = {
       items = {
-        show_grid = { key = "S", post_label = "HOW" },
-        hide_grid = { key = "H", post_label = "IDE" },
-        color = { key = "C", post_label = "OLOR" },
-        size = { pre_label = "SI", key = "Z", post_label = "E" },
+        show_grid = { key = "S", post_label = "how" },
+        hide_grid = { key = "H", post_label = "ide" },
+        color = { key = "C", post_label = "olor" },
+        size = { pre_label = "Si", key = "z", post_label = "e" },
       },
       items_order = { "show_grid", "hide_grid", "color", "size" },
     },
     help = {
       items = {
-        help = { key = "H", post_label = "ELP" },
+        help = { key = "H", post_label = "elp" },
       },
       items_order = { "help" },
     }
@@ -58,7 +58,7 @@ local function load_menus()
       end
       item.colored_text = colored_text
     end
-    menu.width = longest_label * editor.char_width + editor.menu_padding * 2
+    menu.width = longest_label * editor.font.char_width + editor.menu_padding_x * 2
     menu.height = editor.menu_bar_height * #menu.items_order
     local menu_bar_item = editor.menu_bar_items[id]
     menu.x = menu_bar_item.x
