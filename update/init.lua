@@ -14,5 +14,7 @@ function love.update(dt)
     update_player(g.player, input)
     -- g.debug = string.format("FRAME: %d NOW: %.3f DT: %.3f", g.frame, g.now, dt)
   end
-  g.debug = 'The quick brown fox jumps over the lazy dog.\nAlpha Bravo Charlie Delta Echo'
+  g.debug = 'The quick brown fox jumps over the lazy dog.\n' ..
+      'Alpha Bravo Charlie Delta Echo\n' ..
+      'Nano Arena'
 end

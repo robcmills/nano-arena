@@ -6,7 +6,7 @@ local function load_menus()
   editor.menus = {
     file = {
       items = {
-        new = { key = "N", post_label = "ew", on_click = on_click_file_new },
+        new = { key = "N", post_label = "ew arena", on_click = on_click_file_new },
         open = { key = "O", post_label = "pen" },
         save = { key = "S", post_label = "ave" },
       },
