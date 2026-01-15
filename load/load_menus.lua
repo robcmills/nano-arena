@@ -1,5 +1,6 @@
 local editor = require('editor')
 local on_click_file_new = require('editor/on_click_file_new')
+local on_click_file_open = require('editor/on_click_file_open')
 local theme = require('theme')
 
 local function load_menus()
@@ -7,7 +8,7 @@ local function load_menus()
     file = {
       items = {
         new = { key = "N", post_label = "ew arena", on_click = on_click_file_new },
-        open = { key = "O", post_label = "pen" },
+        open = { key = "O", post_label = "pen arena", on_click = on_click_file_open },
         save = { key = "S", post_label = "ave" },
       },
       items_order = { "new", "open", "save" },

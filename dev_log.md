@@ -1,3 +1,6 @@
+ 
+
+
 First draft of working gif encoder was super slow:
 
 ========== GIF ENCODER PROFILE ==========

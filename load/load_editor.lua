@@ -16,6 +16,7 @@ local function load_editor()
     editor_spritesheet:getDimensions()
   )
   editor.spritesheet = editor_spritesheet
+  editor.windows = {}
 
   load_menu_bar()
   load_menus()

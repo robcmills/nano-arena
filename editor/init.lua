@@ -10,6 +10,7 @@
 ---@field menus table<string, Menu>? Menus by key
 ---@field opened_menu string? Currently opened menu key, nil if none
 ---@field spritesheet love.Image? Editor spritesheet image
+---@field windows table<string, WindowState>? Windows by id
 
 ---@class MenuBarItem
 ---@field height number? Item height in pixels
@@ -38,6 +39,14 @@
 ---@field width number? Item width in pixels
 ---@field x number? X position in pixels
 ---@field y number? Y position in pixels
+
+---@class WindowState
+---@field height number Height in pixels
+---@field title string Window title
+---@field width number Width in pixels
+---@field x number X position in pixels
+---@field y number Y position in pixels
+---@field state 'closed' | 'open' Window state
 
 ---@type EditorState
 local editor = {
