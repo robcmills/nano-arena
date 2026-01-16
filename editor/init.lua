@@ -9,6 +9,7 @@
 ---@field menu_padding_y number? Vertical padding for menu items in pixels
 ---@field menus table<string, Menu>? Menus by key
 ---@field opened_menu string? Currently opened menu key, nil if none
+---@field sprites love.Quad[]? Editor sprite quads. Indexed left-to-right, top-to-bottom
 ---@field spritesheet love.Image? Editor spritesheet image
 ---@field windows table<string, WindowState>? Windows by id
 
@@ -41,12 +42,12 @@
 ---@field y number? Y position in pixels
 
 ---@class WindowState
----@field height number Height in pixels
+---@field state 'closed' | 'open' Window state
+---@field tile_height number Height in number of tiles
+---@field tile_width number Width in number of tiles
 ---@field title string Window title
----@field width number Width in pixels
 ---@field x number X position in pixels
 ---@field y number Y position in pixels
----@field state 'closed' | 'open' Window state
 
 ---@type EditorState
 local editor = {

@@ -7,9 +7,9 @@ local function on_click_file_open()
   else
     editor.windows.open = create_new_window({
       placement = 'center',
+      tile_height = 8,
+      tile_width = 8,
       title = 'Open',
-      width = 100,
-      height = 100,
     })
   end
 end
