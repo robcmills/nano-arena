@@ -1,3 +1,4 @@
+local draw_line = require('draw/draw_line')
 local editor = require('editor')
 local g = require('g')
 local theme = require('theme')
@@ -7,6 +8,13 @@ local function draw_menu_bar()
   local canvas_width = g.canvas:getDimensions()
   love.graphics.setColor(theme.menu_bar_background_color)
   love.graphics.rectangle('fill', 0, 0, canvas_width, editor.menu_bar_height)
+  draw_line({
+    color = theme.menu_bar_border_color,
+    x1 = 0,
+    y1 = editor.menu_bar_height + 1,
+    x2 = canvas_width,
+    y2 = editor.menu_bar_height + 1,
+  })
 
   -- menu highlight
   local highlight_items = {}

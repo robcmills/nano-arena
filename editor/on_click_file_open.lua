@@ -9,7 +9,7 @@ local function on_click_file_open()
       placement = 'center',
       tile_height = 8,
       tile_width = 8,
-      title = 'Open',
+      title = 'Select arena',
     })
   end
 end

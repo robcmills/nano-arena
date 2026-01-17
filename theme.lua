@@ -16,9 +16,10 @@ local colors = require('colors')
 
 ---@type Theme
 local theme = {
-  editor_background_color = colors.very_dark_grey,
+  editor_background_color = colors.grey11,
   menu_background_color = colors.dark_grey,
-  menu_bar_background_color = colors.dark_grey,
+  menu_bar_background_color = colors.grey33,
+  menu_bar_border_color = colors.grey22,
   menu_bar_highlight_background_color = colors.blue,
   menu_bar_text_highlight_color = colors.p8.blue,
   menu_bar_text_normal_color = colors.white,

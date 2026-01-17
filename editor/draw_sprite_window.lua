@@ -66,7 +66,7 @@ local function draw_sprite_window(options)
     color = theme.window_title_text_color,
     text = ' ' .. title,
     x = x,
-    y = y,
+    y = y + 1,
   })
 end
 
