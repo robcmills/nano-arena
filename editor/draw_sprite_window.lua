@@ -6,8 +6,23 @@ local settings = require('settings')
 local theme = require('theme')
 
 local tile_size = settings.tile_size
+local window_sprite_indexes = {
+  full_screen = {
+    top_left = 12,
+    top_right = 13,
+    bottom_left = 20,
+    bottom_right = 21,
+  },
+  rounded = {
+    top_left = 9,
+    top_right = 11,
+    bottom_left = 25,
+    bottom_right = 27,
+  },
+}
 
 ---@class DrawSpriteWindowOptions
+---@field full_screen? boolean
 ---@field height number
 ---@field title string
 ---@field width number
@@ -16,6 +31,7 @@ local tile_size = settings.tile_size
 
 ---@param options DrawSpriteWindowOptions
 local function draw_sprite_window(options)
+  local full_screen = options.full_screen
   local height = options.height
   local title = options.title
   local width = options.width
@@ -23,28 +39,29 @@ local function draw_sprite_window(options)
   local y = options.y
 
   -- draw sprite corners
+  local indexes = full_screen and window_sprite_indexes.full_screen or window_sprite_indexes.rounded
 
   -- top left
   draw_editor_sprite({
-    index = 9,
+    index = indexes.top_left,
     x = x,
     y = y,
   })
   -- top right
   draw_editor_sprite({
-    index = 11,
+    index = indexes.top_right,
     x = x + width - tile_size,
     y = y,
   })
   -- bottom left
   draw_editor_sprite({
-    index = 25,
+    index = indexes.bottom_left,
     x = x,
     y = y + height - tile_size,
   })
   -- bottom right
   draw_editor_sprite({
-    index = 27,
+    index = indexes.bottom_right,
     x = x + width - tile_size,
     y = y + height - tile_size,
   })

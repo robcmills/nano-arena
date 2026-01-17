@@ -39,6 +39,7 @@ local function create_new_window(options)
 
   ---@type WindowState
   local window = {
+    full_screen = placement == 'fullscreen',
     height = height,
     state = 'open',
     title = options.title,

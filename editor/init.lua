@@ -46,6 +46,7 @@
 ---@field y number? Y position in pixels
 
 ---@class WindowState
+---@field full_screen boolean Whether window is full screen
 ---@field height number Height in canvas pixels
 ---@field state 'closed' | 'open' Window state
 ---@field title string Window title
