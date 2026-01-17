@@ -1,65 +1,119 @@
 local draw_editor_sprite = require('editor/draw_editor_sprite')
+local draw_rect = require('draw/draw_rect')
 local draw_text = require('draw/draw_text')
+local editor = require('editor')
 local settings = require('settings')
 local theme = require('theme')
 
 local tile_size = settings.tile_size
 
 ---@class DrawSpriteWindowOptions
----@field tile_height number
----@field tile_width number
+---@field height number
 ---@field title string
+---@field width number
 ---@field x number
 ---@field y number
 
 ---@param options DrawSpriteWindowOptions
 local function draw_sprite_window(options)
-  local tile_width = options.tile_width
-  local tile_height = options.tile_height
+  local height = options.height
+  local title = options.title
+  local width = options.width
   local x = options.x
   local y = options.y
-  local title = options.title
 
-  for row = 1, tile_height do
-    for col = 1, tile_width do
-      local index
+  -- draw sprite corners
 
-      if row == 1 then
-        -- Top row
-        if col == 1 then
-          index = 9 -- top-left corner
-        elseif col == tile_width then
-          index = 11 -- top-right corner
-        else
-          index = 10 -- top edge
-        end
-      elseif row == tile_height then
-        -- Bottom row
-        if col == 1 then
-          index = 25 -- bottom-left corner
-        elseif col == tile_width then
-          index = 27 -- bottom-right corner
-        else
-          index = 26 -- bottom edge
-        end
-      else
-        -- Middle rows
-        if col == 1 then
-          index = 17 -- left edge
-        elseif col == tile_width then
-          index = 19 -- right edge
-        else
-          index = 18 -- center
-        end
-      end
+  -- top left
+  draw_editor_sprite({
+    index = 9,
+    x = x,
+    y = y,
+  })
+  -- top right
+  draw_editor_sprite({
+    index = 11,
+    x = x + width - tile_size,
+    y = y,
+  })
+  -- bottom left
+  draw_editor_sprite({
+    index = 25,
+    x = x,
+    y = y + height - tile_size,
+  })
+  -- bottom right
+  draw_editor_sprite({
+    index = 27,
+    x = x + width - tile_size,
+    y = y + height - tile_size,
+  })
 
-      draw_editor_sprite({
-        index = index,
-        x = x + (col - 1) * tile_size,
-        y = y + (row - 1) * tile_size,
-      })
-    end
-  end
+  -- draw title bar background
+  draw_rect({
+    color = theme.window_title_bar_highlight_color,
+    height = 1,
+    width = width - tile_size * 2,
+    x = x + tile_size,
+    y = y,
+  })
+  draw_rect({
+    color = theme.window_title_bar_background_color,
+    height = editor.window_title_bar_height,
+    width = width - tile_size * 2,
+    x = x + tile_size,
+    y = y + 1,
+  })
+  draw_rect({
+    color = theme.window_title_bar_shadow_color,
+    height = 1,
+    width = width - 2,
+    x = x + 1,
+    y = y + editor.window_title_bar_height + 1,
+  })
+
+  -- draw body background
+  draw_rect({
+    color = theme.window_background_color,
+    height = height - tile_size * 2,
+    width = width,
+    x = x,
+    y = y + tile_size,
+  })
+  -- draw left border
+  draw_rect({
+    color = theme.window_border_color,
+    height = height - tile_size * 2,
+    width = 1,
+    x = x,
+    y = y + tile_size,
+  })
+  -- draw right border
+  draw_rect({
+    color = theme.window_border_color,
+    height = height - tile_size * 2,
+    width = 1,
+    x = x + width - 1,
+    y = y + tile_size,
+  })
+
+  -- draw bottom background
+  draw_rect({
+    color = theme.window_background_color,
+    height = tile_size,
+    width = width - tile_size * 2,
+    x = x + tile_size,
+    y = y + height - tile_size,
+  })
+
+  -- draw bottom border
+  draw_rect({
+    color = theme.window_border_color,
+    height = 1,
+    width = width - tile_size * 2,
+    x = x + tile_size,
+    y = y + height - 1,
+  })
 
   -- title text
   draw_text({

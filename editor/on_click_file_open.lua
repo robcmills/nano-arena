@@ -6,10 +6,10 @@ local function on_click_file_open()
     editor.windows.open.state = 'open'
   else
     editor.windows.open = create_new_window({
+      height = 128,
       placement = 'center',
-      tile_height = 8,
-      tile_width = 8,
       title = 'Select arena',
+      width = 128,
     })
   end
 end

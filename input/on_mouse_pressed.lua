@@ -1,7 +1,6 @@
 local editor = require('editor')
 local g = require('g')
 local screen_to_canvas = require('util/screen_to_canvas')
-local settings = require('settings')
 
 ---@param screen_x number
 ---@param screen_y number
@@ -19,10 +18,8 @@ local function on_mouse_pressed(screen_x, screen_y, button)
     local window = editor.windows.open
     if window and window.state == 'open' then
       -- if outside of window, close it
-      local window_width = window.tile_width * settings.tile_size
-      local window_height = window.tile_height * settings.tile_size
-      if x < window.x or x > window.x + window_width or
-         y < window.y or y > window.y + window_height then
+      if x < window.x or x > window.x + window.width or
+         y < window.y or y > window.y + window.height then
         editor.windows.open.state = 'closed'
         return
       end

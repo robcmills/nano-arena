@@ -25,9 +25,11 @@ local theme = {
   menu_bar_text_normal_color = colors.white,
   menu_text_highlight_color = colors.p8.blue,
   menu_text_normal_color = colors.white,
-  window_background_color = colors.dark_grey,
+  window_background_color = colors.grey22,
   window_border_color = colors.cyan33,
   window_title_bar_background_color = colors.cyan33,
+  window_title_bar_highlight_color = colors.cyan50,
+  window_title_bar_shadow_color = colors.cyan17,
   window_title_text_color = colors.white,
 }
 

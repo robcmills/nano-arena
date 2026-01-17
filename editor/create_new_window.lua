@@ -1,46 +1,48 @@
 local get_canvas_dimensions = require('util/get_canvas_dimensions')
+local editor = require('editor')
 local round = require('util/round')
-local settings = require('settings')
-
-local tile_size = settings.tile_size
 
 ---@alias WindowPlacement "center" | "fullscreen"
 
 ---@class CreateWindowOptions
+---@field height? number
 ---@field placement WindowPlacement
----@field tile_width? number
----@field tile_height? number
 ---@field title string
+---@field width? number
 
 ---@param options CreateWindowOptions
 ---@return WindowState
 local function create_new_window(options)
+  local height = options.height or editor.window_default_height
   local placement = options.placement
-  local tile_width = options.tile_width or 3
-  local tile_height = options.tile_height or 3
+  local width = options.width or editor.window_default_width
 
   -- validate options
   if placement == 'center' then
-    assert(tile_width, 'options.tile_width is required for placement "center"')
-    assert(tile_height, 'options.tile_height is required for placement "center"')
+    assert(height, 'create_new_window: options.height is required for placement "center"')
+    assert(width, 'create_new_window: options.width is required for placement "center"')
   end
 
   local canvas_w, canvas_h = get_canvas_dimensions()
+  local x = 0
+  local y = 0
 
   if placement == 'fullscreen' then
-    tile_width = math.floor(canvas_w / tile_size) - 2
-    tile_height = math.floor(canvas_h / tile_size) - 2
+    height = canvas_h
+    width = canvas_w
   end
 
-  local x = round((canvas_w - tile_width  * tile_size) / 2)
-  local y = round((canvas_h - tile_height * tile_size) / 2)
+  if placement == 'center' then
+    x = round((canvas_w - width) / 2)
+    y = round((canvas_h - height) / 2)
+  end
 
   ---@type WindowState
   local window = {
-    tile_height = tile_height,
+    height = height,
     state = 'open',
     title = options.title,
-    tile_width = tile_width,
+    width = width,
     x = x,
     y = y,
   }

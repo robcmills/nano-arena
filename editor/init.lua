@@ -11,6 +11,10 @@
 ---@field opened_menu string? Currently opened menu key, nil if none
 ---@field sprites love.Quad[]? Editor sprite quads. Indexed left-to-right, top-to-bottom
 ---@field spritesheet love.Image? Editor spritesheet image
+---@field window_default_height number Default window height in pixels
+---@field window_default_width number Default window width in pixels
+---@field window_corner_radius number Window corner radius in pixels
+---@field window_title_bar_height number Window title bar height in pixels (excluding borders)
 ---@field windows table<string, WindowState>? Windows by id
 
 ---@class MenuBarItem
@@ -42,10 +46,10 @@
 ---@field y number? Y position in pixels
 
 ---@class WindowState
+---@field height number Height in canvas pixels
 ---@field state 'closed' | 'open' Window state
----@field tile_height number Height in number of tiles
----@field tile_width number Width in number of tiles
 ---@field title string Window title
+---@field width number Width in canvas pixels
 ---@field x number X position in pixels
 ---@field y number Y position in pixels
 
@@ -62,6 +66,11 @@ local editor = {
   menus = nil,
   opened_menu = nil,
   spritesheet = nil,
+  window_default_height = 128,
+  window_default_width = 128,
+  window_corner_radius = 5,
+  window_title_bar_height = 14,
+  windows = nil,
 }
 
 return editor

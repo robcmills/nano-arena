@@ -6,9 +6,9 @@ local function draw_file_open_window()
   assert(window, 'editor.windows.open is nil')
 
   draw_sprite_window({
-    tile_height = window.tile_height,
-    tile_width = window.tile_width,
+    height = window.height,
     title = window.title,
+    width = window.width,
     x = window.x,
     y = window.y,
   })
