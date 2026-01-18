@@ -15,7 +15,14 @@
 ---@field window_default_width number Default window width in pixels
 ---@field window_corner_radius number Window corner radius in pixels
 ---@field window_title_bar_height number Window title bar height in pixels (excluding borders)
----@field windows table<string, WindowState>? Windows by id
+---@field windows EditorWindows Windows states
+
+---@class EditorWindows
+---@field open OpenFileWindowState? Open file window state
+
+---@class FileInfo
+---@field is_directory boolean Whether file is a directory
+---@field name string File name
 
 ---@class MenuBarItem
 ---@field height number? Item height in pixels
@@ -54,6 +61,12 @@
 ---@field x number X position in pixels
 ---@field y number Y position in pixels
 
+---@class OpenFileWindowState : WindowState
+---@field directory string Current love filesystem directory path
+---@field files FileInfo[] List of files and directories in current love filesystem directory path
+---@field item_height number Item height in pixels
+---@field scroll_offset number
+
 ---@type EditorState
 local editor = {
   cursor_quad = nil,
@@ -71,7 +84,7 @@ local editor = {
   window_default_width = 128,
   window_corner_radius = 5,
   window_title_bar_height = 14,
-  windows = nil,
+  windows = {},
 }
 
 return editor

@@ -9,6 +9,9 @@ local colors = require('colors')
 ---@field menu_bar_text_normal_color RGB
 ---@field menu_text_highlight_color RGB
 ---@field menu_text_normal_color RGB
+---@field text_directory_color RGB
+---@field text_file_color RGB
+---@field text_highlight_background_color RGB
 ---@field window_background_color RGB
 ---@field window_border_color RGB
 ---@field window_title_bar_background_color RGB
@@ -25,6 +28,9 @@ local theme = {
   menu_bar_text_normal_color = colors.white,
   menu_text_highlight_color = colors.p8.blue,
   menu_text_normal_color = colors.white,
+  text_directory_color = colors.cyan67,
+  text_file_color = colors.white,
+  text_highlight_background_color = colors.cyan17,
   window_background_color = colors.grey22,
   window_border_color = colors.cyan33,
   window_title_bar_background_color = colors.cyan33,
