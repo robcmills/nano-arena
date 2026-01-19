@@ -1,6 +1,7 @@
 local g = require('g')
 local get_input = require('input/get_input')
 local test = require('test')
+local update_editor = require('editor/update_editor')
 local update_map = require('update/update_map')
 local update_player = require('update/update_player')
 
@@ -13,5 +14,7 @@ function love.update(dt)
     local input = get_input()
     update_player(g.player, input)
     -- g.debug = string.format("FRAME: %d NOW: %.3f DT: %.3f", g.frame, g.now, dt)
+  elseif g.state == 'editor' then
+    update_editor(dt)
   end
 end

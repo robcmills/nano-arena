@@ -65,7 +65,10 @@
 ---@field directory string Current love filesystem directory path
 ---@field files FileInfo[] List of files and directories in current love filesystem directory path
 ---@field item_height number Item height in pixels
----@field scroll_offset number
+---@field scroll_offset_x number in canvas pixels
+---@field scroll_offset_y number in canvas pixels
+---@field scroll_velocity_x number
+---@field scroll_velocity_y number
 
 ---@type EditorState
 local editor = {
