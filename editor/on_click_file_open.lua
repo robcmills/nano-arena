@@ -13,9 +13,10 @@ local function on_click_file_open()
       title = 'Select arena',
       width = 256,
     })
+    local dir = ""
     editor.windows.open = {
-      directory = "",
-      files = get_file_list(""),
+      directory = dir,
+      files = get_file_list(dir),
       full_screen = false,
       height = window.height,
       item_height = settings.tile_size,
