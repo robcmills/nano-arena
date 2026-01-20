@@ -1,6 +1,7 @@
 local draw_rect = require('draw/draw_rect')
 local draw_text = require('draw/draw_text')
 local editor = require('editor')
+local settings = require('settings')
 local theme = require('theme')
 
 local function draw_rectangular_window(options)
@@ -22,7 +23,7 @@ local function draw_rectangular_window(options)
   -- title bar
   draw_rect({
     color = theme.window_title_bar_background_color,
-    height = editor.font.char_height + 1,
+    height = settings.tile_size,
     width = width,
     x = x,
     y = y,
@@ -33,7 +34,7 @@ local function draw_rectangular_window(options)
     color = theme.window_title_text_color,
     text = ' ' .. title,
     x = x,
-    y = y - 1,
+    y = y + 1,
   })
 
   -- border

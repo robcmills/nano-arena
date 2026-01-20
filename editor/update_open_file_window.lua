@@ -12,7 +12,7 @@ local function update_open_file_window(dt)
 
   local max_scroll_y = math.max(
     0,
-    #open_window.files * open_window.item_height - open_window.height + settings.tile_size * 2
+    #open_window.files * open_window.item_height - open_window.height + settings.tile_size + 1
   )
   -- clamp vertical scroll
   open_window.scroll_offset_y = math.max(

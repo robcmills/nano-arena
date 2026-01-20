@@ -6,9 +6,10 @@ local settings = require('settings')
 local function on_click_file_open()
   if editor.windows.open then
     editor.windows.open.state = 'open'
+    editor.windows.open.files = get_file_list("")
   else
     local window = create_new_window({
-      height = 256,
+      height = 256 + 2,
       placement = 'center',
       title = 'Select arena',
       width = 256,

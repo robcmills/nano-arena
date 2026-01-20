@@ -1,5 +1,8 @@
+local close_file_open_window = require('editor/close_file_open_window')
 local editor = require('editor')
 local g = require('g')
+local is_inside = require('collision/is_inside')
+local on_click_in_file_open_window = require('editor/on_click_in_file_open_window')
 local screen_to_canvas = require('util/screen_to_canvas')
 
 ---@param screen_x number
@@ -11,20 +14,24 @@ local function on_mouse_pressed(screen_x, screen_y, button)
   local x = screen_to_canvas(screen_x)
   local y = screen_to_canvas(screen_y)
 
-  if button == 1 then
-    -- windows
+  -- windows
 
-    -- open arena window
-    local window = editor.windows.open
-    if window and window.state == 'open' then
-      -- if outside of window, close it
-      if x < window.x or x > window.x + window.width or
-         y < window.y or y > window.y + window.height then
-        editor.windows.open.state = 'closed'
-        return
+  -- open arena window
+  local window = editor.windows.open
+  if window and window.state == 'open' then
+    -- if outside of window, close it
+    local rect = { x = window.x, y = window.y, width = window.width, height = window.height }
+    if not is_inside({ x = x, y = y, rect = rect }) then
+      if button == 1 then
+        close_file_open_window()
       end
+    else
+      on_click_in_file_open_window({ button = button, x = x, y = y })
     end
+    return
+  end
 
+  if button == 1 then
     -- menu bar
     for _, key in ipairs(editor.menu_bar_order) do
       local item = editor.menu_bar_items[key]

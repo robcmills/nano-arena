@@ -3,13 +3,16 @@
 local function get_file_list(directory)
   local items = {}
   local directory_items = love.filesystem.getDirectoryItems(directory)
+  local save_dir = love.filesystem.getSaveDirectory()
 
   for _, item_name in ipairs(directory_items) do
     local info = love.filesystem.getInfo(item_name)
-    if info then
+    local real_dir = love.filesystem.getRealDirectory(item_name)
+    if real_dir == save_dir and info.type == "file" then
       table.insert(items, {
+        last_modified = info.modtime,
         name = item_name,
-        is_directory = info.type == "directory"
+        size = info.size,
       })
     end
   end

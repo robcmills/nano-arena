@@ -1,16 +1,14 @@
 local colors = require('colors')
 local draw_files_list = require('editor/draw_files_list')
-local draw_rect = require('draw/draw_rect')
-local draw_sprite_window = require('editor/draw_sprite_window')
-local draw_text = require('draw/draw_text')
+local draw_rectangular_window = require('draw/draw_rectangular_window')
 local editor = require('editor')
-local settings = require('settings')
+local get_files_list_scroll_container = require('editor/get_files_list_scroll_container')
 
 local function draw_file_open_window()
   local window = editor.windows.open
   assert(window, 'editor.windows.open is nil')
 
-  draw_sprite_window({
+  draw_rectangular_window({
     full_screen = window.full_screen,
     height = window.height,
     title = window.title,
@@ -19,30 +17,16 @@ local function draw_file_open_window()
     y = window.y,
   })
 
-  -- draw current directory
-  draw_rect({
-    color = colors.grey33,
-    height = settings.tile_size,
-    width = window.width - 2,
-    x = window.x + 1,
-    y = window.y + settings.tile_size,
-  })
-  draw_text({
-    color = colors.white,
-    text = "/" .. window.directory,
-    x = window.x + 6,
-    y = window.y + settings.tile_size + 2,
-  })
-
+  local scroll_container = get_files_list_scroll_container(window)
   draw_files_list({
     files = window.files,
-    height = window.height - settings.tile_size * 3,
+    height = scroll_container.height,
     item_height = window.item_height,
     scroll_offset_x = window.scroll_offset_x,
     scroll_offset_y = window.scroll_offset_y,
-    width = window.width - 2,
-    x = window.x + 1,
-    y = window.y + settings.tile_size * 2,
+    width = scroll_container.width,
+    x = scroll_container.x,
+    y = scroll_container.y,
   })
 end
 

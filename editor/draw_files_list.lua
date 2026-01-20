@@ -25,7 +25,7 @@ local function draw_files_list(options)
   local x = options.x
   local y = options.y
 
-  love.graphics.setScissor(x, y, width, height)
+  love.graphics.setScissor(x - 2, y, width + 2, height)
 
   local mouse_x, mouse_y = get_mouse_canvas_position()
   local start_y = y - scroll_offset_y
@@ -46,8 +46,8 @@ local function draw_files_list(options)
         draw_rect({
           color = theme.text_highlight_background_color,
           height = item_height,
-          width = width,
-          x = x,
+          width = width + 1,
+          x = x - 1,
           y = item_y,
         })
       end
