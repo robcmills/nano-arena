@@ -8,8 +8,9 @@ local function get_arena_files()
   for _, item_name in ipairs(directory_items) do
     local info = love.filesystem.getInfo(item_name)
     local real_dir = love.filesystem.getRealDirectory(item_name)
-    -- todo: filter only .arena files
-    if real_dir == save_dir and info.type == "file" then
+    if real_dir == save_dir and
+        info.type == "file" and
+        item_name:sub(-6) == ".arena" then
       table.insert(items, {
         last_modified = info.modtime,
         name = item_name,

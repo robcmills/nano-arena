@@ -23,7 +23,7 @@
 ---@class FileInfo
 ---@field last_modified? number The file's last modification time in seconds since the unix epoch, or nil if it can't be determined.
 ---@field name string File name
----@field size number The size in bytes of the file, or nil if it can't be determined.
+---@field size? number The size in bytes of the file, or nil if it can't be determined.
 
 ---@class MenuBarItem
 ---@field height number? Item height in pixels

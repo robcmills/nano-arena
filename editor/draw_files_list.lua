@@ -30,6 +30,10 @@ local function draw_files_list(options)
   local mouse_x, mouse_y = get_mouse_canvas_position()
   local start_y = y - scroll_offset_y
 
+  if #files == 0 then
+    files = { { name = "No arenas found." } }
+  end
+
   for i, item in ipairs(files) do
     local item_y = start_y + ((i - 1) * item_height)
 
@@ -39,7 +43,7 @@ local function draw_files_list(options)
 
       -- Draw background for hover
       if mouse_x >= x and mouse_x <= x + width and
-         mouse_y >= item_y and mouse_y <= item_y + item_height then
+          mouse_y >= item_y and mouse_y <= item_y + item_height then
         draw_rect({
           color = theme.text_highlight_background_color,
           height = item_height,
