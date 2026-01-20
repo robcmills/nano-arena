@@ -36,9 +36,6 @@ local function draw_files_list(options)
     -- Only draw if visible within window
     if item_y + item_height >= y and item_y <= y + height then
       local display_name = item.name
-      if item.is_directory then
-        display_name = "[" .. display_name .. "]"
-      end
 
       -- Draw background for hover
       if mouse_x >= x and mouse_x <= x + width and
@@ -52,10 +49,8 @@ local function draw_files_list(options)
         })
       end
 
-      -- Draw text
-      local text_color = item.is_directory and theme.text_directory_color or theme.text_file_color
       draw_text({
-        color = text_color,
+        color = theme.text_file_color,
         text = display_name,
         x = x + 4,
         y = item_y + 2,

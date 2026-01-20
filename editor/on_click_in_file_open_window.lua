@@ -1,6 +1,4 @@
 local editor = require('editor')
-local g = require('g')
-local get_file_list = require('editor/get_file_list')
 local get_files_list_scroll_container = require('editor/get_files_list_scroll_container')
 local is_inside = require('collision/is_inside')
 
@@ -25,14 +23,7 @@ local function on_click_in_file_open_window(options)
     / window.item_height
   ) + 1
   local item = window.files[item_index]
-  if item.is_directory then
-    window.directory = item.name
-    window.files = get_file_list(window.directory)
-    window.scroll_offset_x = 0
-    window.scroll_offset_y = 0
-    window.scroll_velocity_x = 0
-    window.scroll_velocity_y = 0
-  end
+  -- todo: open file
 end
 
 return on_click_in_file_open_window

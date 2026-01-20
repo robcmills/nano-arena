@@ -21,8 +21,9 @@
 ---@field open OpenFileWindowState? Open file window state
 
 ---@class FileInfo
----@field is_directory boolean Whether file is a directory
+---@field last_modified? number The file's last modification time in seconds since the unix epoch, or nil if it can't be determined.
 ---@field name string File name
+---@field size number The size in bytes of the file, or nil if it can't be determined.
 
 ---@class MenuBarItem
 ---@field height number? Item height in pixels
@@ -62,7 +63,6 @@
 ---@field y number Y position in pixels
 
 ---@class OpenFileWindowState : WindowState
----@field directory string Current love filesystem directory path
 ---@field files FileInfo[] List of files and directories in current love filesystem directory path
 ---@field item_height number Item height in pixels
 ---@field scroll_offset_x number in canvas pixels

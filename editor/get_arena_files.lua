@@ -1,13 +1,14 @@
--- Get list of files and directories in given directory
----@param directory string
-local function get_file_list(directory)
+-- Get list of arena files in save directory
+---@return FileInfo[]
+local function get_arena_files()
   local items = {}
-  local directory_items = love.filesystem.getDirectoryItems(directory)
+  local directory_items = love.filesystem.getDirectoryItems("")
   local save_dir = love.filesystem.getSaveDirectory()
 
   for _, item_name in ipairs(directory_items) do
     local info = love.filesystem.getInfo(item_name)
     local real_dir = love.filesystem.getRealDirectory(item_name)
+    -- todo: filter only .arena files
     if real_dir == save_dir and info.type == "file" then
       table.insert(items, {
         last_modified = info.modtime,
@@ -17,18 +18,12 @@ local function get_file_list(directory)
     end
   end
 
-  -- Sort: directories first, then files, alphabetically within each group
+  -- Sort alphabetically
   table.sort(items, function(a, b)
-    if a.is_directory and not b.is_directory then
-      return true
-    elseif not a.is_directory and b.is_directory then
-      return false
-    else
-      return a.name < b.name
-    end
+    return a.name < b.name
   end)
 
   return items
 end
 
-return get_file_list
+return get_arena_files
