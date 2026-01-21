@@ -1,5 +1,6 @@
 # Todo
 
+- [ ] implement on_click_item in arena files list (open arena)
 - [ ] add scroll bar to arena files list
 - [ ] implement horizontal scrolling in arena files list
 - [x] draw debug info when recording tests

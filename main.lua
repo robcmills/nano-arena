@@ -1,3 +1,4 @@
+require('types')
 require('load')
 require('input')
 require('update')
