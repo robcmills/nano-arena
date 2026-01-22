@@ -2,7 +2,7 @@ local editor = require('editor')
 local theme = require('theme')
 
 local function load_menu_bar()
-  editor.menu_padding_x = 3
+  editor.menu_padding_x = 4
   editor.menu_padding_y = 1
   editor.menu_bar_height = editor.font.char_height + editor.menu_padding_y * 2 + 2
 

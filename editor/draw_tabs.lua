@@ -27,7 +27,7 @@ local function draw_tabs()
   local x = 0
   local y = editor.menu_bar_height
   for i, arena in ipairs(editor.arenas) do
-    local tab_width = editor.menu_padding_x * 2 + (#arena.name + 4) * editor.font.char_width
+    local tab_width = editor.menu_padding_x * 2 + (#arena.name + 3) * editor.font.char_width
     local is_active = i == editor.active_arena
     if is_active then
       -- active tab border
@@ -62,7 +62,7 @@ local function draw_tabs()
         theme.tabs_text_color
     draw_text({
       color = text_color,
-      text = arena.name,
+      text = arena.name .. "  x",
       x = x + editor.menu_padding_x,
       y = y + editor.menu_padding_y,
     })
