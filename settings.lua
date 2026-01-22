@@ -18,7 +18,7 @@ local settings = {
   grid_size = 8, -- todo: move to editor
   player_move_speed = 100,
   player_sprite_size = 32,
-  resolution = 480,
+  resolution = 256,
   tile_size = 16,
 }
 

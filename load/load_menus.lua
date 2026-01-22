@@ -5,7 +5,7 @@ local theme = require('theme')
 
 local function load_menus()
   editor.menus = {
-    file = {
+    fjle = {
       items = {
         new = { key = "N", post_label = "ew arena", on_click = on_click_file_new },
         open = { key = "O", post_label = "pen arena", on_click = on_click_file_open },

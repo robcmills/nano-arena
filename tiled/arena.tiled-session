@@ -3,12 +3,15 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "",
+    "activeFile": "arena-map-3.tmx",
     "expandedProjectPaths": [
+        "/Users/robcmills/src/nano-arena/assets",
+        "."
     ],
     "fileStates": {
         "": {
-            "scaleInDock": 1
+            "scaleInDock": 1,
+            "scaleInEditor": 1
         },
         "arena-map-1.tmx": {
             "scale": 6.8643,
@@ -41,14 +44,14 @@
         },
         "arena-map-3.tmx": {
             "scale": 6.201388888888888,
-            "selectedLayer": 3,
+            "selectedLayer": 1,
             "viewCenter": {
-                "x": 71.91937290033596,
-                "y": 71.91937290033597
+                "x": 71.59686450167975,
+                "y": 78.04703247480406
             }
         },
         "arena-map-3.tmx#arena-tileset": {
-            "scaleInDock": 1
+            "scaleInDock": 2
         },
         "arena-tileset.tsx": {
             "scaleInDock": 2,
@@ -69,15 +72,16 @@
     "map.tileWidth": 16,
     "map.width": 9,
     "openFiles": [
+        "arena-map-3.tmx"
     ],
     "project": "arena.tiled-project",
     "property.type": "string",
     "recentFiles": [
+        "arena-map-3.tmx",
         "arena-tileset.tsx",
         "arena-map-1.tmx",
         "gray-rocks.tsx",
-        "arena-map-2.tmx",
-        "arena-map-3.tmx"
+        "arena-map-2.tmx"
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {

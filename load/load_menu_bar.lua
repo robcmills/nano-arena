@@ -4,15 +4,15 @@ local theme = require('theme')
 local function load_menu_bar()
   editor.menu_padding_x = 3
   editor.menu_padding_y = 1
-  editor.menu_bar_height = editor.font.char_height + editor.menu_padding_y * 2
+  editor.menu_bar_height = editor.font.char_height + editor.menu_padding_y * 2 + 2
 
   editor.menu_bar_items = {
-    file = { key = "F", label = "ile" },
+    fjle = { key = "F", label = "jle" },
     edit = { key = "E", label = "dit" },
     grid = { key = "G", label = "rid" },
     help = { key = "H", label = "elp" },
   }
-  editor.menu_bar_order = { "file", "edit", "grid", "help" }
+  editor.menu_bar_order = { "fjle", "edit", "grid", "help" }
 
   -- calculate offsets
   local x_offset = 0

@@ -1,10 +1,12 @@
+local reset_graphics = require('draw/reset_graphics')
+
 ---@alias AlignMode 'center' | 'justify' | 'left' | 'right'
 
 ---@class DrawTextOptions
 ---@field align AlignMode?
----@field color RGB
+---@field color? RGB
 ---@field limit number? Wrap the line after this many horizontal pixels
----@field text string
+---@field text string | table
 ---@field x number
 ---@field y number
 
@@ -17,14 +19,14 @@ local function draw_text(options)
   local x = options.x
   local y = options.y
 
-  love.graphics.setColor(color)
+  love.graphics.setColor(color or {1, 1, 1})
   if limit then
     love.graphics.printf(text, x, y, limit, align)
   else
     love.graphics.print(text, x, y)
   end
 
-  love.graphics.setColor(1, 1, 1)
+  reset_graphics()
 end
 
 return draw_text

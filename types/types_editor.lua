@@ -4,15 +4,16 @@
 ---@field cursor_quad love.Quad? Quad for cursor sprite
 ---@field font FontInfo?
 ---@field menu_bar_colored_text (string|number)[]? Colored text array for menu bar
----@field menu_bar_height number? Height of menu bar in pixels
+---@field menu_bar_height number Height of menu bar in pixels
 ---@field menu_bar_items table<string, MenuBarItem>? Menu bar items by key
 ---@field menu_bar_order string[]? Ordered list of menu bar item keys
----@field menu_padding_x number? Horizontal padding for menu items in pixels
----@field menu_padding_y number? Vertical padding for menu items in pixels
+---@field menu_padding_x number Horizontal padding for menu items in pixels
+---@field menu_padding_y number Vertical padding for menu items in pixels
 ---@field menus table<string, Menu>? Menus by key
 ---@field opened_menu string? Currently opened menu key, nil if none
 ---@field sprites love.Quad[]? Editor sprite quads. Indexed left-to-right, top-to-bottom
 ---@field spritesheet love.Image? Editor spritesheet image
+---@field tab_gap number Horizontal gap between tabs in pixels
 ---@field window_default_height number Default window height in pixels
 ---@field window_default_width number Default window width in pixels
 ---@field window_corner_radius number Window corner radius in pixels

@@ -8,7 +8,7 @@ local take_screenshot = require('util/save_screenshot')
 function love.keypressed(key)
   if editor ~= nil then
     if key == 'f' then
-      editor.opened_menu = 'file'
+      editor.opened_menu = 'fjle'
     elseif key == 'e' then
       editor.opened_menu = 'edit'
     elseif key == 'g' then
@@ -18,16 +18,16 @@ function love.keypressed(key)
     elseif key == 'escape' then
       close_opened_menu()
       close_file_open_window()
-    elseif key == 'n' and editor.opened_menu == 'file' then
+    elseif key == 'n' and editor.opened_menu == 'fjle' then
       on_click_file_new()
-    elseif key == 'o' and editor.opened_menu == 'file' then
+    elseif key == 'o' and editor.opened_menu == 'fjle' then
       editor.opened_menu = nil
       on_click_file_open()
     end
   end
   if key == 'q' then
     love.event.quit()
-  elseif key == 'n' then
+  elseif key == 't' then
     take_screenshot()
   end
 end
