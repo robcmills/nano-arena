@@ -9,6 +9,7 @@ local colors = require('colors')
 ---@field menu_bar_text_normal_color RGB
 ---@field menu_text_highlight_color RGB
 ---@field menu_text_normal_color RGB
+---@field tab_close_button_hover_background_color RGB
 ---@field tabs_active_background_color RGB
 ---@field tabs_inactive_background_color RGB
 ---@field text_directory_color RGB
@@ -30,6 +31,7 @@ local theme = {
   menu_bar_text_normal_color = colors.grey89,
   menu_text_highlight_color = colors.p8.blue,
   menu_text_normal_color = colors.white,
+  tab_close_button_hover_background_color = colors.red67,
   tabs_active_background_color = colors.grey11,
   tabs_inactive_background_color = colors.grey33,
   tabs_text_color = colors.grey67,

@@ -2,6 +2,8 @@ local draw_rect = require('draw/draw_rect')
 local draw_text = require('draw/draw_text')
 local editor = require('editor')
 local g = require('g')
+local get_mouse_canvas_position = require('input/get_mouse_canvas_position')
+local is_inside = require('collision/is_inside')
 local theme = require('theme')
 
 local function draw_tabs()
@@ -57,6 +59,27 @@ local function draw_tabs()
         y = y,
       })
     end
+
+    -- hover highlight close button
+    local mouse_x, mouse_y = get_mouse_canvas_position()
+    local close_button_rect = {
+      height = 7,
+      width = 7,
+      x = x + tab_width - editor.menu_padding_x - 7,
+      y = y + 5,
+    }
+    if is_inside({ x = mouse_x, y = mouse_y, rect = close_button_rect }) and
+        editor.opened_menu == nil then
+      draw_rect({
+        color = theme.tab_close_button_hover_background_color,
+        height = close_button_rect.height,
+        width = close_button_rect.width,
+        x = close_button_rect.x,
+        y = close_button_rect.y,
+      })
+    end
+
+    -- tab text
     local text_color = is_active and
         theme.tabs_text_highlight_color or
         theme.tabs_text_color
