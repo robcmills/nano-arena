@@ -33,11 +33,13 @@ local function on_mouse_pressed(screen_x, screen_y, button)
 
   if button == 1 then
     -- menu bar
-    for _, key in ipairs(editor.menu_bar_order) do
-      local item = editor.menu_bar_items[key]
-      if item.is_hovered then
-        editor.opened_menu = key
-        return
+    if not editor.opened_menu then
+      for _, key in ipairs(editor.menu_bar_order) do
+        local item = editor.menu_bar_items[key]
+        if item.is_hovered then
+          editor.opened_menu = key
+          return
+        end
       end
     end
 
@@ -49,9 +51,11 @@ local function on_mouse_pressed(screen_x, screen_y, button)
           item.on_click()
         end
       end
+      editor.opened_menu = nil
+      return
     end
 
-    editor.opened_menu = nil
+    -- tabs
   end
 end
 
