@@ -1,9 +1,3 @@
----@class Rect
----@field height number
----@field width number
----@field x number
----@field y number
-
 ---@param options { x: number, y: number, rect: Rect }
 local function is_inside(options)
   local x = options.x

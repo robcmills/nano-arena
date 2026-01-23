@@ -1,3 +1,6 @@
+---@class Arena -- aka level, map, world, etc.
+---@field name string
+
 ---@class EditorState
 ---@field active_arena number? Currently active arena (index into arenas)
 ---@field arenas Arena[] Opened arenas (tabs)
@@ -14,14 +17,12 @@
 ---@field sprites love.Quad[]? Editor sprite quads. Indexed left-to-right, top-to-bottom
 ---@field spritesheet love.Image? Editor spritesheet image
 ---@field tab_gap number Horizontal gap between tabs in pixels
+---@field tabs TabState[] Tab positions and close button rects
 ---@field window_default_height number Default window height in pixels
 ---@field window_default_width number Default window width in pixels
 ---@field window_corner_radius number Window corner radius in pixels
 ---@field window_title_bar_height number Window title bar height in pixels (excluding borders)
 ---@field windows EditorWindows Windows states
-
----@class Arena -- aka level, map, world, etc.
----@field name string
 
 ---@class EditorWindows
 ---@field open OpenFileWindowState? Open file window state
@@ -31,20 +32,20 @@
 ---@field name string File name
 ---@field size? number The size in bytes of the file, or nil if it can't be determined.
 
+---@class Menu
+---@field height number? Menu height in pixels
+---@field items table<string, MenuItem> Menu items by key
+---@field items_order string[] Ordered list of menu item keys
+---@field width number? Menu width in pixels
+---@field x number? X position in pixels
+---@field y number? Y position in pixels
+
 ---@class MenuBarItem
 ---@field height number? Item height in pixels
 ---@field is_hovered boolean? Whether item is hovered
 ---@field key string Keyboard shortcut key
 ---@field label string Display label
 ---@field width number? Item width in pixels
----@field x number? X position in pixels
----@field y number? Y position in pixels
-
----@class Menu
----@field height number? Menu height in pixels
----@field items table<string, MenuItem> Menu items by key
----@field items_order string[] Ordered list of menu item keys
----@field width number? Menu width in pixels
 ---@field x number? X position in pixels
 ---@field y number? Y position in pixels
 
@@ -59,6 +60,24 @@
 ---@field x number? X position in pixels
 ---@field y number? Y position in pixels
 
+---@class OpenFileWindowState : WindowState
+---@field files FileInfo[] List of files and directories in current love filesystem directory path
+---@field item_height number Item height in pixels
+---@field scroll_offset_x number in canvas pixels
+---@field scroll_offset_y number in canvas pixels
+---@field scroll_velocity_x number
+---@field scroll_velocity_y number
+
+---@class Rect
+---@field height number
+---@field width number
+---@field x number
+---@field y number
+
+---@class TabState
+---@field close_button_rect Rect
+---@field tab_rect Rect
+
 ---@class WindowState
 ---@field full_screen boolean Whether window is full screen
 ---@field height number Height in canvas pixels
@@ -67,11 +86,3 @@
 ---@field width number Width in canvas pixels
 ---@field x number X position in pixels
 ---@field y number Y position in pixels
-
----@class OpenFileWindowState : WindowState
----@field files FileInfo[] List of files and directories in current love filesystem directory path
----@field item_height number Item height in pixels
----@field scroll_offset_x number in canvas pixels
----@field scroll_offset_y number in canvas pixels
----@field scroll_velocity_x number
----@field scroll_velocity_y number
