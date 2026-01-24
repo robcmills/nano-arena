@@ -3,6 +3,7 @@ local editor = require('editor')
 local g = require('g')
 local is_inside = require('collision/is_inside')
 local on_click_in_file_open_window = require('editor/on_click_in_file_open_window')
+local on_click_tabs = require('editor/on_click_tabs')
 local screen_to_canvas = require('util/screen_to_canvas')
 
 ---@param screen_x number
@@ -56,6 +57,7 @@ local function on_mouse_pressed(screen_x, screen_y, button)
     end
 
     -- tabs
+    on_click_tabs({ x = x, y = y, button = button })
   end
 end
 
