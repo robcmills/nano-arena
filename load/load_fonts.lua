@@ -7,7 +7,7 @@ local function load_fonts()
       char_width = 6,
       font = love.graphics.newImageFont(
         'assets/future-font.png',
-        'abcdefghijklmnopqrstuvwxyz.,"\'?!@_*#$%()+-/:;<=>[\\]^{|}~ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 '
+        'abcdefghijklmnopqrstuvwxyz.,"\'?!@_*#$%()+-/:;<=>[\\]^{|}~ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 …'
       )
     },
     monogram = {

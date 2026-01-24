@@ -16,6 +16,7 @@
 ---@field opened_menu string? Currently opened menu key, nil if none
 ---@field sprites love.Quad[]? Editor sprite quads. Indexed left-to-right, top-to-bottom
 ---@field spritesheet love.Image? Editor spritesheet image
+---@field tab_max_char_count number Number of characters in tab text (before ellipsification)
 ---@field tab_gap number Horizontal gap between tabs in pixels
 ---@field tabs TabState[] Tab positions and close button rects
 ---@field window_default_height number Default window height in pixels

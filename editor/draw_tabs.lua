@@ -3,6 +3,7 @@ local draw_text = require('draw/draw_text')
 local editor = require('editor')
 local g = require('g')
 local get_mouse_canvas_position = require('input/get_mouse_canvas_position')
+local get_tab_text = require('editor/get_tab_text')
 local is_inside = require('collision/is_inside')
 local theme = require('theme')
 
@@ -83,7 +84,7 @@ local function draw_tabs()
         theme.tabs_text_color
     draw_text({
       color = text_color,
-      text = arena.name .. "  x",
+      text = get_tab_text(arena.name) .. " x",
       x = tab_rect.x + editor.menu_padding_x,
       y = tab_rect.y + editor.menu_padding_y,
     })

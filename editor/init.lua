@@ -12,6 +12,7 @@ local editor = {
   menus = nil,
   opened_menu = nil,
   spritesheet = nil,
+  tab_max_char_count = 19,
   tab_gap = 3,
   tabs = {},
   window_default_height = 128,

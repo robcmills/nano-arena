@@ -1,7 +1,7 @@
 # Todo
 
 - [ ] add toast notifications (for screenshots, etc.)
-- [ ] draw open menu outline
+- [x] draw open menu outline
 - [ ] implement on_click_item in arena files list (open arena)
 - [ ] add scroll bar to arena files list
 - [ ] implement horizontal scrolling in arena files list
