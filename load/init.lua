@@ -8,8 +8,16 @@ local test = require('test')
 
 function love.load()
   love.filesystem.setIdentity("nano-arena")
-  -- love.window.setMode(0, 0, { fullscreen = true })
-  love.window.setMode(1080, 960)
+
+  local width, height = love.window.getDesktopDimensions()
+  love.window.setMode(width, height, {
+    borderless = false,
+    resizable = false,
+    vsync = true,
+    x = 0,
+    y = 0
+  })
+
   love.keyboard.setKeyRepeat(true)
   love.mouse.setVisible(false)
   love.graphics.setDefaultFilter('nearest', 'nearest')
