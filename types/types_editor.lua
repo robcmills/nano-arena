@@ -1,9 +1,13 @@
 ---@class Arena -- aka level, map, world, etc.
 ---@field name string
 
+---@class ArenaState
+---@field arena Arena
+---@field has_unsaved_changes boolean
+
 ---@class EditorState
 ---@field active_arena number? Currently active arena (index into arenas)
----@field arenas Arena[] Opened arenas (tabs)
+---@field arenas ArenaState[] Opened arenas (tabs)
 ---@field cursor_quad love.Quad? Quad for cursor sprite
 ---@field font FontInfo?
 ---@field menu_bar_colored_text (string|number)[]? Colored text array for menu bar

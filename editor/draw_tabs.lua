@@ -29,7 +29,7 @@ local function draw_tabs()
 
   local mouse_x, mouse_y = get_mouse_canvas_position()
 
-  for i, arena in ipairs(editor.arenas) do
+  for i, arena_state in ipairs(editor.arenas) do
     local tab = editor.tabs[i]
     if not tab then break end
 
@@ -84,7 +84,7 @@ local function draw_tabs()
         theme.tabs_text_color
     draw_text({
       color = text_color,
-      text = get_tab_text(arena.name) .. " x",
+      text = get_tab_text(arena_state.arena.name) .. " x",
       x = tab_rect.x + editor.menu_padding_x,
       y = tab_rect.y + editor.menu_padding_y,
     })

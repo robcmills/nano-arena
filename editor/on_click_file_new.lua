@@ -15,9 +15,12 @@ local function on_click_file_new()
   local name = i <= #names and names[i] or '' .. os.date("%Y-%m-%d-%H:%M:%S")
   i = i + 1
 
-  ---@type Arena
+  ---@type ArenaState
   local new_arena = {
-    name = name,
+    arena = {
+      name = name,
+    },
+    has_unsaved_changes = true,
   }
   table.insert(editor.arenas, new_arena)
   editor.active_arena = #editor.arenas

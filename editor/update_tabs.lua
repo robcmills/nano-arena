@@ -6,8 +6,8 @@ local function update_tabs()
   editor.tabs = {}
   local x = 0
   local y = editor.menu_bar_height
-  for _, arena in ipairs(editor.arenas) do
-    local tab_text = get_tab_text(arena.name)
+  for _, arena_state in ipairs(editor.arenas) do
+    local tab_text = get_tab_text(arena_state.arena.name)
     -- Lua's `#` operator counts **bytes**, not characters.
     -- The ellipsis `…` is 3 bytes in UTF-8 encoding.
     -- So to get an accurate char count, we need to use `utf8.len`.

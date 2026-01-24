@@ -1,5 +1,7 @@
 # Todo
 
+- [ ] add view menu -> tabs list (window with vertical tabs list)
+- [ ] add tabs horizontal scrolling/paging
 - [ ] add toast notifications (for screenshots, etc.)
 - [x] draw open menu outline
 - [ ] implement on_click_item in arena files list (open arena)
