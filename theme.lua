@@ -31,6 +31,7 @@ local theme = {
   menu_bar_text_normal_color = colors.grey89,
   menu_text_highlight_color = colors.p8.blue,
   menu_text_normal_color = colors.white,
+  prompt_background_color = colors.grey22,
   tab_close_button_hover_background_color = colors.red67,
   tabs_active_background_color = colors.grey11,
   tabs_inactive_background_color = colors.grey33,

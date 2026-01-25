@@ -13,6 +13,7 @@
 ---@field now number Current time in seconds
 ---@field palette? RGB[]
 ---@field player PlayerState | nil Player game state
+---@field prompt PromptState | nil
 ---@field state 'game' | 'editor' Game state
 
 ---@class WeaponState
@@ -43,6 +44,14 @@
 ---@field left love.Quad | nil Sprite quad for left direction
 ---@field right love.Quad | nil Sprite quad for right direction
 ---@field up love.Quad | nil Sprite quad for up direction
+
+---@class PromptState
+---@field buttons PromptButton[]
+---@field height number Height in pixels
+---@field text string
+---@field width number Width in pixels
+---@field x number X position in pixels
+---@field y number Y position in pixels
 
 ---@class MapState
 ---@field map table? Loaded map data table

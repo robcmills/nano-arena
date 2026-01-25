@@ -1,8 +1,37 @@
 local editor = require('editor')
+local prompt = require('util/prompt')
 local update_tabs = require('editor/update_tabs')
 
 ---@param tab_index number the tab index to close
 local function close_tab(tab_index)
+  if editor.arenas[tab_index].has_unsaved_changes then
+    prompt({
+      text = 'The active arena has unsaved changes!',
+      buttons = {
+        {
+          key = 'c',
+          label = 'Cancel',
+        },
+        {
+          key = 'd',
+          label = 'Discard',
+          on_click = function()
+            close_tab(tab_index)
+          end,
+        },
+        {
+          key = 's',
+          label = 'Save',
+          on_click = function()
+            -- save_arena(tab_index)
+            close_tab(tab_index)
+          end,
+        },
+      },
+    })
+    return
+  end
+
   local was_active = editor.active_arena == tab_index
   local was_less = tab_index < editor.active_arena
   table.remove(editor.tabs, tab_index)

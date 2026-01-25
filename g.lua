@@ -12,6 +12,7 @@ local g = {
   now = 0,
   palette = nil,
   player = nil,
+  prompt = nil,
   state = 'editor',
 }
 
