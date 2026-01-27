@@ -26,6 +26,7 @@ local function close_tab(tab_index)
             -- save_arena(tab_index)
             close_tab(tab_index)
           end,
+          type = 'primary',
         },
       },
     })

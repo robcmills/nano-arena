@@ -1,6 +1,7 @@
 ---@class Settings
 ---@field allow_void_suicide boolean Allow player to move into void
----@field button_padding number Button padding in pixels
+---@field button_padding_x number Button padding horizontal in pixels
+---@field button_padding_y number Button padding vertical in pixels
 ---@field debug_x number Debug print X position in pixels
 ---@field debug_y number Debug print Y position in pixels
 ---@field grid_color [number, number, number] Grid color
@@ -15,7 +16,8 @@
 ---@type Settings
 local settings = {
   allow_void_suicide = false,
-  button_padding = 2,
+  button_padding_x = 4,
+  button_padding_y = 2,
   debug_x = 32,
   debug_y = 64,
   grid_color = {0.25, 0.25, 0.25}, -- todo: move to editor

@@ -33,6 +33,33 @@ local function draw_prompt()
     x = prompt.x + settings.prompt_padding,
     y = prompt.y + settings.prompt_padding,
   })
+
+  for _, button in ipairs(prompt.buttons) do
+    local is_primary = button.type == 'primary'
+    -- background
+    draw_rect({
+      color = is_primary and theme.primary or theme.button_background_color,
+      height = button.height,
+      width = button.width,
+      x = button.x,
+      y = button.y,
+    })
+    -- outline
+    draw_rect({
+      color = is_primary and theme.primary_light or theme.button_outline_color,
+      fill = false,
+      height = button.height,
+      width = button.width,
+      x = button.x,
+      y = button.y,
+    })
+    draw_text({
+      color = theme.button_text_color,
+      text = button.label,
+      x = button.x + settings.button_padding_x,
+      y = button.y + settings.button_padding_y,
+    })
+  end
 end
 
 return draw_prompt

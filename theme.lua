@@ -1,6 +1,8 @@
 local colors = require('colors')
 
 ---@class Theme
+---@field button_background_color RGB
+---@field button_outline_color RGB
 ---@field editor_background_color RGB
 ---@field menu_background_color RGB
 ---@field menu_bar_background_color RGB
@@ -9,6 +11,9 @@ local colors = require('colors')
 ---@field menu_bar_text_normal_color RGB
 ---@field menu_text_highlight_color RGB
 ---@field menu_text_normal_color RGB
+---@field primary RGB
+---@field primary_dark RGB
+---@field primary_light RGB
 ---@field tab_close_button_hover_background_color RGB
 ---@field tabs_active_background_color RGB
 ---@field tabs_inactive_background_color RGB
@@ -22,6 +27,9 @@ local colors = require('colors')
 
 ---@type Theme
 local theme = {
+  button_background_color = colors.grey33,
+  button_outline_color = colors.grey78,
+  button_text_color = colors.white,
   editor_background_color = colors.grey11,
   menu_background_color = colors.grey22,
   menu_bar_background_color = colors.grey22,
@@ -31,6 +39,9 @@ local theme = {
   menu_bar_text_normal_color = colors.grey89,
   menu_text_highlight_color = colors.p8.blue,
   menu_text_normal_color = colors.white,
+  primary = colors.blue,
+  primary_dark = colors.blue17,
+  primary_light = colors.blue83,
   prompt_background_color = colors.grey22,
   tab_close_button_hover_background_color = colors.red67,
   tabs_active_background_color = colors.grey11,
