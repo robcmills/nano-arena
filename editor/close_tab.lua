@@ -1,5 +1,6 @@
 local editor = require('editor')
 local prompt = require('util/prompt')
+local theme = require('theme')
 local update_tabs = require('editor/update_tabs')
 
 ---@param tab_index number the tab index to close

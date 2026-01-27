@@ -1,5 +1,7 @@
+local colored_to_string = require('util/colored_to_string')
 local create_new_window = require('editor/create_new_window')
 local g = require('g')
+local get_colored_button_label = require('util/get_colored_button_label')
 local measure_text = require('util/measure_text')
 local settings = require('settings')
 
@@ -12,7 +14,7 @@ local settings = require('settings')
 ---@class PromptButtonOptions
 ---@field on_click? function
 ---@field key string
----@field label string
+---@field label string | table -- string or table of colored text
 ---@field type? 'primary'
 
 ---@class PromptOptions
@@ -58,6 +60,13 @@ local function prompt(options)
   -- iterate right to left to right align
   for i = 0, #buttons - 1 do
     local button = buttons[#buttons - i]
+    local label = button.label
+    if type(label) == 'string' then
+      button.label = get_colored_button_label({
+        key = button.key,
+        label = label,
+      })
+    end
     button.on_click = function()
       if button.on_click then
         button.on_click()
@@ -65,7 +74,7 @@ local function prompt(options)
       g.prompt = nil
     end
     button.height = settings.button_padding_y * 2 + font_height
-    button.width = settings.button_padding_x * 2 + font:getWidth(button.label)
+    button.width = settings.button_padding_x * 2 + font:getWidth(colored_to_string(button.label))
     button.x = window.x + width - x_offset - button.width
     button.y = window.y + height - settings.prompt_padding - button.height
     x_offset = x_offset + settings.prompt_padding + button.width -- add gap between buttons
